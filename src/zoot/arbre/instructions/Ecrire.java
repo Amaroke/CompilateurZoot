@@ -18,7 +18,13 @@ public class Ecrire extends Instruction {
 
     @Override
     public String toMIPS() {
-        return "\tli $a0, " + exp.toMIPS() + "\nli $v0 , 1\nsyscall\n";
+        StringBuilder str = new StringBuilder("");
+        str.append("\tli $a0, " + exp.toMIPS());
+        str.append("\n#On affiche :\n");
+        str.append("\tli $v0 , 1\n\tsyscall\n");
+        str.append("#On fait un saut de ligne :\n");
+        str.append("\tla $a0, saut_ligne\n\tli $v0, 4\n\tsyscall\n\n");
+        return str.toString();
     }
 
 }

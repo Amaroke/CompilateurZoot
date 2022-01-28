@@ -31,11 +31,15 @@ public class BlocDInstructions extends ArbreAbstrait {
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder("");
-        str.append(".text\nmain: \n");
+        str.append("#MATHIEU STEINBACH Hugo & MOSELLE Marie-Luc\n");
+        str.append(".data\n");
+        str.append("saut_ligne: .asciiz \"\\n\"\n");
+        str.append(".text\n");
+        str.append("main: \n");
         for (Instruction i: programme) {
             str.append(i.toMIPS());
         }
-        str.append("#Fin du programmeli $v0, 10\nsyscall");
+        str.append("#Fin du programme :\nli $v0, 10\nsyscall");
         return str.toString();
     }
 
