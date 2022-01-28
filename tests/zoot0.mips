@@ -1,0 +1,16 @@
+.text
+main: 
+	li $a0, 42
+li $v0 , 1
+syscall
+	li $a0, 7
+li $v0 , 1
+syscall
+	li $a0, 154853
+li $v0 , 1
+syscall
+	li $a0, 0
+li $v0 , 1
+syscall
+#Fin du programmeli $v0, 10
+syscall
