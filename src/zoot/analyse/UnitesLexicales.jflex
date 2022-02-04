@@ -46,8 +46,6 @@ commentaire = [/]{2}.*{finDeLigne}
 
 "ecrire"               { return symbol(CodesLexicaux.ECRIRE); }
 
-"lire"                 { return symbol(CodesLexicaux.LIRE); }
-
 "entier"               { return symbol(CodesLexicaux.ENTIER); }
 
 "booleen"              { return symbol(CodesLexicaux.BOOLEEN); }

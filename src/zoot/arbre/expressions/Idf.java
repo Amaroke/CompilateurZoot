@@ -1,10 +1,18 @@
 package zoot.arbre.expressions;
 
-public class Idf extends Variable {
+public class Idf extends Expression {
 
-    public Idf(String texte, int n) {
-        super(texte, n) ;
+    private String nom;
+
+    public Idf(String nom, int n) {
+        super(n) ;
+        this.nom = nom;
         this.noLigne = n;
+    }
+
+    @Override
+    public void verifier() {
+
     }
 
     @Override
