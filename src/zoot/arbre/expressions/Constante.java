@@ -11,6 +11,7 @@ public abstract class Constante extends Expression {
     
     @Override
     public void verifier() {
+        //TODO vérifier type
         throw new UnsupportedOperationException("fonction verfier non définie ") ;
     }
 

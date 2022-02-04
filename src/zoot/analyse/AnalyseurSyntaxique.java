@@ -11,7 +11,6 @@ import zoot.arbre.*;
 import zoot.arbre.expressions.*;
 import zoot.arbre.instructions.*;
 import zoot.exceptions.AnalyseSyntaxiqueException;
-import java_cup.runtime.*;
 
 /** CUP v0.11a beta 20060608 generated parser.
   * @version Fri Feb 04 20:43:01 CET 2022
@@ -204,7 +203,7 @@ class CUP$AnalyseurSyntaxique$actions {
 		int eleft = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).left;
 		int eright = ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).right;
 		Expression e = (Expression)((java_cup.runtime.Symbol) CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-1)).value;
-		 RESULT = new Affect(new Idf(i,ileft+1), e, eleft+1) ; 
+		 RESULT = new Affectation(new Idf(i,ileft+1), e, eleft+1) ;
               CUP$AnalyseurSyntaxique$result = parser.getSymbolFactory().newSymbol("INST",2, ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.elementAt(CUP$AnalyseurSyntaxique$top-3)), ((java_cup.runtime.Symbol)CUP$AnalyseurSyntaxique$stack.peek()), RESULT);
             }
           return CUP$AnalyseurSyntaxique$result;
