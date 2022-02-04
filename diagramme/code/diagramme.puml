@@ -18,6 +18,9 @@ AnalyseException -up-|> RuntimeException
 
 AnalyseLexicaleException -up-|> AnalyseException
 AnalyseSyntaxiqueException -up-|> AnalyseException
+AnalyseSemantiqueException -up-|> AnalyseException
+VariableNonDeclaree -up-|> AnalyseSemantiqueException
+DoubleDeclaration -up-|> AnalyseSemantiqueException
 
 abstract class ArbreAbstrait {
    int noLigne
@@ -49,24 +52,15 @@ class Ecrire {
 
 Ecrire  -up-|> Instruction
 
-class Affect {
-   Affect(Idf idf, Expression e, int n)
+class Affectation {
+   Affectation(Idf idf, Expression e, int n)
    void verifier()
    String toMIPS()
 }
 
-Affect  -up-|> Instruction
-Affect - "1" Expression
-Affect - "1" Idf
-
-class Lire {
-   Lire(Idf idf, int n)
-   void verifier()
-   String toMIPS()
-}
-
-Lire  -up-|> Instruction
-Lire - "1" Idf
+Affectation  -up-|> Instruction
+Affectation - "1" Expression
+Affectation - "1" Idf
 
 abstract class Expression {
    protected Expression(int n)
@@ -91,18 +85,17 @@ class ConstanteEntiere {
 
 ConstanteEntiere  -up-|> Constante
 
-abstract class Variable {
-   String texte
-   protected Variable(String texte, int n)
-   void verfier()
-}
-
-Variable  -up-|> Expression
 
 class Idf {
    Idf(String texte, int n)
    String toMIPS()
 }
 
-Idf  -up-|> Variable
+class Symbole {
+}
+
+class TDS{
+}
+
+
 @enduml
