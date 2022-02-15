@@ -42,4 +42,8 @@ public class TDS {
     public int getTailleZoneVariable(){
         return this.variables.size() * (-4);
     }
+
+    public HashMap<String, Symbole> getVariables() {
+        return variables;
+    }
 }

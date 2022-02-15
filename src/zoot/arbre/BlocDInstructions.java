@@ -1,8 +1,11 @@
 package zoot.arbre;
 
+import zoot.arbre.declarations.Symbole;
+import zoot.arbre.declarations.TDS;
 import zoot.arbre.instructions.Instruction;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * 21 novembre 2018
@@ -36,8 +39,9 @@ public class BlocDInstructions extends ArbreAbstrait {
         str.append("saut_ligne: .asciiz \"\\n\"\n");
         str.append(".text\n");
         str.append("main: \n");
+        str.append("\tmove $s7, $sp\n");
+        str.append("\taddi $sp, $sp, ").append(TDS.getInstance().getTailleZoneVariable()).append("\n\n");
         for (ArbreAbstrait a: programme) {
-            System.out.println(a);
             str.append(a.toMIPS());
         }
         str.append("#Fin du programme :\nli $v0, 10\nsyscall");

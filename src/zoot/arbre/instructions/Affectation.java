@@ -1,5 +1,6 @@
 package zoot.arbre.instructions;
 
+import zoot.arbre.declarations.TDS;
 import zoot.arbre.expressions.Expression;
 import zoot.arbre.expressions.Idf;
 import zoot.exceptions.VariableNonDeclaree;
@@ -23,7 +24,12 @@ public class Affectation extends Instruction {
 
     @Override
     public String toMIPS() {
-        return "aaa";
+        StringBuilder str = new StringBuilder();
+        str.append("\t# ").append(idf.getNom()).append(" = ").append(exp.toMIPS()).append("\n");
+        System.out.println(exp);
+        str.append("\tli $v0, ").append(exp.toMIPS()).append("\n");
+        str.append("\tsw $v0, ").append(TDS.getInstance().identifier(idf.getNom()).getDeplacement()).append("($s7)\n\n");
+        return str.toString();
     }
 
 }

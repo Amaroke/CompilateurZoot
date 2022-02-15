@@ -53,6 +53,8 @@ commentaire = [/]{2}.*{finDeLigne}
 
 "booleen"              { return symbol(CodesLexicaux.BOOLEEN); }
 
+"vrai"                 { return symbol(CodesLexicaux.TRUE); }
+
 "="                    { return symbol(CodesLexicaux.EGAL); }
 
 ";"                    { return symbol(CodesLexicaux.POINTVIRGULE); }

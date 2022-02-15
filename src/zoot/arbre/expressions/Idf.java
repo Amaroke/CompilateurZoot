@@ -22,7 +22,7 @@ public class Idf extends Expression {
 
     @Override
     public String toMIPS() {
-        return "aaa";
+        return TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n");
     }
 
     public String getNom() {
