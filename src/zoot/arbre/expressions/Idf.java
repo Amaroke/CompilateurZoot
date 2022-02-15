@@ -22,7 +22,7 @@ public class Idf extends Expression {
 
     @Override
     public String toMIPS() {
-        return null;
+        return "aaa";
     }
 
     public String getNom() {

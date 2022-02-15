@@ -20,9 +20,8 @@ public class TDS {
         return INSTANCE;
     }
 
-    public void ajouter(Idf idf) throws DoubleDeclaration {
-        // Géré dans Grammaire.cup
-        this.variables.put(idf.getNom(), idf.getSymbole());
+    public void ajouter(Idf idf, Symbole symbole) throws DoubleDeclaration {
+        this.variables.put(idf.getNom(), symbole);
     }
 
     public Symbole identifier(String nom) throws VariableNonDeclaree {

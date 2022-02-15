@@ -23,7 +23,7 @@ public class Affectation extends Instruction {
 
     @Override
     public String toMIPS() {
-        return null;
+        return "aaa";
     }
 
 }

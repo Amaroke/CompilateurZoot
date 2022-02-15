@@ -41,7 +41,10 @@ commentaire = [/]{2}.*{finDeLigne}
 %%
 "//".*                                    { /* DO NOTHING */ }
 
+"variables"            { return symbol(CodesLexicaux.VARIABLES); }
+
 "debut"                { return symbol(CodesLexicaux.DEBUT); }
+
 "fin"              	   { return symbol(CodesLexicaux.FIN); }
 
 "ecrire"               { return symbol(CodesLexicaux.ECRIRE); }
@@ -61,5 +64,6 @@ commentaire = [/]{2}.*{finDeLigne}
 {commentaire}          { }
 
 {espace}               { }
+
 .                      { throw new AnalyseLexicaleException(yyline, yycolumn, yytext()) ; }
 
