@@ -1,0 +1,17 @@
+variables
+entier a;
+booleen b;
+entier c;
+booleen d;
+debut
+// affectation
+ecrire 42;
+a = 5;
+c = a;
+b = vrai;
+d = faux;
+ecrire a;
+ecrire b;
+ecrire c;
+ecrire d;
+fin

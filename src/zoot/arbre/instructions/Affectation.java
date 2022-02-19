@@ -23,8 +23,16 @@ public class Affectation extends Instruction {
 
     @Override
     public String toMIPS() {
-        return "\tli $v0, " + exp.toMIPS() + "\n" +
-                "\tsw $v0, " + idf.toMIPS() + "\n";
+        StringBuilder str = new StringBuilder();
+        if(exp.isConstante()){
+            str.append("\tli $v0, " + exp.toMIPS() + "\n")
+                    .append("\tsw $v0, " + idf.toMIPS() + "\n");
+        }else{
+            str.append("\tlw $v0, " + exp.toMIPS() + "\n")
+                    .append("\tsw $v0, " + idf.toMIPS() + "\n");
+        }
+
+        return str.toString();
     }
 
 }
