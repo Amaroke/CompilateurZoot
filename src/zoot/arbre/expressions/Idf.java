@@ -6,7 +6,7 @@ import zoot.exceptions.VariableNonDeclaree;
 
 public class Idf extends Expression {
 
-    private String nom;
+    private final String nom;
     private Symbole symbole;
 
     public Idf(String nom, int n) {
@@ -17,20 +17,12 @@ public class Idf extends Expression {
 
     @Override
     public void verifier() throws VariableNonDeclaree {
-            this.symbole = TDS.getInstance().identifier(this.nom);
-        }
+        this.symbole = TDS.getInstance().identifier(this.nom);
+    }
 
     @Override
     public String toMIPS() {
-        StringBuilder s = new StringBuilder();
-        s.append("\tlw $v0, ")
-                .append(TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n"))
-                .append("\tmove $a0, $v0\n")
-                .append("\tli $v0, 1\n")
-                .append("\tsyscall\n");
-
-        return s.toString();
-
+        return (TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n"));
     }
 
     public String getNom() {

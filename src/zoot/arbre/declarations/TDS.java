@@ -1,6 +1,5 @@
 package zoot.arbre.declarations;
 
-import zoot.arbre.expressions.Idf;
 import zoot.exceptions.DoubleDeclaration;
 import zoot.exceptions.VariableNonDeclaree;
 
@@ -9,8 +8,8 @@ import java.util.Map;
 
 public class TDS {
 
-    private static TDS INSTANCE = new TDS();
-    private HashMap<String, Symbole> variables;
+    private static final TDS INSTANCE = new TDS();
+    private final HashMap<String, Symbole> variables;
 
     private TDS() {
         this.variables = new HashMap<>();
@@ -35,7 +34,6 @@ public class TDS {
                 symbole.setDeplacement(m.getValue().getDeplacement());
                 symbole.setType(m.getValue().getType());
             }
-
         }
         if(!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")){
             throw new VariableNonDeclaree(nom);

@@ -1,7 +1,5 @@
 package zoot.arbre.expressions;
 
-import zoot.arbre.declarations.TDS;
-
 public abstract class Constante extends Expression {
 
     protected String cste ;

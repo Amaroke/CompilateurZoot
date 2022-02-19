@@ -1,11 +1,8 @@
 package zoot.arbre;
 
-import zoot.arbre.declarations.Symbole;
 import zoot.arbre.declarations.TDS;
-import zoot.arbre.instructions.Instruction;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 /**
  * 21 novembre 2018
