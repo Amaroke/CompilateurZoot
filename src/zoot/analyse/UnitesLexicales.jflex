@@ -32,6 +32,7 @@ import zoot.exceptions.AnalyseLexicaleException;
 %}
 
 csteE = [0-9]+
+csteB = vrai|faux
 idf = [a-zA-Z_][a-zA-Z0-9_]*
 finDeLigne = \r|\n
 espace = {finDeLigne}  | [ \t\f]
@@ -53,13 +54,13 @@ commentaire = [/]{2}.*{finDeLigne}
 
 "booleen"              { return symbol(CodesLexicaux.BOOLEEN); }
 
-"vrai"                 { return symbol(CodesLexicaux.TRUE); }
-
 "="                    { return symbol(CodesLexicaux.EGAL); }
 
 ";"                    { return symbol(CodesLexicaux.POINTVIRGULE); }
 
 {csteE}      	       { return symbol(CodesLexicaux.CSTENTIERE, yytext()); }
+
+{csteB}                { return symbol(CodesLexicaux.CSTBOOLEEN, yytext()); }
 
 {idf}      	           { return symbol(CodesLexicaux.IDF, yytext()); }
 

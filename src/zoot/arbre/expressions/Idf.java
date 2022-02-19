@@ -22,7 +22,15 @@ public class Idf extends Expression {
 
     @Override
     public String toMIPS() {
-        return TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n");
+        StringBuilder s = new StringBuilder();
+        s.append("\tlw $v0, ")
+                .append(TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n"))
+                .append("\tmove $a0, $v0\n")
+                .append("\tli $v0, 1\n")
+                .append("\tsyscall\n");
+
+        return s.toString();
+
     }
 
     public String getNom() {
@@ -35,5 +43,11 @@ public class Idf extends Expression {
 
     public Symbole getSymbole(){
         return this.symbole;
+    }
+
+
+    @Override
+    public boolean isConstante() {
+        return false;
     }
 }

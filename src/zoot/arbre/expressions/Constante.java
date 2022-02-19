@@ -1,5 +1,7 @@
 package zoot.arbre.expressions;
 
+import zoot.arbre.declarations.TDS;
+
 public abstract class Constante extends Expression {
 
     protected String cste ;
@@ -11,8 +13,6 @@ public abstract class Constante extends Expression {
     
     @Override
     public void verifier() {
-        //TODO vérifier type
-        throw new UnsupportedOperationException("fonction verfier non définie ") ;
     }
 
     @Override
@@ -20,4 +20,8 @@ public abstract class Constante extends Expression {
         return cste ;
     }
 
+    @Override
+    public boolean isConstante() {
+        return true;
+    }
 }

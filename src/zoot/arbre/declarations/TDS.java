@@ -20,8 +20,12 @@ public class TDS {
         return INSTANCE;
     }
 
-    public void ajouter(Idf idf, Symbole symbole) throws DoubleDeclaration {
-        this.variables.put(idf.getNom(), symbole);
+    public void ajouter(String idf, Symbole symbole) throws DoubleDeclaration {
+        if(this.variables.containsKey(idf)){
+            throw new DoubleDeclaration("Le symbole" + idf + "a été déclaré deux fois");
+        }
+        symbole.setDeplacement(this.getTailleZoneVariable());
+        this.variables.put(idf, symbole);
     }
 
     public Symbole identifier(String nom) throws VariableNonDeclaree {
@@ -33,7 +37,7 @@ public class TDS {
             }
 
         }
-        if(symbole.getType().equals("")){
+        if(!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")){
             throw new VariableNonDeclaree(nom);
         }
         return symbole;
@@ -43,7 +47,4 @@ public class TDS {
         return this.variables.size() * (-4);
     }
 
-    public HashMap<String, Symbole> getVariables() {
-        return variables;
-    }
 }

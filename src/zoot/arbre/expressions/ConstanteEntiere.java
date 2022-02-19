@@ -8,7 +8,7 @@ public class ConstanteEntiere extends Constante {
 
     @Override
     public String toMIPS() {
-        return cste.equals("vrai") ? "1" : (cste.equals("faux") ? "0" : this.cste);
+        return this.cste;
     }
 
 }

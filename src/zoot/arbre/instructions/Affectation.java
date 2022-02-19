@@ -25,10 +25,8 @@ public class Affectation extends Instruction {
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        str.append("\t# ").append(idf.getNom()).append(" = ").append(exp.toMIPS()).append("\n");
-        System.out.println(exp);
         str.append("\tli $v0, ").append(exp.toMIPS()).append("\n");
-        str.append("\tsw $v0, ").append(TDS.getInstance().identifier(idf.getNom()).getDeplacement()).append("($s7)\n\n");
+        str.append("\tsw $v0, ").append(TDS.getInstance().identifier(idf.getNom()).getDeplacement()).append("($s7)\n\n");str.append(exp.toMIPS() + "\n");
         return str.toString();
     }
 
