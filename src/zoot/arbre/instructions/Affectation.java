@@ -2,7 +2,7 @@ package zoot.arbre.instructions;
 
 import zoot.arbre.expressions.Expression;
 import zoot.arbre.expressions.Idf;
-import zoot.exceptions.VariableNonDeclaree;
+import zoot.exceptions.Transtypage;
 
 public class Affectation extends Instruction {
 
@@ -16,22 +16,29 @@ public class Affectation extends Instruction {
     }
 
     @Override
-    public void verifier() throws VariableNonDeclaree {
+    public void verifier() throws Transtypage {
         this.idf.verifier();
         this.exp.verifier();
+        if (!this.idf.getType().equals(this.exp.getType())) {
+            throw new Transtypage();
+        }
     }
 
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        if(exp.isConstante()){
-            str.append("\tli $v0, " + exp.toMIPS() + "\n")
-                    .append("\tsw $v0, " + idf.toMIPS() + "\n");
-        }else{
-            str.append("\tlw $v0, " + exp.toMIPS() + "\n")
-                    .append("\tsw $v0, " + idf.toMIPS() + "\n");
+        if (!exp.isIdf()) {
+            if (exp.isBool()) {
+                str.append("\tla $v0, ").append(exp.toMIPS()).append("\n")
+                        .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+            } else {
+                str.append("\tli $v0, ").append(exp.toMIPS()).append("\n")
+                        .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+            }
+        } else {
+            str.append("\tlw $v0, ").append(exp.toMIPS()).append("\n")
+                    .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
         }
-
         return str.toString();
     }
 

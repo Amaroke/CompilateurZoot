@@ -1,0 +1,7 @@
+variables
+entier a;
+booleen b;
+debut
+a = 5;
+b = a;
+fin

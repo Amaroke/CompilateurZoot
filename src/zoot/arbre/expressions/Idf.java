@@ -25,21 +25,19 @@ public class Idf extends Expression {
         return (TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n"));
     }
 
-    public String getNom() {
-        return nom;
+    @Override
+    public boolean isIdf() {
+        return true;
     }
 
-    public String getType(){
+    @Override
+    public boolean isBool() {
+        return (symbole.getType().equals("booleen"));
+    }
+
+    @Override
+    public String getType() {
         return this.symbole.getType();
     }
 
-    public Symbole getSymbole(){
-        return this.symbole;
-    }
-
-
-    @Override
-    public boolean isConstante() {
-        return false;
-    }
 }

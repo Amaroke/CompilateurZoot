@@ -10,6 +10,10 @@ public class Symbole {
         this.type = type;
     }
 
+    public Symbole(String type) {
+        this.type = type;
+    }
+
     public int getDeplacement() {
         return deplacement;
     }

@@ -4,8 +4,10 @@ booleen b;
 entier c;
 booleen d;
 debut
-// affectation
+// Commentaire
 ecrire 42;
+ecrire faux;
+ecrire vrai;
 a = 5;
 c = a;
 b = vrai;

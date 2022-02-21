@@ -60,7 +60,7 @@ commentaire = [/]{2}.*{finDeLigne}
 
 {csteE}      	       { return symbol(CodesLexicaux.CSTENTIERE, yytext()); }
 
-{csteB}                { return symbol(CodesLexicaux.CSTBOOLEEN, yytext()); }
+{csteB}                { return symbol(CodesLexicaux.CSTBOOLEENNE, yytext()); }
 
 {idf}      	           { return symbol(CodesLexicaux.IDF, yytext()); }
 

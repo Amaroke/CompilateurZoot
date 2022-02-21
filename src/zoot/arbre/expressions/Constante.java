@@ -8,7 +8,7 @@ public abstract class Constante extends Expression {
         super(n) ;
         cste = texte ;
     }
-    
+
     @Override
     public void verifier() {
     }
@@ -19,7 +19,8 @@ public abstract class Constante extends Expression {
     }
 
     @Override
-    public boolean isConstante() {
-        return true;
+    public boolean isIdf() {
+        return false;
     }
+
 }

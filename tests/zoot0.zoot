@@ -1,6 +1,7 @@
 debut
-ecrire 42;
-ecrire 7;
-ecrire 154853;
 ecrire 0;
+ecrire 1;
+ecrire 10;
+ecrire 100;
+ecrire 55555;
 fin

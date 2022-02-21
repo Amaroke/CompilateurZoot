@@ -1,8 +1,8 @@
 package zoot.arbre.expressions;
 
-public class ConstanteEntiere extends Constante {
+public class ConstanteBooleenne extends Constante {
 
-    public ConstanteEntiere(String texte, int n) {
+    public ConstanteBooleenne(String texte, int n) {
         super(texte, n);
     }
 
@@ -13,11 +13,12 @@ public class ConstanteEntiere extends Constante {
 
     @Override
     public boolean isBool() {
-        return false;
+        return true;
     }
 
     @Override
     public String getType() {
-        return "entier";
+        return "booleen";
     }
+
 }

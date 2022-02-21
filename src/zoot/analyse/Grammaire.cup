@@ -57,8 +57,8 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, POINTVIRGULE, ECRIRE, ENTIER, BOOLEEN, TRUE, EGAL ;
-terminal String    CSTENTIERE, IDF, CSTBOOLEEN;
+terminal Symbol    DEBUT, FIN, VARIABLES, POINTVIRGULE, ECRIRE, ENTIER, BOOLEEN, EGAL ;
+terminal String    IDF, CSTENTIERE, CSTBOOLEENNE;
 
 /* Non terminals used in the grammar section.  */
 
@@ -72,20 +72,20 @@ start with PROG ;
 
 PROG    ::=     VARIABLES LDCL:lv DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
-                |
+        |
                 DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
                 ;
 
-LDCL    ::=     LDCL:lv DCL:v
-                {: ((BlocDInstructions)lv).ajouter(v) ;
-                    RESULT = lv ; :}
+LDCL    ::=     LDCL:ld DCL:d
+                {: ((BlocDInstructions)ld).ajouter(d) ;
+                    RESULT = ld ; :}
         |
-                DCL:v
-                {: BlocDInstructions b = new BlocDInstructions(vleft + 1) ;
-                   b.ajouter(v) ;
+                DCL:d
+                {: BlocDInstructions b = new BlocDInstructions(dleft + 1) ;
+                   b.ajouter(d) ;
                    RESULT = b ; :}
-                   ;
+                ;
 
 LINST   ::=     LINST:li  INST:i
                 {: ((BlocDInstructions)li).ajouter(i) ;
@@ -100,24 +100,24 @@ LINST   ::=     LINST:li  INST:i
 INST    ::=     ECRIRE EXP:e POINTVIRGULE
                 {: RESULT = new Ecrire(e, eleft + 1) ; :}
         |
-              IDF:i EGAL CSTBOOLEEN:b POINTVIRGULE
-              {: RESULT = new Affectation(new Idf(i,ileft+1), new Booleen(b, ileft+1), ileft+1) ; :}
-        |
-                IDF:i EGAL EXP:e POINTVIRGULE
-                {: RESULT = new Affectation(new Idf(i,ileft+1), e, eleft+1) ; :}
-                ;
+              IDF:i EGAL EXP:e POINTVIRGULE
+              {: RESULT = new Affectation(new Idf(i,ileft+1), e, eleft+1) ; :}
+              ;
 
 
 EXP    ::=     CSTENTIERE:c
                {: RESULT = new ConstanteEntiere(c, cleft + 1) ; :}
+        |
+               CSTBOOLEENNE:c
+               {: RESULT = new ConstanteBooleenne(c, cleft + 1) ; :}
         |
                IDF:i
                {: RESULT = new Idf(i, ileft + 1) ; :}
                 ;
 
 DCL     ::=    ENTIER IDF:i POINTVIRGULE
-               {: TDS.getInstance().ajouter(i, new Symbole(0, "entier")) ; :}
+               {: TDS.getInstance().ajouter(i, new Symbole("entier")) ; :}
         |
                BOOLEEN IDF:i POINTVIRGULE
-               {: TDS.getInstance().ajouter(i, new Symbole(0, "booleen")) ; :}
+               {: TDS.getInstance().ajouter(i, new Symbole("booleen")) ; :}
                 ;
