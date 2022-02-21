@@ -28,6 +28,7 @@ public class Affectation extends Instruction {
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
         if (!exp.isIdf()) {
+            str.append("   #").append(idf.getNom()).append(" = ").append(exp).append("\n");
             if (exp.isBool()) {
                 str.append("\tla $v0, ").append(exp.toMIPS()).append("\n")
                         .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
@@ -36,8 +37,8 @@ public class Affectation extends Instruction {
                         .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
             }
         } else {
-            str.append("\tlw $v0, ").append(exp.toMIPS()).append("\n")
-                    .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+            str.append("   #").append(idf.getNom()).append(" = ").append(exp.getNom()).append("\n");
+            str.append("\tlw $v0, ").append(exp.toMIPS()).append("\n").append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
         }
         return str.toString();
     }

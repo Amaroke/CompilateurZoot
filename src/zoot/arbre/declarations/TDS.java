@@ -15,12 +15,12 @@ public class TDS {
         this.variables = new HashMap<>();
     }
 
-    public static TDS getInstance(){
+    public static TDS getInstance() {
         return INSTANCE;
     }
 
     public void ajouter(String idf, Symbole symbole) throws DoubleDeclaration {
-        if(this.variables.containsKey(idf)){
+        if (this.variables.containsKey(idf)) {
             throw new DoubleDeclaration("Le symbole : \"" + idf + "\" a été déclaré deux fois.");
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
@@ -29,19 +29,19 @@ public class TDS {
 
     public Symbole identifier(String nom) throws VariableNonDeclaree {
         Symbole symbole = new Symbole(0, "");
-        for (Map.Entry<String, Symbole> m : this.variables.entrySet()){
-            if(m.getKey().equals(nom)) {
+        for (Map.Entry<String, Symbole> m : this.variables.entrySet()) {
+            if (m.getKey().equals(nom)) {
                 symbole.setDeplacement(m.getValue().getDeplacement());
                 symbole.setType(m.getValue().getType());
             }
         }
-        if(!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")){
+        if (!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")) {
             throw new VariableNonDeclaree("Le symbole : \"" + nom + "\" n'a pas été déclaré.");
         }
         return symbole;
     }
 
-    public int getTailleZoneVariable(){
+    public int getTailleZoneVariable() {
         return this.variables.size() * (-4);
     }
 

@@ -19,7 +19,7 @@ public class Ecrire extends Instruction {
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        System.out.println(exp.isBool());
+        str.append("   #ecrire ").append(exp.getNom()).append("\n");
         if (exp.isBool()) {
             str.append("\tlw $t0, ").append(exp.toMIPS()).append("\n");
             str.append("\tbeq $s1, $t0, Sinon").append(exp.getNoLigne()).append("\n");
@@ -31,7 +31,6 @@ public class Ecrire extends Instruction {
             str.append("\tli $v0, 4\n\tsyscall" + "\n");
             str.append("\tFinSi").append(exp.getNoLigne()).append(":").append("\n");
         } else if (!exp.isIdf()) {
-
             str.append("\tli $a0, ").append(exp.toMIPS()).append("\n");
             str.append("\tli $v0, 1\n\tsyscall\n");
         } else {

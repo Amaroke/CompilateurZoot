@@ -40,4 +40,9 @@ public class Idf extends Expression {
         return this.symbole.getType();
     }
 
+    @Override
+    public String getNom() {
+        return this.nom;
+    }
+
 }

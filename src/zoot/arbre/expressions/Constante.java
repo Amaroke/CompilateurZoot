@@ -5,8 +5,8 @@ public abstract class Constante extends Expression {
     protected String cste ;
     
     protected Constante(String texte, int n) {
-        super(n) ;
-        cste = texte ;
+        super(n);
+        cste = texte;
     }
 
     @Override
@@ -15,12 +15,16 @@ public abstract class Constante extends Expression {
 
     @Override
     public String toString() {
-        return cste ;
+        return cste;
     }
 
     @Override
     public boolean isIdf() {
         return false;
+    }
+
+    public String getNom() {
+        return this.cste;
     }
 
 }

@@ -13,4 +13,6 @@ public abstract class Expression extends ArbreAbstrait {
     public abstract boolean isBool();
 
     public abstract String getType();
+
+    public abstract String getNom();
 }
