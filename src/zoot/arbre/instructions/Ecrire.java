@@ -21,15 +21,25 @@ public class Ecrire extends Instruction {
         StringBuilder str = new StringBuilder();
         str.append("   #ecrire ").append(exp.getNom()).append("\n");
         if (exp.isBool()) {
-            str.append("\tlw $t0, ").append(exp.toMIPS()).append("\n");
-            str.append("\tbeq $s1, $t0, Sinon").append(exp.getNoLigne()).append("\n");
-            str.append("\tla $a0, AffichageVrai\n");
-            str.append("\tli $v0, 4\n\tsyscall" + "\n");
-            str.append("\tb FinSi").append(exp.getNoLigne()).append("\n");
-            str.append("\tSinon").append(exp.getNoLigne()).append(":").append("\n");
-            str.append("\tla $a0, AffichageFaux\n");
-            str.append("\tli $v0, 4\n\tsyscall" + "\n");
-            str.append("\tFinSi").append(exp.getNoLigne()).append(":").append("\n");
+            if(exp.isIdf()) {
+                str.append("\tlw $t0, ").append(exp.toMIPS()).append("\n");
+                str.append("\tbeq $s1, $t0, Sinon").append(exp.getNoLigne()).append("\n");
+                str.append("\tla $a0, AffichageVrai\n");
+                str.append("\tli $v0, 4\n\tsyscall" + "\n");
+                str.append("\tb FinSi").append(exp.getNoLigne()).append("\n");
+                str.append("\tSinon").append(exp.getNoLigne()).append(":").append("\n");
+                str.append("\tla $a0, AffichageFaux\n");
+                str.append("\tli $v0, 4\n\tsyscall" + "\n");
+                str.append("\tFinSi").append(exp.getNoLigne()).append(":").append("\n");
+            } else {
+                str.append("\tla $a0,");
+                if(exp.getNom().equals("vrai")) {
+                    str.append(" AffichageVrai\n");
+                } else {
+                    str.append(" AffichageFaux\n");
+                }
+                str.append("\tli $v0, 4\n\tsyscall" + "\n");
+            }
         } else if (!exp.isIdf()) {
             str.append("\tli $a0, ").append(exp.toMIPS()).append("\n");
             str.append("\tli $v0, 1\n\tsyscall\n");
