@@ -47,6 +47,8 @@ public class BlocDInstructions extends ArbreAbstrait {
         str.append("   #Initialisation de la base des variables :\n");
         str.append("\tmove $s7, $sp\n");
         str.append("\taddi $sp, $sp, ").append(TDS.getInstance().getTailleZoneVariable()).append("\n\n");
+        str.append("   #Initialisation de $s1 avec la valeur faux :\n");
+        str.append("\tla $s1, faux\n\n");
         str.append("   #Debut du programme :\n\n");
         for (ArbreAbstrait a : programme) {
             if (ListeErreurs.getInstance().getNbErreurs() != 0 && ListeErreurs.getInstance().getErreur(0).getLigne() == a.getNoLigne()) {
