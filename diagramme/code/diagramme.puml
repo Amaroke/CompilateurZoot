@@ -12,90 +12,190 @@ skinparam stereotypeABackgroundColor Yellow
 hide stereotype
 hide empty member
 
-abstract class AnalyseException
+package "arbre"{
+    package "exceptions"{
+        abstract class AnalyseException{
+            AnalyseException(String m)
+        }
 
-AnalyseException -up-|> RuntimeException
+        AnalyseException -up-|> RuntimeException
 
-AnalyseLexicaleException -up-|> AnalyseException
-AnalyseSyntaxiqueException -up-|> AnalyseException
-AnalyseSemantiqueException -up-|> AnalyseException
-VariableNonDeclaree -up-|> AnalyseSemantiqueException
-DoubleDeclaration -up-|> AnalyseSemantiqueException
+        class AnalyseLexicaleException{
+            AnalyseLexicalException(int ligne, int colonne, String m)
+        }
+        AnalyseLexicaleException -up-|> AnalyseException
 
-abstract class ArbreAbstrait {
-   int noLigne
-   protected ArbreAbstrait(int n)
-   void verifier()
-   String toMIPS()
+        class AnalyseSyntaxiqueException{
+            AnalyseSyntaxiqueException(String m)
+        }
+        AnalyseSyntaxiqueException -up-|> AnalyseException
+
+        class AnalyseSemantiqueException{
+            AnalyseSemantiqueException(String m)
+        }
+        AnalyseSemantiqueException -up-|> AnalyseException
+
+        class AnalyseLexicaleSemantiqueException{
+            AnalyseLexicaleSemantiqueException(String m)
+        }
+        AnalyseLexicaleSemantiqueException -up-|> AnalyseException
+
+        class VariableNonDeclaree{
+            VariableNonDeclaree(String m)
+        }
+        VariableNonDeclaree -up-|> AnalyseSemantiqueException
+
+        class DoubleDeclaration{
+            DoubleDeclaration(String m)
+        }
+        DoubleDeclaration -up-|> AnalyseSemantiqueException
+
+        class Erreur{
+            final String message
+            final int ligne
+            String getMessage()
+            int getLigne()
+        }
+
+        class ListeErreurs{
+            static final ListeErreurs INSTANCE
+            ListeErreurs()
+            static ListeErreurs getInstance()
+            void ajouter(Erreur e)
+            int getNbErreurs()
+            Erreur getErreur(int i)
+            ArrayList<Erreur> getErreurs()
+        }
+    }
+    ListeErreurs --"*"Erreur
+
+
+    package "instructions"{
+        abstract class ArbreAbstrait {
+           int noLigne
+           ArbreAbstrait(int n)
+           int getNoLigne()
+           abstract void verifier()
+           abstract String toMIPS()
+        }
+
+        class BlocDInstructions {
+           BlocDInstructions(int n)
+           void ajouter(ArbreAbstrait a)
+           void verifier()
+           String toMIPS()
+           String toString()
+        }
+
+        BlocDInstructions -up-|> ArbreAbstrait
+        BlocDInstructions -up- "*" ArbreAbstrait
+
+        abstract class Instruction {
+            Instruction(int n)
+        }
+
+        Instruction -up-|> ArbreAbstrait
+
+        class Ecrire {
+           Ecrire(int n)
+           void verifier()
+           String toMIPS()
+        }
+
+        Ecrire  -up-|> Instruction
+
+        class Affectation {
+           Affectation(Idf idf, Expression e, int n)
+           void verifier()
+           String toMIPS()
+        }
+
+        Affectation  -up-|> Instruction
+
+    }
+
+
+    package "expressions"{
+        abstract class Expression {
+           Expression(int n)
+           abstract boolean isIdf()
+           abstract boolean isBool()
+           abstract String getType()
+           abstract String getNom()
+        }
+
+        Expression  -up-|> ArbreAbstrait
+        Ecrire - "1" Expression
+
+        abstract class Constante {
+           String cste
+           protected Constante(String texte, int n)
+           void verfier()
+           String toString()
+           boolean isIdf
+           String getNom()
+        }
+
+        Constante  -up-|> Expression
+
+
+        class ConstanteEntiere {
+           ConstanteEntiere(String texte, int n)
+           String toMIPS()
+           boolean isBool()
+           String getType()
+
+        }
+
+        class Idf {
+                   String nom
+                   Symbole symbole
+                   Idf(String texte, int n)
+                   void verifier()
+                   String toMIPS()
+                   boolean isIdf()
+                   boolean isBool()
+                   String getType()
+                   String getNom()
+
+                }
+
+        ConstanteEntiere  -up-|> Constante
+
+        class ConstanteBooleenne {
+           ConstanteBooleenne(String texte, int n)
+           String toMIPS()
+           boolean isBool()
+           String getType()
+        }
+
+        ConstanteBooleenne  -up-|> Constante
+        Affectation - "1" Expression
+                Affectation - "1" Idf
+
+    }
+    package "declarations"{
+        class Symbole {
+            int deplacement
+            String type
+            Symbole(int deplacement, String type)
+            Symbole(String type)
+            int getDeplacement
+            void setDeplacement(int deplacement)
+            String getType()
+            void setType(String type)
+
+        }
+
+        class TDS{
+            static final TDS INSTANCE
+            final HashMap<String, Symbole> variables
+            static TDS getInstance()
+            void ajouter(String idf, Symbole symbole) throws DoubleDeclaration
+            Symbole identifier(String nom) throws VariableNonDeclaree
+            int getTailleZoneVariable()
+
+        }
 }
-
-class BlocDInstructions {
-   BlocDInstructions(int n)
-   void verifier()
-   String toMIPS()
 }
-
-BlocDInstructions -up-|> ArbreAbstrait
-BlocDInstructions -up- "*" ArbreAbstrait
-
-abstract class Instruction {
-   protected Instruction(int n)
-}
-
-Instruction -up-|> ArbreAbstrait
-
-class Ecrire {
-   Ecrire(int n)
-   void verifier()
-   String toMIPS()
-}
-
-Ecrire  -up-|> Instruction
-
-class Affectation {
-   Affectation(Idf idf, Expression e, int n)
-   void verifier()
-   String toMIPS()
-}
-
-Affectation  -up-|> Instruction
-Affectation - "1" Expression
-Affectation - "1" Idf
-
-abstract class Expression {
-   protected Expression(int n)
-}
-
-Expression  -up-|> ArbreAbstrait
-Ecrire - "1" Expression
-
-abstract class Constante {
-   String cste
-   protected Constante(String texte, int n)
-   void verfier()
-}
-
-Constante  -up-|> Expression
-
-
-class ConstanteEntiere {
-   ConstanteEntiere(String texte, int n)
-   String toMIPS()
-}
-
-ConstanteEntiere  -up-|> Constante
-
-
-class Idf {
-   Idf(String texte, int n)
-   String toMIPS()
-}
-
-class Symbole {
-}
-
-class TDS{
-}
-
-
 @enduml
