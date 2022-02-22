@@ -2,6 +2,8 @@ package zoot.arbre.expressions;
 
 import zoot.arbre.declarations.Symbole;
 import zoot.arbre.declarations.TDS;
+import zoot.exceptions.Erreur;
+import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
 
 public class Idf extends Expression {
@@ -17,12 +19,21 @@ public class Idf extends Expression {
 
     @Override
     public void verifier() throws VariableNonDeclaree {
-        this.symbole = TDS.getInstance().identifier(this.nom);
+        try {
+            this.symbole = TDS.getInstance().identifier(this.nom);
+        } catch (VariableNonDeclaree m) {
+            ListeErreurs.getInstance().ajouter(new Erreur("Le symbole : " + nom + " n'a pas été déclaré.", this.noLigne));
+        }
     }
 
     @Override
     public String toMIPS() {
-        return (TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n"));
+        try {
+            return (TDS.getInstance().identifier(nom).getDeplacement() + ("($s7)\n"));
+        } catch (VariableNonDeclaree m) {
+            ListeErreurs.getInstance().ajouter(new Erreur(m.getMessage(), this.noLigne));
+        }
+        return ("0($s7)\n");
     }
 
     @Override
@@ -36,8 +47,8 @@ public class Idf extends Expression {
     }
 
     @Override
-    public String getType() {
-        return this.symbole.getType();
+    public String getType() throws VariableNonDeclaree {
+        return TDS.getInstance().identifier(nom).getType();
     }
 
     @Override

@@ -2,7 +2,9 @@ package zoot.arbre.instructions;
 
 import zoot.arbre.expressions.Expression;
 import zoot.arbre.expressions.Idf;
-import zoot.exceptions.Transtypage;
+import zoot.exceptions.Erreur;
+import zoot.exceptions.ListeErreurs;
+import zoot.exceptions.VariableNonDeclaree;
 
 public class Affectation extends Instruction {
 
@@ -16,12 +18,17 @@ public class Affectation extends Instruction {
     }
 
     @Override
-    public void verifier() throws Transtypage {
+    public void verifier() {
         this.idf.verifier();
         this.exp.verifier();
-        if (!this.idf.getType().equals(this.exp.getType())) {
-            throw new Transtypage();
+        try {
+            if (!this.idf.getType().equals(this.exp.getType())) {
+                ListeErreurs.getInstance().ajouter(new Erreur((this.idf.getNom() + " = " + this.exp.getNom() + " n'est pas autorisé, les variables ne sont pas du même type."), this.noLigne));
+            }
+        } catch (VariableNonDeclaree ignored) {
+
         }
+
     }
 
     @Override

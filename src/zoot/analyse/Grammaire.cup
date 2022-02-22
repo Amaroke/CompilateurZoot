@@ -57,14 +57,15 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, POINTVIRGULE, ECRIRE, ENTIER, BOOLEEN, EGAL ;
-terminal String    IDF, CSTENTIERE, CSTBOOLEENNE;
+terminal Symbol    DEBUT, FIN, VARIABLES, POINTVIRGULE, ECRIRE, EGAL;
+terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN ;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG, LINST, LDCL, DCL ;
+non terminal ArbreAbstrait PROG, LINST, LDCL, DCL;
 non terminal Instruction INST ;
 non terminal Expression EXP ;
+non terminal String TYPE;
 
 /* ----------------------------Grammar Section-------------------- */
 
@@ -115,9 +116,13 @@ EXP    ::=     CSTENTIERE:c
                {: RESULT = new Idf(i, ileft + 1) ; :}
                 ;
 
-DCL     ::=    ENTIER IDF:i POINTVIRGULE
-               {: TDS.getInstance().ajouter(i, new Symbole("entier")) ; :}
-        |
-               BOOLEEN IDF:i POINTVIRGULE
-               {: TDS.getInstance().ajouter(i, new Symbole("booleen")) ; :}
+TYPE    ::=     ENTIER
+                {: RESULT = "entier"; :}
+                |
+                BOOLEEN
+                {: RESULT = "booleen"; :}
+                ;
+
+DCL     ::=    TYPE:t IDF:i POINTVIRGULE
+               {: TDS.getInstance().ajouter(i, new Symbole(t)) ; :}
                 ;

@@ -1,7 +1,7 @@
 package zoot.exceptions;
 
-public class DoubleDeclaration extends AnalyseSemantiqueException {
+public class DoubleDeclaration extends AnalyseLexicaleSemantiqueException {
     public DoubleDeclaration(String m) {
-        super("DOUBLE DECLARATION : " + m);
+        super(m);
     }
 }

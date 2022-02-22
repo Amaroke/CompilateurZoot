@@ -36,7 +36,7 @@ public class TDS {
             }
         }
         if (!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")) {
-            throw new VariableNonDeclaree("Le symbole : \"" + nom + "\" n'a pas été déclaré.");
+            throw new VariableNonDeclaree("");
         }
         return symbole;
     }
