@@ -58,6 +58,12 @@ commentaire = [/]{2}.*{finDeLigne}
 
 ";"                    { return symbol(CodesLexicaux.POINTVIRGULE); }
 
+"("                    { return symbol(CodesLexicaux.PAR_OUVRANTE); }
+
+")"                    { return symbol(CodesLexicaux.PAR_FERMANTE); }
+
+"retourne"             { return symbol(CodesLexicaux.RETOURNE); }
+
 {csteE}      	       { return symbol(CodesLexicaux.CSTENTIERE, yytext()); }
 
 {csteB}                { return symbol(CodesLexicaux.CSTBOOLEENNE, yytext()); }

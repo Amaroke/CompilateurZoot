@@ -2,8 +2,9 @@ package zoot.arbre.declarations;
 
 public class Symbole {
 
-    private int deplacement;
+    protected int deplacement;
     private String type;
+    protected int noLigne;
 
     public Symbole(int deplacement, String type) {
         this.deplacement = deplacement;

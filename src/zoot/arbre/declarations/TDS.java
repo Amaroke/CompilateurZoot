@@ -19,18 +19,18 @@ public class TDS {
         return INSTANCE;
     }
 
-    public void ajouter(String idf, Symbole symbole) throws DoubleDeclaration {
-        if (this.variables.containsKey(idf)) {
-            throw new DoubleDeclaration("Le symbole : \"" + idf + "\" a été déclaré deux fois.");
+    public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {
+        if (this.variables.containsKey(e.getNom())) {
+            throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
-        this.variables.put(idf, symbole);
+        this.variables.put(e.getNom(), symbole);
     }
 
-    public Symbole identifier(String nom) throws VariableNonDeclaree {
+    public Symbole identifier(Entree e) throws VariableNonDeclaree {
         Symbole symbole = new Symbole(0, "");
         for (Map.Entry<String, Symbole> m : this.variables.entrySet()) {
-            if (m.getKey().equals(nom)) {
+            if (m.getKey().equals(e.getNom())) {
                 symbole.setDeplacement(m.getValue().getDeplacement());
                 symbole.setType(m.getValue().getType());
             }

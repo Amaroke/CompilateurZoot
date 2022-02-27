@@ -1,5 +1,8 @@
 package zoot.arbre;
 
+import zoot.arbre.declarations.Fonction;
+import zoot.arbre.declarations.ListeFonctions;
+import zoot.arbre.declarations.Symbole;
 import zoot.arbre.declarations.TDS;
 import zoot.exceptions.ListeErreurs;
 
@@ -43,6 +46,12 @@ public class BlocDInstructions extends ArbreAbstrait {
         str.append("AffichageErreur: .asciiz \"ERREUR EXECUTION\"\n");
         str.append("saut_ligne: .asciiz \"\\n\"\n\n");
         str.append(".text\n\n");
+        ListeFonctions lf = ListeFonctions.getInstance();
+        if(lf.getCpt() == 0){
+            lf.getFonctions().get(0).toMIPS();
+            lf.setCpt(lf.getCpt()+1);
+        }
+
         str.append("main: \n");
         str.append("   #Initialisation de la base des variables :\n");
         str.append("\tmove $s7, $sp\n");
