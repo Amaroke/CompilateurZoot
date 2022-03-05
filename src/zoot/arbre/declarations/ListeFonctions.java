@@ -32,4 +32,10 @@ public class ListeFonctions {
     public void setCpt(int cpt) {
         this.cpt = cpt;
     }
+
+    public void verifier() {
+        for (Fonction f : fonctions) {
+            f.verifier();
+        }
+    }
 }

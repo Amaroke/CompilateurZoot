@@ -21,7 +21,9 @@ public class Fonction {
     }
 
     public void verifier(){
-
+        arbre.verifier();
+        //TODO Une variable et une fonction ne peuvent pas porter le même nom.
+        //TODO fonc1 = vrai; fonctionne mais ne devrait pas
     }
 
     public int getNoLigne() {

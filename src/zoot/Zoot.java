@@ -3,6 +3,7 @@ package zoot;
 import zoot.analyse.AnalyseurLexical;
 import zoot.analyse.AnalyseurSyntaxique;
 import zoot.arbre.ArbreAbstrait;
+import zoot.arbre.declarations.ListeFonctions;
 import zoot.exceptions.AnalyseException;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
@@ -21,8 +22,10 @@ public class Zoot {
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
 
             arbre.verifier();
-            if (!(ListeErreurs.getInstance().getNbErreurs() == 0)) {
-
+            ListeFonctions.getInstance().verifier();
+            if (ListeErreurs.getInstance().getNbErreurs() == 0) {
+                System.out.println("COMPILATION OK");
+            } else {
                 for (Erreur e : ListeErreurs.getInstance().getErreurs()) {
                     System.err.println("ERREUR SEMANTIQUE : Ligne n°" + e.getLigne() + " : " + e.getMessage());
                 }
