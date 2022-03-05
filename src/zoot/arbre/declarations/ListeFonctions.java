@@ -34,7 +34,7 @@ public class ListeFonctions {
     }
 
     public void verifier() {
-        for (Fonction f : fonctions) {
+        for (Fonction f : this.fonctions) {
             f.verifier();
         }
     }
