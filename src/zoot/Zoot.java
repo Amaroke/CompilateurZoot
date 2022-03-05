@@ -6,6 +6,7 @@ import zoot.arbre.ArbreAbstrait;
 import zoot.exceptions.AnalyseException;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
+import zoot.exceptions.RetourneHorsFonction;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -14,14 +15,14 @@ import java.util.logging.Logger;
 public class Zoot {
     
     public Zoot(String nomFichier) {
+        boolean compilationOK = true;
         try {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(nomFichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
 
             arbre.verifier();
-            if (ListeErreurs.getInstance().getNbErreurs() == 0) {
-                System.out.println("COMPILATION OK");
-            } else {
+            if (!(ListeErreurs.getInstance().getNbErreurs() == 0)) {
+
                 for (Erreur e : ListeErreurs.getInstance().getErreurs()) {
                     System.err.println("ERREUR SEMANTIQUE : Ligne n°" + e.getLigne() + " : " + e.getMessage());
                 }
@@ -30,16 +31,17 @@ public class Zoot {
             PrintWriter flot = new PrintWriter(new BufferedWriter(new FileWriter(nomSortie)));
             flot.println(arbre.toMIPS());
             flot.close();
-        }
-        catch (FileNotFoundException ex) {
-            System.err.println("Fichier " + nomFichier + " inexistant") ;
-        }
-        catch (AnalyseException ex) {
+        } catch (RetourneHorsFonction r) {
+            compilationOK = false;
+            System.err.println(r.getMessage());
+        } catch (FileNotFoundException ex) {
+            System.err.println("Fichier " + nomFichier + " inexistant");
+        } catch (AnalyseException ex) {
             System.err.println(ex.getMessage());
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Zoot.class.getName()).log(Level.SEVERE, null, ex);
         }
+        System.out.println(compilationOK ? "COMPILATION OK" : "");
     }
 
     public static void main(String[] args) {

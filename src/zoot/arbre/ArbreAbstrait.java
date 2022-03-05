@@ -16,4 +16,6 @@ public abstract class ArbreAbstrait {
 
     public abstract String toMIPS();
 
+    protected abstract boolean isRetourne();
+
 }

@@ -8,4 +8,7 @@ public abstract class Instruction extends ArbreAbstrait {
         super(n);
     }
 
+    protected abstract boolean isRetourne();
+
+    public abstract void verifier();
 }

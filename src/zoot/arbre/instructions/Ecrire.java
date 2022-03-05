@@ -72,4 +72,9 @@ public class Ecrire extends Instruction {
 
         return str.toString();
     }
+
+    @Override
+    protected boolean isRetourne() {
+        return false;
+    }
 }

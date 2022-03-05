@@ -12,6 +12,7 @@ public class Fonction {
         this.arbre = arbre;
         this.noLigne = noLigne;
         this.idf = idf;
+        this.arbre.verifier();
     }
 
     public String toMIPS(){
@@ -20,7 +21,7 @@ public class Fonction {
     }
 
     public void verifier(){
-        //TODO Une variable et une fonction ne peuvent pas porter le même nom.
+
     }
 
     public int getNoLigne() {

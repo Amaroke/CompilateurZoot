@@ -4,6 +4,7 @@ import zoot.arbre.declarations.Fonction;
 import zoot.arbre.declarations.ListeFonctions;
 import zoot.arbre.declarations.TDS;
 import zoot.exceptions.ListeErreurs;
+import zoot.exceptions.RetourneHorsFonction;
 
 import java.util.ArrayList;
 
@@ -55,14 +56,19 @@ public class BlocDInstructions extends ArbreAbstrait {
             str.append("\tla $s1, faux\n\n");
             str.append("   #Debut du programme :\n\n");
             for (ArbreAbstrait a : programme) {
-                if (ListeErreurs.getInstance().getNbErreurs() != 0 && ListeErreurs.getInstance().getErreur(0).getLigne() == a.getNoLigne()) {
+                if (a.isRetourne() || ListeErreurs.getInstance().getNbErreurs() != 0 && ListeErreurs.getInstance().getErreur(0).getLigne() == a.getNoLigne()) {
                     str.append("   #Affichage de l'erreur d'execution\n");
                     str.append("\tla $a0, AffichageErreur\n");
                     str.append("\tli $v0, 4\n");
                     str.append("\tsyscall\n");
                     str.append("\tb end\n\n");
                 }
-                str.append(a.toMIPS());
+                if (a.isRetourne()) {
+                    throw new RetourneHorsFonction("L'instruction retourne ne peut pas être en dehors d'une fonction", getNoLigne());
+                } else {
+                    str.append(a.toMIPS());
+                }
+
             }
             str.append("\tb end\n\n");
             for (Fonction f : ListeFonctions.getInstance().getFonctions()) {
@@ -71,15 +77,20 @@ public class BlocDInstructions extends ArbreAbstrait {
             str.append("   #Fin du programme :\n\tend:\n\tli $v0, 10\n\tsyscall");
         } else {
             for (ArbreAbstrait a : programme) {
-                str.append(a.toMIPS()).append("\n");
+                str.append(a.toMIPS());
             }
         }
         return str.toString();
     }
 
     @Override
+    protected boolean isRetourne() {
+        return false;
+    }
+
+    @Override
     public String toString() {
-        return programme.toString() ;
+        return programme.toString();
     }
 
 }

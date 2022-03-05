@@ -73,9 +73,7 @@ start with PROG ;
 
 PROG    ::=     VARIABLES LDCL:lv FONCTION LFCT:lf DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
-
         |
-
                 VARIABLES LDCL:lv DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
         |

@@ -56,4 +56,8 @@ public class Affectation extends Instruction {
     }
 
 
+    @Override
+    protected boolean isRetourne() {
+        return false;
+    }
 }

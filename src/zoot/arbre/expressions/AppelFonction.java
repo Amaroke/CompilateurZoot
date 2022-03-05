@@ -15,15 +15,13 @@ public class AppelFonction extends Expression {
 
     @Override
     public void verifier() {
-
+        idf.verifier();
     }
 
 
     @Override
     public String toMIPS() {
-        return "\tsw $v0, ($sp)\n" +
-                "\tadd $sp, $sp, -4\n" +
-                "\tjal " + idf.getNom() + "\n\n";
+        return "\tjal " + idf.getNom() + "\n";
     }
 
     @Override
