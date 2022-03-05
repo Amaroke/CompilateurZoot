@@ -34,7 +34,6 @@ public class Affectation extends Instruction {
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
         if (exp.isFonction()) {
-            //TODO C'est un peu random
             str.append("   #").append(idf.getNom()).append(" = ").append(exp.getNom()).append("\n");
             str.append(exp.toMIPS());
             str.append("\tsw $v0, ").append(idf.toMIPS()).append("\n");

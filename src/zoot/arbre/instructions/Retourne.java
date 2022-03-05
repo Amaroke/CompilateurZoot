@@ -14,14 +14,20 @@ public class Retourne extends Instruction{
 
     @Override
     public void verifier() {
+        //TODO le type de retour doit être le même que le type de la fonction
         //TODO L’instruction retourne ne peut pas se trouver en dehors du corps d’une fonction.
     }
 
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        str.append("\tli, $v0, " + expression.toMIPS() + "\n");
-        str.append("\tjr $ra\n");
+        if(expression.getType().equals("booleen")){
+            str.append("\tla, $v0, " + expression.toMIPS() + "\n");
+            str.append("\tjr $ra\n");
+        }else{
+            str.append("\tli, $v0, " + expression.toMIPS() + "\n");
+            str.append("\tjr $ra\n");
+        }
         return str.toString();
     }
 }

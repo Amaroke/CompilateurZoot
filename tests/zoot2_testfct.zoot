@@ -1,14 +1,23 @@
 variables
 entier a;
+booleen b;
 
 fonctions
-entier fonc1()
+booleen fonc1()
 debut
 ecrire 42;
+retourne vrai;
+fin
+
+entier fonc2()
+debut
+ecrire faux;
 retourne 25;
 fin
 
 debut
-a = fonc1();
+b = vrai;
+ecrire fonc1();
+a = fonc2();
 ecrire a;
 fin
