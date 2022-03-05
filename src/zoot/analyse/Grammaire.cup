@@ -57,12 +57,12 @@ parser code {:
    
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, POINTVIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE;
+terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE;
 terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, PARAM;
+non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, PARAM, LFCT, FCT;
 non terminal Instruction INST ;
 non terminal Expression EXP ;
 non terminal String TYPE;
@@ -71,11 +71,26 @@ non terminal String TYPE;
 
 start with PROG ;
 
-PROG    ::=     VARIABLES LDCL:lv DEBUT  LINST:li  FIN
+PROG    ::=     VARIABLES LDCL:lv FONCTION LFCT:lf DEBUT  LINST:li  FIN
+                {: RESULT = li; :}
+
+        |
+
+                VARIABLES LDCL:lv DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
         |
                 DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
+                ;
+
+LFCT    ::=     LFCT:lf FCT:f
+                {: ((BlocDInstructions)lf).ajouter(f) ;
+                    RESULT = lf ; :}
+        |
+                FCT:f
+                {: BlocDInstructions b = new BlocDInstructions(fleft + 1) ;
+                   b.ajouter(f) ;
+                   RESULT = b ; :}
                 ;
 
 LDCL    ::=     LDCL:ld DCL:d
@@ -128,12 +143,13 @@ TYPE    ::=     ENTIER
                 {: RESULT = "booleen"; :}
                 ;
 
+FCT     ::=     TYPE:t IDF:i PARAM DEBUT LINST:li FIN
+                {: TDS.getInstance().ajouter(new Entree(i), new Symbole(t, ileft+1));
+                ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i));:}
+                ;
+
 DCL     ::=    TYPE:t IDF:i POINTVIRGULE
                {: TDS.getInstance().ajouter(new Entree(i), new Symbole(t)) ;:}
-               |
-               TYPE:t IDF:i PARAM DEBUT LINST:li FIN
-               {: TDS.getInstance().ajouter(new Entree(i), new SymboleFonction(ileft+1));
-                  ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i));:}
                ;
 
 PARAM ::=     PAR_OUVRANTE PAR_FERMANTE

@@ -1,8 +1,16 @@
 variables
+
+
 entier a;
 booleen b;
 entier c;
 booleen d;
+
+entier fonc1() 
+debut
+retourne 4; 
+fin
+
 debut
 // Commentaire
 ecrire 42;
@@ -16,4 +24,8 @@ ecrire a;
 ecrire b;
 ecrire c;
 ecrire d;
+
 fin
+
+
+

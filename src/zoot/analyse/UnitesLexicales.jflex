@@ -44,6 +44,8 @@ commentaire = [/]{2}.*{finDeLigne}
 
 "variables"            { return symbol(CodesLexicaux.VARIABLES); }
 
+"fonctions"            { return symbol(CodesLexicaux.FONCTION); }
+
 "debut"                { return symbol(CodesLexicaux.DEBUT); }
 
 "fin"              	   { return symbol(CodesLexicaux.FIN); }

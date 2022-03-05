@@ -1,5 +1,8 @@
 package zoot.arbre.expressions;
 
+import zoot.arbre.declarations.Entree;
+import zoot.arbre.declarations.TDS;
+
 public class AppelFonction extends Expression {
 
     private final Idf idf;
@@ -9,10 +12,12 @@ public class AppelFonction extends Expression {
         this.idf = idf;
     }
 
+
     @Override
     public void verifier() {
-        //TODO
+
     }
+
 
     @Override
     public String toMIPS() {
@@ -39,8 +44,7 @@ public class AppelFonction extends Expression {
 
     @Override
     public String getType() {
-        //TODO
-        return "entier";
+        return TDS.getInstance().identifier(new Entree(idf.getNom())).getType();
     }
 
     @Override

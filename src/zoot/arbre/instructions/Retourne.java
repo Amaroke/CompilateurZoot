@@ -2,7 +2,7 @@ package zoot.arbre.instructions;
 
 import zoot.arbre.expressions.Expression;
 
-@SuppressWarnings("ALL")
+
 public class Retourne extends Instruction{
 
     private final Expression expression;
@@ -14,7 +14,7 @@ public class Retourne extends Instruction{
 
     @Override
     public void verifier() {
-        //TODO
+        //TODO L’instruction retourne ne peut pas se trouver en dehors du corps d’une fonction.
     }
 
     @Override

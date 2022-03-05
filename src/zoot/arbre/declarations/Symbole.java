@@ -11,6 +11,11 @@ public class Symbole {
         this.type = type;
     }
 
+    public Symbole(String type, int noLigne) {
+        this.type = type;
+        this.noLigne = noLigne;
+    }
+
     public Symbole(String type) {
         this.type = type;
     }
