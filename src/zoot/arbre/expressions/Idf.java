@@ -12,9 +12,9 @@ public class Idf extends Expression {
     private final Entree entree;
     private Symbole symbole;
 
-    public Idf(String nom, int n) {
-        super(n) ;
-        this.entree = new Entree(nom);
+    public Idf(Entree entree, int n) {
+        super(n);
+        this.entree = entree;
         this.noLigne = n;
     }
 
@@ -66,4 +66,7 @@ public class Idf extends Expression {
         return this.entree.getNom();
     }
 
+    public Entree getEntree() {
+        return entree;
+    }
 }

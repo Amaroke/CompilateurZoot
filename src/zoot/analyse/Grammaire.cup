@@ -115,7 +115,7 @@ INST    ::=     ECRIRE EXP:e POINTVIRGULE
                 {: RESULT = new Ecrire(e, eleft + 1) ; :}
         |
               IDF:i EGAL EXP:e POINTVIRGULE
-              {: RESULT = new Affectation(new Idf(i,ileft+1), e, eleft+1) ; :}
+              {: RESULT = new Affectation(new Idf(new Entree(i),ileft+1), e, eleft+1) ; :}
         |
               RETOURNE EXP:e POINTVIRGULE
               {: RESULT = new Retourne(eleft+1, e); :}
@@ -128,10 +128,10 @@ EXP    ::=     CSTENTIERE:c
                {: RESULT = new ConstanteBooleenne(c, cleft + 1) ; :}
         |
                IDF:i
-               {: RESULT = new Idf(i, ileft + 1) ; :}
+               {: RESULT = new Idf(new Entree(i), ileft + 1) ; :}
         |
                IDF:i PAR_OUVRANTE PAR_FERMANTE
-               {: RESULT = new AppelFonction(new Idf(i, ileft + 1 ),ileft+1) ; :}
+               {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
                 ;
 
 TYPE    ::=     ENTIER
@@ -142,7 +142,7 @@ TYPE    ::=     ENTIER
                 ;
 
 FCT     ::=     TYPE:t IDF:i PARAM DEBUT LINST:li FIN
-                {: TDS.getInstance().ajouter(new Entree(i), new Symbole(t, ileft+1));
+                {: TDS.getInstance().ajouter(new Entree(i, "fonction"), new Symbole(t, ileft+1));
                 ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i));:}
                 ;
 

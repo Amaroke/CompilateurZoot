@@ -17,6 +17,8 @@ retourne 25;
 fin
 
 debut
+b = vrai;
+fonc1 = vrai;
 ecrire fonc1();
 a = fonc2();
 ecrire a;
