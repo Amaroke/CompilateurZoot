@@ -66,7 +66,5 @@ public class Idf extends Expression {
         return this.entree.getNom();
     }
 
-    public Entree getEntree() {
-        return entree;
-    }
+
 }

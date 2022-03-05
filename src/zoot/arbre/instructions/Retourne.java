@@ -22,17 +22,12 @@ public class Retourne extends Instruction{
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
         if (expression.getType().equals("booleen")) {
-            str.append("\tla, $v0, " + expression.toMIPS() + "\n");
+            str.append("\tla, $v0, ").append(expression.toMIPS()).append("\n");
             str.append("\tjr $ra\n");
         } else {
-            str.append("\tli, $v0, " + expression.toMIPS() + "\n");
+            str.append("\tli, $v0, ").append(expression.toMIPS()).append("\n");
             str.append("\tjr $ra\n");
         }
         return str.toString();
-    }
-
-    @Override
-    protected boolean isRetourne() {
-        return true;
     }
 }

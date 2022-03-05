@@ -55,9 +55,4 @@ public class Affectation extends Instruction {
         return str.toString();
     }
 
-
-    @Override
-    protected boolean isRetourne() {
-        return false;
-    }
 }

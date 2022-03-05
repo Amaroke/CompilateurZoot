@@ -17,9 +17,4 @@ public abstract class Expression extends ArbreAbstrait {
     public abstract String getType();
 
     public abstract String getNom();
-
-    @Override
-    protected boolean isRetourne() {
-        return false;
-    }
 }

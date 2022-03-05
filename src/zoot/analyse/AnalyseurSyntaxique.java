@@ -35,7 +35,7 @@ public class AnalyseurSyntaxique extends java_cup.runtime.lr_parser {
   public AnalyseurSyntaxique(java_cup.runtime.Scanner s, java_cup.runtime.SymbolFactory sf) {super(s,sf);}
 
   /** Production table. */
-  protected static final short _production_table[][] = 
+  protected static final short[][] _production_table =
     unpackFromStrings(new String[] {
     "\000\026\000\002\002\004\000\002\002\011\000\002\002" +
     "\007\000\002\002\005\000\002\007\004\000\002\007\003" +

@@ -3,6 +3,7 @@ package zoot;
 import zoot.analyse.AnalyseurLexical;
 import zoot.analyse.AnalyseurSyntaxique;
 import zoot.arbre.ArbreAbstrait;
+import zoot.arbre.declarations.ListeFonctions;
 import zoot.exceptions.AnalyseException;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
@@ -19,6 +20,7 @@ public class Zoot {
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
 
             arbre.verifier();
+            ListeFonctions.getInstance().verifier();
             if (ListeErreurs.getInstance().getNbErreurs() == 0) {
                 System.out.println("COMPILATION OK");
             } else {

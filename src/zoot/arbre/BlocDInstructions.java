@@ -4,7 +4,6 @@ import zoot.arbre.declarations.Fonction;
 import zoot.arbre.declarations.ListeFonctions;
 import zoot.arbre.declarations.TDS;
 import zoot.exceptions.ListeErreurs;
-import zoot.exceptions.RetourneHorsFonction;
 
 import java.util.ArrayList;
 
@@ -56,18 +55,16 @@ public class BlocDInstructions extends ArbreAbstrait {
             str.append("\tla $s1, faux\n\n");
             str.append("   #Debut du programme :\n\n");
             for (ArbreAbstrait a : programme) {
-                if (a.isRetourne() || ListeErreurs.getInstance().getNbErreurs() != 0 && ListeErreurs.getInstance().getErreur(0).getLigne() == a.getNoLigne()) {
+                if (ListeErreurs.getInstance().getNbErreurs() != 0 && ListeErreurs.getInstance().getErreur(0).getLigne() == a.getNoLigne()) {
                     str.append("   #Affichage de l'erreur d'execution\n");
                     str.append("\tla $a0, AffichageErreur\n");
                     str.append("\tli $v0, 4\n");
                     str.append("\tsyscall\n");
                     str.append("\tb end\n\n");
                 }
-                if (a.isRetourne()) {
-                    throw new RetourneHorsFonction("L'instruction retourne ne peut pas être en dehors d'une fonction", getNoLigne());
-                } else {
-                    str.append(a.toMIPS());
-                }
+
+                str.append(a.toMIPS());
+
 
             }
             str.append("\tb end\n\n");
@@ -81,11 +78,6 @@ public class BlocDInstructions extends ArbreAbstrait {
             }
         }
         return str.toString();
-    }
-
-    @Override
-    protected boolean isRetourne() {
-        return false;
     }
 
     @Override
