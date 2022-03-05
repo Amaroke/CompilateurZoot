@@ -108,7 +108,6 @@ INST    ::=     ECRIRE EXP:e POINTVIRGULE
               {: RESULT = new Retourne(eleft+1, e); :}
               ;
 
-
 EXP    ::=     CSTENTIERE:c
                {: RESULT = new ConstanteEntiere(c, cleft + 1) ; :}
         |
@@ -117,6 +116,9 @@ EXP    ::=     CSTENTIERE:c
         |
                IDF:i
                {: RESULT = new Idf(i, ileft + 1) ; :}
+        |
+               IDF:i PAR_OUVRANTE PAR_FERMANTE
+               {: RESULT = new AppelFonction(new Idf(i, ileft + 1 ),ileft+1) ; :}
                 ;
 
 TYPE    ::=     ENTIER

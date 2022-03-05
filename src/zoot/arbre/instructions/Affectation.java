@@ -8,12 +8,12 @@ import zoot.exceptions.VariableNonDeclaree;
 
 public class Affectation extends Instruction {
 
-    protected Expression exp ;
-    protected Idf idf;
+    protected final Expression exp;
+    protected final Idf idf;
 
     public Affectation(Idf idf, Expression e, int n) {
-        super(n) ;
-        exp = e ;
+        super(n);
+        exp = e;
         this.idf = idf;
     }
 
@@ -26,7 +26,6 @@ public class Affectation extends Instruction {
                 ListeErreurs.getInstance().ajouter(new Erreur((this.idf.getNom() + " = " + this.exp.getNom() + " n'est pas autorisé, les variables ne sont pas du même type."), this.noLigne));
             }
         } catch (VariableNonDeclaree ignored) {
-
         }
 
     }
@@ -34,20 +33,28 @@ public class Affectation extends Instruction {
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        if (!exp.isIdf()) {
-            str.append("   #").append(idf.getNom()).append(" = ").append(exp).append("\n");
-            if (exp.isBool()) {
-                str.append("\tla $v0, ").append(exp.toMIPS()).append("\n")
-                        .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
-            } else {
-                str.append("\tli $v0, ").append(exp.toMIPS()).append("\n")
-                        .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
-            }
-        } else {
+        if (exp.isFonction()) {
+            //TODO C'est un peu random
             str.append("   #").append(idf.getNom()).append(" = ").append(exp.getNom()).append("\n");
-            str.append("\tlw $v0, ").append(exp.toMIPS()).append("\n").append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+            str.append(exp.toMIPS());
+            str.append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+        } else {
+            if (!exp.isIdf()) {
+                str.append("   #").append(idf.getNom()).append(" = ").append(exp).append("\n");
+                if (exp.isBool()) {
+                    str.append("\tla $v0, ").append(exp.toMIPS()).append("\n")
+                            .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+                } else {
+                    str.append("\tli $v0, ").append(exp.toMIPS()).append("\n")
+                            .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+                }
+            } else {
+                str.append("   #").append(idf.getNom()).append(" = ").append(exp.getNom()).append("\n");
+                str.append("\tlw $v0, ").append(exp.toMIPS()).append("\n").append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
+            }
         }
         return str.toString();
     }
+
 
 }

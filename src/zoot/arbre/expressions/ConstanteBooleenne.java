@@ -17,6 +17,11 @@ public class ConstanteBooleenne extends Constante {
     }
 
     @Override
+    public boolean isFonction() {
+        return false;
+    }
+
+    @Override
     public String getType() {
         return "booleen";
     }

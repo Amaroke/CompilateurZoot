@@ -4,7 +4,7 @@ import zoot.arbre.expressions.Expression;
 
 public class Ecrire extends Instruction {
 
-    protected Expression exp;
+    protected final Expression exp;
 
     public Ecrire(Expression e, int n) {
         super(n);
@@ -18,6 +18,7 @@ public class Ecrire extends Instruction {
 
     @Override
     public String toMIPS() {
+        //TODO GERER FONCTION
         StringBuilder str = new StringBuilder();
         str.append("   #ecrire ").append(exp.getNom()).append("\n");
         if (exp.isBool()) {

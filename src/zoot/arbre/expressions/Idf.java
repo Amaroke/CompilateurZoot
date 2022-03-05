@@ -9,7 +9,7 @@ import zoot.exceptions.VariableNonDeclaree;
 
 public class Idf extends Expression {
 
-    private Entree entree;
+    private final Entree entree;
     private Symbole symbole;
 
     public Idf(String nom, int n) {
@@ -44,7 +44,16 @@ public class Idf extends Expression {
 
     @Override
     public boolean isBool() {
-        return (symbole.getType().equals("booleen"));
+        try {
+            return (symbole.getType().equals("booleen"));
+        } catch (NullPointerException n) {
+            return false;
+        }
+    }
+
+    @Override
+    public boolean isFonction() {
+        return false;
     }
 
     @Override

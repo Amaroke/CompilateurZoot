@@ -5,3 +5,5 @@
 /.idea/vcs.xml
 /src/build.xml
 /tests/zoot1.mips
+/tests/zoot2.mips
+/tests/zoot2_testfct.mips

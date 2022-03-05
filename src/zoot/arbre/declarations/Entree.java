@@ -2,7 +2,7 @@ package zoot.arbre.declarations;
 
 public class Entree {
 
-    private String nom;
+    private final String nom;
 
     public Entree(String nom) {
         this.nom = nom;

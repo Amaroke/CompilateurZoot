@@ -2,9 +2,10 @@ package zoot.arbre.instructions;
 
 import zoot.arbre.expressions.Expression;
 
+@SuppressWarnings("ALL")
 public class Retourne extends Instruction{
 
-    private Expression expression;
+    private final Expression expression;
 
     public Retourne(int n, Expression expression) {
         super(n);
@@ -13,16 +14,13 @@ public class Retourne extends Instruction{
 
     @Override
     public void verifier() {
-
+        //TODO
     }
 
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        str.append(expression.toMIPS() + "\n");
-        str.append("\tadd, $sp, $sp, 4\n");
-        str.append("\tlw $ra, ($sp)\n");
-        str.append("\tadd $sp, $sp, "+ 0 +"\n"); // $sp = $s2
+        str.append("\tli, $v0, " + expression.toMIPS() + "\n");
         str.append("\tjr $ra\n");
         return str.toString();
     }

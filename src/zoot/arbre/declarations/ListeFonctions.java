@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class ListeFonctions {
 
-    private ArrayList<Fonction> fonctions;
+    private final ArrayList<Fonction> fonctions;
     private int cpt;
     private static final ListeFonctions INSTANCE = new ListeFonctions();
 

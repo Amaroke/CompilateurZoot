@@ -1,0 +1,13 @@
+variables
+entier a;
+
+entier fonc1()
+debut
+ecrire 42;
+retourne 25;
+fin
+
+debut
+a = fonc1();
+ecrire a;
+fin

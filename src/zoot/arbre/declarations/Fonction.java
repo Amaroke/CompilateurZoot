@@ -4,9 +4,12 @@ import zoot.arbre.ArbreAbstrait;
 
 public class Fonction {
 
-    private ArbreAbstrait arbre;
-    private int noLigne;
-    private String idf;
+    private final ArbreAbstrait arbre;
+    private final int noLigne;
+    private final String idf;
+    //TODO connaitre type de retour
+    //TODO Le type de l’expression est identique au type de retour de la fonction.
+    //TODO L’instruction retourne ne peut pas se trouver en dehors du corps d’une fonction.
 
     public Fonction(ArbreAbstrait arbre, int noLigne, String idf) {
         this.arbre = arbre;
@@ -14,28 +17,17 @@ public class Fonction {
         this.idf = idf;
     }
 
-
     public String toMIPS(){
-        StringBuilder str = new StringBuilder();
-        str.append(idf + noLigne + ":\n");
-
-        str.append("\tmove $s2, $sp\n");
-        str.append("\tadd, $s2, $s2, " + 0 + "\n\n");
-
-        str.append("\tadd, $sp, $sp, " + 0 + "\n\n");
-
-        str.append("\tsw $ra, ($sp)\n");
-        str.append("\tadd, $sp, $sp, -4\n\n");
-
-        str.append(arbre.toMIPS());
-
-        return str.toString();
+        //TODO C'est un peu random
+        return "\t" + idf + ":\n" +
+                arbre.toMIPS() + "\n";
     }
 
     public void verifier(){
-
+        //TODO Une variable et une fonction ne peuvent pas porter le même nom.
     }
 
-
-
+    public int getNoLigne() {
+        return noLigne;
+    }
 }

@@ -12,6 +12,8 @@ public abstract class Expression extends ArbreAbstrait {
 
     public abstract boolean isBool();
 
+    public abstract boolean isFonction();
+
     public abstract String getType();
 
     public abstract String getNom();

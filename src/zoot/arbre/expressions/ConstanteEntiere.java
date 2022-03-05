@@ -17,6 +17,11 @@ public class ConstanteEntiere extends Constante {
     }
 
     @Override
+    public boolean isFonction() {
+        return false;
+    }
+
+    @Override
     public String getType() {
         return "entier";
     }

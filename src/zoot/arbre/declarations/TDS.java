@@ -21,7 +21,7 @@ public class TDS {
 
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {
         if (this.variables.containsKey(e.getNom())) {
-            throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
+            throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.", symbole.getNoLigne());
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
         this.variables.put(e.getNom(), symbole);
@@ -35,8 +35,8 @@ public class TDS {
                 symbole.setType(m.getValue().getType());
             }
         }
-        if (!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")) {
-            throw new VariableNonDeclaree("");
+        if (!symbole.getType().equals("entier") && !symbole.getType().equals("booleen") && !symbole.getType().equals("fonction")) {
+            throw new VariableNonDeclaree("Problème dans TDS.");
         }
         return symbole;
     }

@@ -30,4 +30,8 @@ public class Symbole {
     public void setType(String type) {
         this.type = type;
     }
+
+    public int getNoLigne() {
+        return noLigne;
+    }
 }
