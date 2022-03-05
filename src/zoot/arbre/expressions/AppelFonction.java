@@ -21,7 +21,6 @@ public class AppelFonction extends Expression {
 
     @Override
     public String toMIPS() {
-        //TODO C'est un peu random
         return "\tsw $v0, ($sp)\n" +
                 "\tadd $sp, $sp, -4\n" +
                 "\tjal " + idf.getNom() + "\n\n";

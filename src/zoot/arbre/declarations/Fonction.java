@@ -15,7 +15,6 @@ public class Fonction {
     }
 
     public String toMIPS(){
-        //TODO C'est un peu random
         return "\t" + idf + ":\n" +
                 arbre.toMIPS() + "\n";
     }

@@ -110,6 +110,11 @@ package "arbre"{
            String toMIPS()
         }
 
+        class Retourne{
+        	final Expression expression
+
+        	}
+				Retourne --up-|> Expression
         Affectation  -up-|> Instruction
 
     }
@@ -120,6 +125,7 @@ package "arbre"{
            Expression(int n)
            abstract boolean isIdf()
            abstract boolean isBool()
+           abstract boolean isFonction()
            abstract String getType()
            abstract String getNom()
         }
@@ -143,6 +149,7 @@ package "arbre"{
            ConstanteEntiere(String texte, int n)
            String toMIPS()
            boolean isBool()
+           boolean isFonction()
            String getType()
 
         }
@@ -166,12 +173,26 @@ package "arbre"{
            ConstanteBooleenne(String texte, int n)
            String toMIPS()
            boolean isBool()
+           boolean isFonction()
            String getType()
+        }
+
+        class AppelFonction{
+        	final Idf idf
+        	AppelFonction(Idf idf, int n)
+        	void verifier()
+        	String toMIPS()
+        	boolean isIdf()
+        	boolean isBool()
+        	boolean isFonction()
+        	String getType()
+        	String getNom()
         }
 
         ConstanteBooleenne  -up-|> Constante
         Affectation - "1" Expression
-                Affectation - "1" Idf
+        Affectation - "1" Idf
+        AppelFonction --up-|> Expression
 
     }
     package "declarations"{
@@ -180,6 +201,7 @@ package "arbre"{
             String type
             Symbole(int deplacement, String type)
             Symbole(String type)
+            Symbole(String type, int noLigne)
             int getDeplacement
             void setDeplacement(int deplacement)
             String getType()
@@ -196,6 +218,37 @@ package "arbre"{
             int getTailleZoneVariable()
 
         }
+
+        class Entree{
+        	final String nom
+        	Entree(String nom)
+        	String getNom()
+        }
+
+        class Fonction{
+    			final int noLigne;
+    			final String idf;
+    			Fonction(ArbreAbstrait arbre, int noLigne, String idf)
+    			String toMIPS()
+    			void verifier()
+    			int getNoLigne()
+        }
+
+        class ListeFonctions{
+        	int cpt
+        	static final ListeFonctions INSTANCE
+        	ListeFonctions()
+        	ListeFonctions getInstance()
+        	ajouter(Fonction f)
+        	ArrayList<Fonction> getFonctions()
+        	int getCpt()
+        	void setCpt(int cpt)
+        }
+
+
+        Fonction --"1" ArbreAbstrait
+        Fonction --up-|> Expression
+        ListeFonctions --"*" Fonction
 }
 }
 @enduml
