@@ -16,6 +16,7 @@ public class Retourne extends Instruction{
     public void verifier() {
         expression.verifier();
         //TODO Le type de retour n'est pas forcément celui de la fonction.
+        //TODO Retour est hors d'une fonction.
     }
 
     @Override

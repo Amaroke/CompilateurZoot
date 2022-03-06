@@ -9,7 +9,7 @@ import java.util.Map;
 public class TDS {
 
     private static final TDS INSTANCE = new TDS();
-    private final HashMap<String, Symbole> variables;
+    private final HashMap<Entree, Symbole> variables;
 
     private TDS() {
         this.variables = new HashMap<>();
@@ -20,17 +20,19 @@ public class TDS {
     }
 
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {
-        if (this.variables.containsKey(e.getNom())) {
-            throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.", symbole.getNoLigne());
+        for (Map.Entry<Entree, Symbole> m : this.variables.entrySet()) {
+            if (m.getKey().getNom().equals(e.getNom())) {
+                throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.", symbole.getNoLigne());
+            }
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
-        this.variables.put(e.getNom(), symbole);
+        this.variables.put(e, symbole);
     }
 
     public Symbole identifier(Entree e) throws VariableNonDeclaree {
         Symbole symbole = new Symbole(0, "");
-        for (Map.Entry<String, Symbole> m : this.variables.entrySet()) {
-            if (m.getKey().equals(e.getNom())) {
+        for (Map.Entry<Entree, Symbole> m : this.variables.entrySet()) {
+            if (m.getKey().getNom().equals(e.getNom()) && m.getKey().getType().equals(e.getType())) {
                 symbole.setDeplacement(m.getValue().getDeplacement());
                 symbole.setType(m.getValue().getType());
             }
