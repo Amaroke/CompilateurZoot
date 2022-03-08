@@ -26,4 +26,8 @@ public class Fonction {
     public int getNoLigne() {
         return noLigne;
     }
+
+    public String getIdf() {
+        return idf;
+    }
 }

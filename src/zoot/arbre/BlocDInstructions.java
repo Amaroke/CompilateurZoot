@@ -3,7 +3,6 @@ package zoot.arbre;
 import zoot.arbre.declarations.Fonction;
 import zoot.arbre.declarations.ListeFonctions;
 import zoot.arbre.declarations.TDS;
-import zoot.exceptions.ListeErreurs;
 
 import java.util.ArrayList;
 
@@ -44,7 +43,6 @@ public class BlocDInstructions extends ArbreAbstrait {
             str.append("faux: .word 0\n");
             str.append("AffichageVrai: .asciiz \"vrai\"\n");
             str.append("AffichageFaux: .asciiz \"faux\"\n");
-            str.append("AffichageErreur: .asciiz \"ERREUR EXECUTION\"\n");
             str.append("saut_ligne: .asciiz \"\\n\"\n\n");
             str.append(".text\n\n");
             str.append("main: \n");
@@ -55,17 +53,7 @@ public class BlocDInstructions extends ArbreAbstrait {
             str.append("\tla $s1, faux\n\n");
             str.append("   #Debut du programme :\n\n");
             for (ArbreAbstrait a : programme) {
-                if (ListeErreurs.getInstance().getNbErreurs() != 0 && ListeErreurs.getInstance().getErreur(0).getLigne() == a.getNoLigne()) {
-                    str.append("   #Affichage de l'erreur d'execution\n");
-                    str.append("\tla $a0, AffichageErreur\n");
-                    str.append("\tli $v0, 4\n");
-                    str.append("\tsyscall\n");
-                    str.append("\tb end\n\n");
-                }
-
                 str.append(a.toMIPS());
-
-
             }
             str.append("\tb end\n\n");
             for (Fonction f : ListeFonctions.getInstance().getFonctions()) {

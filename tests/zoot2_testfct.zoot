@@ -6,6 +6,7 @@ fonctions
 booleen fonc1()
 debut
 a = 2;
+ecrire fonc2();
 ecrire 42;
 retourne vrai;
 fin

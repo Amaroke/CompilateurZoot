@@ -18,7 +18,18 @@ public class AppelFonction extends Expression {
 
     @Override
     public String toMIPS() {
-        return "\tjal " + idf.getNom() + "\n";
+        StringBuilder str = new StringBuilder();
+        str.append("   #Sauvegarde des registres\n");
+        str.append("\tsw $ra,0($sp)\n");
+        str.append("\tsw $s1,-4($sp)\n");
+        str.append("\taddi $sp,$sp,-8\n");
+        str.append("   #Appel de la fonction\n");
+        str.append("\tjal " + idf.getNom() + "\n");
+        str.append("   #Restauration des registres\n");
+        str.append("\tlw $s1,4($sp)\n");
+        str.append("\tlw $ra,8($sp)\n");
+        str.append("\taddi $sp,$sp,8\n");
+        return str.toString();
     }
 
     @Override

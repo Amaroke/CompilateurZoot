@@ -22,7 +22,7 @@ public class TDS {
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {
         for (Map.Entry<Entree, Symbole> m : this.variables.entrySet()) {
             if (m.getKey().getNom().equals(e.getNom())) {
-                throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.", symbole.getNoLigne());
+                throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
             }
         }
         symbole.setDeplacement(this.getTailleZoneVariable());

@@ -5,7 +5,7 @@ import zoot.arbre.* ;
 import zoot.arbre.expressions.* ;
 import zoot.arbre.instructions.* ;
 import zoot.arbre.declarations.* ;
-import zoot.exceptions.AnalyseSyntaxiqueException;
+import zoot.exceptions.*;
 
 import java_cup.runtime.*;
 
@@ -142,12 +142,22 @@ TYPE    ::=     ENTIER
                 ;
 
 FCT     ::=     TYPE:t IDF:i PARAM DEBUT LINST:li FIN
-                {: TDS.getInstance().ajouter(new Entree(i, "fonction"), new Symbole(t, ileft+1));
+                {:
+                try {
+                    TDS.getInstance().ajouter(new Entree(i, "fonction"), new Symbole(t, ileft+1));
+                    } catch (DoubleDeclaration d) {
+                        ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                    }
                 ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i));:}
                 ;
 
 DCL     ::=    TYPE:t IDF:i POINTVIRGULE
-               {: TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t)) ;:}
+               {:
+                 try {
+                                   TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t)) ;
+                                    } catch (DoubleDeclaration d) {
+                                        ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                                    }:}
                ;
 
 PARAM ::=     PAR_OUVRANTE PAR_FERMANTE

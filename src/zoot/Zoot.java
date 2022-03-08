@@ -20,18 +20,20 @@ public class Zoot {
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
 
             arbre.verifier();
+            ListeFonctions.getInstance().setCpt(1);
             ListeFonctions.getInstance().verifier();
+            ListeFonctions.getInstance().setCpt(0);
             if (ListeErreurs.getInstance().getNbErreurs() == 0) {
                 System.out.println("COMPILATION OK");
+                String nomSortie = nomFichier.replaceAll("[.]zoot", ".mips");
+                PrintWriter flot = new PrintWriter(new BufferedWriter(new FileWriter(nomSortie)));
+                flot.println(arbre.toMIPS());
+                flot.close();
             } else {
                 for (Erreur e : ListeErreurs.getInstance().getErreurs()) {
                     System.err.println("ERREUR SEMANTIQUE : Ligne n°" + e.getLigne() + " : " + e.getMessage());
                 }
             }
-            String nomSortie = nomFichier.replaceAll("[.]zoot", ".mips");
-            PrintWriter flot = new PrintWriter(new BufferedWriter(new FileWriter(nomSortie)));
-            flot.println(arbre.toMIPS());
-            flot.close();
         }
         catch (FileNotFoundException ex) {
             System.err.println("Fichier " + nomFichier + " inexistant") ;
