@@ -47,13 +47,16 @@ public class Retourne extends Instruction{
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        if (expression.getType().equals("booleen")) {
-            str.append("\tla, $v0, ").append(expression.toMIPS()).append("\n");
-            str.append("\tjr $ra\n");
+        if (!expression.isFonction()) {
+            if (expression.getType().equals("booleen")) {
+                str.append("\tla, $v0, ").append(expression.toMIPS()).append("\n");
+            } else {
+                str.append("\tli, $v0, ").append(expression.toMIPS()).append("\n");
+            }
         } else {
-            str.append("\tli, $v0, ").append(expression.toMIPS()).append("\n");
-            str.append("\tjr $ra\n");
+            str.append(expression.toMIPS()).append("\n");
         }
+        str.append("\tjr $ra\n");
         return str.toString();
     }
 }

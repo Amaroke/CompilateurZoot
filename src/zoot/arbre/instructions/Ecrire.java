@@ -24,6 +24,7 @@ public class Ecrire extends Instruction {
            str.append(exp.toMIPS());
             str.append("\tmove $a0, $v0\n");
             if(exp.getType().equals("booleen")){
+                str.append("\tmove $t0, $v0\n");
                 str.append("\tbeq $s1, $t0, Sinon").append(exp.getNoLigne()).append("\n");
                 str.append("\tla $a0, AffichageVrai\n");
                 str.append("\tli $v0, 4\n");

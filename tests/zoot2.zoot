@@ -1,25 +1,18 @@
 variables
-entier a;
-booleen b;
-entier c;
-booleen d;
-
-entier fonc1()
+    entier x;
+fonctions
+booleen fonc2()
 debut
-retourne 25;
+    retourne faux;
+fin
+booleen fonc1()
+debut
+
+    retourne fonc2();
 fin
 
 debut
-// Commentaire
-ecrire 42;
-ecrire faux;
-ecrire vrai;
-a = 5;
-c = a;
-b = vrai;
-d = faux;
-ecrire a;
-ecrire b;
-ecrire c;
-ecrire d;
+    ecrire fonc1();
+    ecrire 1;
+    ecrire vrai;
 fin
