@@ -64,6 +64,7 @@ public class BlocDInstructions extends ArbreAbstrait {
             for (ArbreAbstrait a : programme) {
                 str.append(a.toMIPS());
             }
+
         }
         return str.toString();
     }

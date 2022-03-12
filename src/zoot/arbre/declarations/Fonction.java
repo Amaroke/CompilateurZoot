@@ -7,11 +7,13 @@ public class Fonction {
     private final ArbreAbstrait arbre;
     private final int noLigne;
     private final String idf;
+    private final int numeroBloc;
 
-    public Fonction(ArbreAbstrait arbre, int noLigne, String idf) {
+    public Fonction(ArbreAbstrait arbre, int noLigne, String idf, int numeroBloc) {
         this.arbre = arbre;
         this.noLigne = noLigne;
         this.idf = idf;
+        this.numeroBloc = numeroBloc;
     }
 
     public String toMIPS(){
@@ -29,5 +31,9 @@ public class Fonction {
 
     public String getIdf() {
         return idf;
+    }
+
+    public int getNumeroBloc() {
+        return numeroBloc;
     }
 }

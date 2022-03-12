@@ -62,7 +62,7 @@ terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, PARAM, LFCT, FCT;
+non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, LPAR, PAR, PARAM, LFCT, FCT;
 non terminal Instruction INST ;
 non terminal Expression EXP ;
 non terminal String TYPE;
@@ -111,15 +111,36 @@ LINST   ::=     LINST:li  INST:i
                    RESULT = b ; :}
                    ;
 
+LPAR    ::=     LPAR:lp PAR:p
+                {: ((BlocDInstructions)lp).ajouter(p) ;
+                   RESULT = lp ; :}
+        |
+                PAR:p
+                {: BlocDInstructions b = new BlocDInstructions(pleft + 1) ;
+                b.ajouter(p) ;
+                RESULT = b ; :}
+                ;
+
+PAR     ::=     TYPE:t IDF:i POINTVIRGULE
+                {: TDS.getInstance().ajouter(new Entree(TDS.getInstance().getBloc() ,i, "parametre"), new Symbole(t, ileft+1)); :}
+                ;
+
+PARAM   ::=   PAR_OUVRANTE PAR_FERMANTE
+              {: :}
+        |
+              PAR_OUVRANTE LPAR PAR_FERMANTE
+              {: :}
+              ;
+
 INST    ::=     ECRIRE EXP:e POINTVIRGULE
                 {: RESULT = new Ecrire(e, eleft + 1) ; :}
         |
-              IDF:i EGAL EXP:e POINTVIRGULE
-              {: RESULT = new Affectation(new Idf(new Entree(i, "variable"),ileft+1), e, eleft+1) ; :}
+                IDF:i EGAL EXP:e POINTVIRGULE
+                {: RESULT = new Affectation(new Idf(new Entree(TDS.getInstance().getBloc(), i, "variable"),ileft+1), e, eleft+1) ; :}
         |
-              RETOURNE EXP:e POINTVIRGULE
-              {: RESULT = new Retourne(eleft+1, e); :}
-              ;
+                RETOURNE EXP:e POINTVIRGULE
+                {: RESULT = new Retourne(eleft+1, e); :}
+                ;
 
 EXP    ::=     CSTENTIERE:c
                {: RESULT = new ConstanteEntiere(c, cleft + 1) ; :}
@@ -128,38 +149,37 @@ EXP    ::=     CSTENTIERE:c
                {: RESULT = new ConstanteBooleenne(c, cleft + 1) ; :}
         |
                IDF:i
-               {: RESULT = new Idf(new Entree(i, "variable"), ileft + 1) ; :}
+               {: RESULT = new Idf(new Entree(TDS.getInstance().getBloc() ,i, "variable"), ileft + 1) ; :}
         |
-               IDF:i PAR_OUVRANTE PAR_FERMANTE
-               {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
+               IDF:i PARAM
+               {: RESULT = new AppelFonction(new Idf(new Entree(TDS.getInstance().getBloc(), i, "fonction"), ileft + 1 ),ileft+1) ; :}
                 ;
 
 TYPE    ::=     ENTIER
                 {: RESULT = "entier"; :}
-                |
+        |
                 BOOLEEN
                 {: RESULT = "booleen"; :}
                 ;
 
 FCT     ::=     TYPE:t IDF:i PARAM DEBUT LINST:li FIN
                 {:
+                TDS.getInstance().entreeBloc();
                 try {
-                    TDS.getInstance().ajouter(new Entree(i, "fonction"), new Symbole(t, ileft+1));
+                    TDS.getInstance().ajouter(new Entree(TDS.getInstance().getBloc(), i, "fonction"), new Symbole(t, ileft+1));
                     } catch (DoubleDeclaration d) {
                         ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
                     }
-                ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i));:}
+                ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i, TDS.getInstance().getBloc()));
+                TDS.getInstance().sortieBloc(); :}
                 ;
 
 DCL     ::=    TYPE:t IDF:i POINTVIRGULE
                {:
                  try {
-                                   TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t)) ;
-                                    } catch (DoubleDeclaration d) {
-                                        ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                                    }:}
+                      TDS.getInstance().ajouter(new Entree(TDS.getInstance().getBloc(), i, "variable"), new Symbole(t)) ;
+                      } catch (DoubleDeclaration d) {
+                      ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                      }:}
                ;
 
-PARAM ::=     PAR_OUVRANTE PAR_FERMANTE
-              {: :}
-              ;

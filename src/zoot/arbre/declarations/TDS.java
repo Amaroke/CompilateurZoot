@@ -11,8 +11,11 @@ public class TDS {
     private static final TDS INSTANCE = new TDS();
     private final HashMap<Entree, Symbole> variables;
 
+    private int bloc;
+
     private TDS() {
         this.variables = new HashMap<>();
+        this.bloc = 0;
     }
 
     public static TDS getInstance() {
@@ -47,4 +50,15 @@ public class TDS {
         return this.variables.size() * (-4);
     }
 
+    public void entreeBloc(){
+        this.bloc++;
+    }
+
+    public void sortieBloc(){
+        this.bloc--;
+    }
+
+    public int getBloc(){
+        return this.bloc;
+    }
 }
