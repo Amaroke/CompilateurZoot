@@ -51,7 +51,13 @@ public class Retourne extends Instruction{
             if (expression.getType().equals("booleen")) {
                 str.append("\tla, $v0, ").append(expression.toMIPS()).append("\n");
             } else {
-                str.append("\tli, $v0, ").append(expression.toMIPS()).append("\n");
+
+                if(expression.isIdf()) {
+                    str.append("\tlw $v0, ").append(expression.toMIPS()).append("\n");
+                }
+                else {
+                    str.append("\tli $v0, ").append(expression.toMIPS()).append("\n");
+                }
             }
         } else {
             str.append(expression.toMIPS()).append("\n");
