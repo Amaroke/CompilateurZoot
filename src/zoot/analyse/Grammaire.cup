@@ -9,15 +9,14 @@ import zoot.exceptions.*;
 
 import java_cup.runtime.*;
 
-action code {:
-             :} ;
+action code {::} ;
 
 parser code {:
 
     public void report_error(String message, Object info) {
 
         HashMap<Integer, String> lesTerminaux = new HashMap<>() ;
-    
+
         lesTerminaux.put(new Integer(CodesLexicaux.DEBUT), "debut") ;
         lesTerminaux.put(new Integer(CodesLexicaux.FIN), "fin") ;
         lesTerminaux.put(new Integer(CodesLexicaux.POINTVIRGULE), ";") ;
@@ -52,9 +51,9 @@ parser code {:
         report_error(message, info);
     }
 :};
-   
+
 /* ------------Declaration of Terminals and Non Terminals Section----------- */
-   
+
 /* Terminals (tokens returned by the scanner).  */
 
 terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE;

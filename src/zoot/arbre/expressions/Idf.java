@@ -29,12 +29,13 @@ public class Idf extends Expression {
 
     @Override
     public String toMIPS() {
+        String str = "";
         try {
-            return (TDS.getInstance().identifier(this.entree).getDeplacement() + ("($s7)\n"));
+            str = ("lw $v0, " + this.getDeplacement() + ("($s7)\n"));
         } catch (VariableNonDeclaree m) {
             ListeErreurs.getInstance().ajouter(new Erreur(m.getMessage(), this.noLigne));
         }
-        return ("0($s7)\n");
+        return str;
     }
 
     @Override
@@ -61,10 +62,13 @@ public class Idf extends Expression {
         return TDS.getInstance().identifier(this.entree).getType();
     }
 
+    public int getDeplacement() {
+        return TDS.getInstance().identifier(this.entree).getDeplacement();
+    }
+
     @Override
     public String getNom() {
         return this.entree.getNom();
     }
-
 
 }

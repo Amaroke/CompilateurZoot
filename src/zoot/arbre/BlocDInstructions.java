@@ -39,8 +39,6 @@ public class BlocDInstructions extends ArbreAbstrait {
             ListeFonctions.getInstance().setCpt(1);
             str.append("#MATHIEU STEINBACH Hugo & MOSELLE Marie-Luc\n\n");
             str.append(".data\n\n");
-            str.append("vrai: .word 1\n");
-            str.append("faux: .word 0\n");
             str.append("AffichageVrai: .asciiz \"vrai\"\n");
             str.append("AffichageFaux: .asciiz \"faux\"\n");
             str.append("saut_ligne: .asciiz \"\\n\"\n\n");
@@ -49,8 +47,6 @@ public class BlocDInstructions extends ArbreAbstrait {
             str.append("   #Initialisation de la base des variables :\n");
             str.append("\tmove $s7, $sp\n");
             str.append("\taddi $sp, $sp, ").append(TDS.getInstance().getTailleZoneVariable()).append("\n\n");
-            str.append("   #Initialisation de $s1 avec la valeur faux :\n");
-            str.append("\tla $s1, faux\n\n");
             str.append("   #Debut du programme :\n\n");
             for (ArbreAbstrait a : programme) {
                 str.append(a.toMIPS());
@@ -64,7 +60,6 @@ public class BlocDInstructions extends ArbreAbstrait {
             for (ArbreAbstrait a : programme) {
                 str.append(a.toMIPS());
             }
-
         }
         return str.toString();
     }

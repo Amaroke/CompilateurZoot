@@ -18,8 +18,8 @@ public class Zoot {
         try {
             AnalyseurSyntaxique analyseur = new AnalyseurSyntaxique(new AnalyseurLexical(new FileReader(nomFichier)));
             ArbreAbstrait arbre = (ArbreAbstrait) analyseur.parse().value;
-
             arbre.verifier();
+            // Je suis obligé de mettre le compteur à 1 pour le test, autrement les instructions retounre seront considérés comme hors de la fonction.
             ListeFonctions.getInstance().setCpt(1);
             ListeFonctions.getInstance().verifier();
             ListeFonctions.getInstance().setCpt(0);

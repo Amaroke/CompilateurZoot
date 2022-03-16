@@ -27,32 +27,12 @@ public class Affectation extends Instruction {
             }
         } catch (VariableNonDeclaree ignored) {
         }
-
     }
 
     @Override
     public String toMIPS() {
-        StringBuilder str = new StringBuilder();
-        if (exp.isFonction()) {
-            str.append("   #").append(idf.getNom()).append(" = ").append(exp.getNom()).append("\n");
-            str.append(exp.toMIPS());
-            str.append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
-        } else {
-            if (!exp.isIdf()) {
-                str.append("   #").append(idf.getNom()).append(" = ").append(exp).append("\n");
-                if (exp.isBool()) {
-                    str.append("\tla $v0, ").append(exp.toMIPS()).append("\n")
-                            .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
-                } else {
-                    str.append("\tli $v0, ").append(exp.toMIPS()).append("\n")
-                            .append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
-                }
-            } else {
-                str.append("   #").append(idf.getNom()).append(" = ").append(exp.getNom()).append("\n");
-                str.append("\tlw $v0, ").append(exp.toMIPS()).append("\n").append("\tsw $v0, ").append(idf.toMIPS()).append("\n");
-            }
-        }
-        return str.toString();
+        return "   #" + idf.getNom() + " = " + exp.getNom() + "\n" + "\t" + exp.toMIPS() + "\n\tsw $v0, " +
+                idf.getDeplacement() + "($s7)\n";
     }
 
 }

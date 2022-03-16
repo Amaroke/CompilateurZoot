@@ -8,7 +8,7 @@ public class ConstanteBooleenne extends Constante {
 
     @Override
     public String toMIPS() {
-        return this.cste;
+        return "li $v0, " + (this.cste.equals("vrai") ? "1" : "0");
     }
 
     @Override

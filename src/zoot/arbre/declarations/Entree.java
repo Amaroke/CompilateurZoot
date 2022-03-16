@@ -2,7 +2,7 @@ package zoot.arbre.declarations;
 
 public class Entree {
 
-    private int numeroBloc;
+    private final int numeroBloc;
     private final String nom;
     private final String type;
 

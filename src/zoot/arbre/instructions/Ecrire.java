@@ -20,62 +20,23 @@ public class Ecrire extends Instruction {
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
         str.append("   #ecrire ").append(exp.getNom()).append("\n");
-        if(exp.isFonction()){
-           str.append(exp.toMIPS());
-            str.append("\tmove $a0, $v0\n");
-            if(exp.getType().equals("booleen")){
-                str.append("\tmove $t0, $v0\n");
-                str.append("\tbeq $s1, $t0, Sinon").append(exp.getNoLigne()).append("\n");
-                str.append("\tla $a0, AffichageVrai\n");
-                str.append("\tli $v0, 4\n");
-                str.append("\tsyscall\n");
-                str.append("\tb FinSi").append(exp.getNoLigne()).append("\n");
-                str.append("\tSinon").append(exp.getNoLigne()).append(":").append("\n");
-                str.append("\tla $a0, AffichageFaux\n");
-                str.append("\tli $v0, 4\n");
-                str.append("\tsyscall\n");
-                str.append("\tFinSi").append(exp.getNoLigne()).append(":").append("\n");
-            }else{
-                str.append("\tli $v0, 1\n\tsyscall\n");
-            }
-        }
-        else {
-            if (exp.isBool()) {
-                if (exp.isIdf()) {
-                    str.append("\tlw $t0, ").append(exp.toMIPS()).append("\n");
-                    str.append("\tbeq $s1, $t0, Sinon").append(exp.getNoLigne()).append("\n");
-                    str.append("\tla $a0, AffichageVrai\n");
-                    str.append("\tli $v0, 4\n");
-                    str.append("\tsyscall\n");
-                    str.append("\tb FinSi").append(exp.getNoLigne()).append("\n");
-                    str.append("\tSinon").append(exp.getNoLigne()).append(":").append("\n");
-                    str.append("\tla $a0, AffichageFaux\n");
-                    str.append("\tli $v0, 4\n");
-                    str.append("\tsyscall\n");
-                    str.append("\tFinSi").append(exp.getNoLigne()).append(":").append("\n");
-                } else {
-                    str.append("\tla $a0,");
-                    if (exp.getNom().equals("vrai")) {
-                        str.append(" AffichageVrai\n");
-                    } else {
-                        str.append(" AffichageFaux\n");
-                    }
-                    str.append("\tli $v0, 4\n");
-                    str.append("\tsyscall\n");
-                }
-            } else if (!exp.isIdf()) {
-                str.append("\tli $a0, ").append(exp.toMIPS()).append("\n");
-                str.append("\tli $v0, 1\n\tsyscall\n");
-            } else {
-                str.append("\tlw $v0, ")
-                        .append(exp.toMIPS())
-                        .append("\tmove $a0, $v0\n")
-                        .append("\tli $v0, 1\n")
-                        .append("\tsyscall\n");
-            }
+        str.append("\t").append(exp.toMIPS()).append("\n");
+        str.append("\tmove $a0, $v0\n");
+        if (exp.isBool()) {
+            str.append("\tbeq $zero, $a0, Sinon").append(exp.getNoLigne()).append("\n");
+            str.append("\tla $a0, AffichageVrai\n");
+            str.append("\tli $v0, 4\n");
+            str.append("\tsyscall\n");
+            str.append("\tb FinSi").append(exp.getNoLigne()).append("\n");
+            str.append("\tSinon").append(exp.getNoLigne()).append(":").append("\n");
+            str.append("\tla $a0, AffichageFaux\n");
+            str.append("\tli $v0, 4\n");
+            str.append("\tsyscall\n");
+            str.append("\tFinSi").append(exp.getNoLigne()).append(":").append("\n");
+        } else {
+            str.append("\tli $v0, 1\n\tsyscall\n");
         }
         str.append("\tla $a0, saut_ligne\n\tli $v0, 4\n\tsyscall\n\n");
-
         return str.toString();
     }
 
