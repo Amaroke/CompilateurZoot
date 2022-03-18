@@ -1,21 +1,25 @@
 package zoot.arbre.declarations;
 
+
 import zoot.exceptions.DoubleDeclaration;
 import zoot.exceptions.VariableNonDeclaree;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 public class TDS {
 
     private static final TDS INSTANCE = new TDS();
-    private final HashMap<Entree, Symbole> variables;
+    private final ArrayList<HashMap<Entree, Symbole>> blocs;
 
-    private int bloc;
+    private int blocCourant;
+    private int nbBlocs;
 
     private TDS() {
-        this.variables = new HashMap<>();
-        this.bloc = 0;
+        this.blocCourant = 0;
+        this.blocs = new ArrayList<>();
+        this.nbBlocs = 0;
     }
 
     public static TDS getInstance() {
@@ -23,18 +27,23 @@ public class TDS {
     }
 
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {
-        for (Map.Entry<Entree, Symbole> m : this.variables.entrySet()) {
-            if (m.getKey().getNom().equals(e.getNom())) {
-                throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
+        if (this.blocs.size() > this.blocCourant){
+            for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
+                if (m.getKey().getNom().equals(e.getNom())) {
+                    throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
+                }
             }
+        }else {
+            this.blocs.add(new HashMap<>());
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
-        this.variables.put(e, symbole);
+        this.blocs.get(blocCourant).put(e, symbole);
     }
 
     public Symbole identifier(Entree e) throws VariableNonDeclaree {
-        Symbole symbole = new Symbole(0, "");
-        for (Map.Entry<Entree, Symbole> m : this.variables.entrySet()) {
+        System.out.println(e);
+        Symbole symbole = new Symbole("type", 0, this.blocCourant);
+        for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
             if (m.getKey().getNom().equals(e.getNom()) && m.getKey().getType().equals(e.getType())) {
                 symbole.setDeplacement(m.getValue().getDeplacement());
                 symbole.setType(m.getValue().getType());
@@ -47,18 +56,28 @@ public class TDS {
     }
 
     public int getTailleZoneVariable() {
-        return this.variables.size() * (-4);
+        return this.blocs.get(blocCourant).size() * (-4);
     }
 
     public void entreeBloc(){
-        this.bloc++;
+        this.blocCourant++;
     }
 
     public void sortieBloc(){
-        this.bloc--;
+        this.blocCourant--;
     }
 
-    public int getBloc(){
-        return this.bloc;
+    public int getBlocCourant(){
+        return this.blocCourant;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("TDS{");
+        sb.append("blocs=").append(blocs);
+        sb.append(", blocCourant=").append(blocCourant);
+        sb.append(", nbBlocs=").append(nbBlocs);
+        sb.append('}');
+        return sb.toString();
     }
 }

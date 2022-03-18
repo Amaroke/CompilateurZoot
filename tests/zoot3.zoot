@@ -1,12 +1,13 @@
 variables
 entier a;
-booleen b;
 
 fonctions
-booleen fonc1(booleen x; entier y; booleen z;)
+booleen fonc1()
+variables
+entier x;
+booleen y;
 debut
-x = vrai;
-retourne x;
+retourne vrai;
 fin
 
 

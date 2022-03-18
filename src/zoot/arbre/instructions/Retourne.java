@@ -37,7 +37,7 @@ public class Retourne extends Instruction{
                     }
                 }
             }
-            if (!TDS.getInstance().identifier(new Entree(TDS.getInstance().getBloc(), fonctionMere, "fonction")).getType().equals(expression.getType())) {
+            if (!TDS.getInstance().identifier(new Entree(fonctionMere, "fonction")).getType().equals(expression.getType())) {
                 ListeErreurs.getInstance().ajouter(new Erreur("Le type de l'instruction retourné ne correspond pas au type de retour de la fonction correspondante.", noLigne));
             }
         } catch (VariableNonDeclaree e) {

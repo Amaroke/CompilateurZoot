@@ -4,6 +4,7 @@ import zoot.analyse.AnalyseurLexical;
 import zoot.analyse.AnalyseurSyntaxique;
 import zoot.arbre.ArbreAbstrait;
 import zoot.arbre.declarations.ListeFonctions;
+import zoot.arbre.declarations.TDS;
 import zoot.exceptions.AnalyseException;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
@@ -24,6 +25,7 @@ public class Zoot {
             ListeFonctions.getInstance().verifier();
             ListeFonctions.getInstance().setCpt(0);
             if (ListeErreurs.getInstance().getNbErreurs() == 0) {
+                System.out.println(TDS.getInstance());
                 System.out.println("COMPILATION OK");
                 String nomSortie = nomFichier.replaceAll("[.]zoot", ".mips");
                 PrintWriter flot = new PrintWriter(new BufferedWriter(new FileWriter(nomSortie)));
