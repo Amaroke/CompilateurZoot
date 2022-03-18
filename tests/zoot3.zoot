@@ -2,15 +2,18 @@ variables
 entier a;
 
 fonctions
-booleen fonc1()
+entier fonc1(entier z;)
 variables
 entier x;
 booleen y;
 debut
-retourne vrai;
+z = 10;
+ecrire z;
+x = 57;
+retourne x;
 fin
 
 
 debut
-ecrire 42;
+ecrire fonc1();
 fin

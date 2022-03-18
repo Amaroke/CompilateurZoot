@@ -124,7 +124,7 @@ LPAR    ::=     LPAR:lp PAR:p
 
 PAR     ::=     TYPE:t IDF:i POINTVIRGULE
                 {:
-                TDS.getInstance().ajouter(new Entree(i, "parametre"), new Symbole(t, ileft+1, TDS.getInstance().getBlocCourant())); :}
+                TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t, ileft+1, TDS.getInstance().getBlocCourant())); :}
                 ;
 
 LVARLOC    ::=  LVARLOC:lv VAR:v
@@ -139,7 +139,7 @@ LVARLOC    ::=  LVARLOC:lv VAR:v
 
 VAR     ::=     TYPE:t IDF:i POINTVIRGULE
                 {:
-                TDS.getInstance().ajouter(new Entree(i, "locale"), new Symbole(t, ileft+1,TDS.getInstance().getBlocCourant())); :}
+                TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t, ileft+1,TDS.getInstance().getBlocCourant())); :}
                 ;
 
 PARAM   ::=   PAR_OUVRANTE PAR_FERMANTE
