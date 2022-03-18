@@ -41,8 +41,7 @@ public class TDS {
     }
 
     public Symbole identifier(Entree e) throws VariableNonDeclaree {
-        System.out.println(e);
-        Symbole symbole = new Symbole("type", 0, this.blocCourant);
+        Symbole symbole = new Symbole("", 0, this.blocCourant);
         for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
             if (m.getKey().getNom().equals(e.getNom()) && m.getKey().getType().equals(e.getType())) {
                 symbole.setDeplacement(m.getValue().getDeplacement());

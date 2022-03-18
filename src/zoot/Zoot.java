@@ -25,7 +25,6 @@ public class Zoot {
             ListeFonctions.getInstance().verifier();
             ListeFonctions.getInstance().setCpt(0);
             if (ListeErreurs.getInstance().getNbErreurs() == 0) {
-                System.out.println(TDS.getInstance());
                 System.out.println("COMPILATION OK");
                 String nomSortie = nomFichier.replaceAll("[.]zoot", ".mips");
                 PrintWriter flot = new PrintWriter(new BufferedWriter(new FileWriter(nomSortie)));
