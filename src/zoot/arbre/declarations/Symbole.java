@@ -42,7 +42,7 @@ public class Symbole {
         sb.append(", type='").append(type).append(" ");
         sb.append(", noLigne=").append(noLigne);
         sb.append(", numBloc=").append(numBloc);
-        sb.append("}\n");
+        sb.append("}");
         return sb.toString();
     }
 }

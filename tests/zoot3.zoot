@@ -2,18 +2,29 @@ variables
 entier a;
 
 fonctions
-entier fonc1(entier z;)
+entier fonc1(entier p1;)
 variables
 entier x;
-booleen y;
 debut
-z = 10;
-ecrire z;
-x = 57;
-retourne x;
+retourne 1;
 fin
 
+entier fonc2(entier p2;)
+variables
+entier y;
+debut
+retourne 1;
+fin
+
+entier fonc3(entier p3;)
+variables
+entier z;
+debut
+retourne 1;
+fin
 
 debut
 ecrire fonc1();
+ecrire fonc2();
+ecrire fonc3();
 fin

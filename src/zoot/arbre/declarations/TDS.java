@@ -14,12 +14,11 @@ public class TDS {
     private final ArrayList<HashMap<Entree, Symbole>> blocs;
 
     private int blocCourant;
-    private int nbBlocs;
 
     private TDS() {
         this.blocCourant = 0;
         this.blocs = new ArrayList<>();
-        this.nbBlocs = 0;
+        this.blocs.add(new HashMap<>());
     }
 
     public static TDS getInstance() {
@@ -27,17 +26,14 @@ public class TDS {
     }
 
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {
-        if (this.blocs.size() > this.blocCourant){
-            for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
+        for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
                 if (m.getKey().getNom().equals(e.getNom())) {
                     throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
                 }
-            }
-        }else {
-            this.blocs.add(new HashMap<>());
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
         this.blocs.get(blocCourant).put(e, symbole);
+        System.out.println((this));
     }
 
     public Symbole identifier(Entree e) throws VariableNonDeclaree {
@@ -56,28 +52,38 @@ public class TDS {
     }
 
     public int getTailleZoneVariable() {
-        return this.blocs.get(blocCourant).size() * (-4);
+        int taille = 0;
+        for (int i = 0; i> this.blocs.size(); ++i) {
+            taille+=this.blocs.get(i).size();
+        }
+        return taille * (-4);
     }
 
     public void entreeBloc(){
-        this.blocCourant++;
+        this.blocs.add(new HashMap<>());
+        this.blocCourant = this.blocs.size()-1;
     }
 
     public void sortieBloc(){
-        this.blocCourant--;
+        this.blocCourant = 0;
     }
 
     public int getBlocCourant(){
         return this.blocCourant;
     }
 
+    public int getNbBlocs() {
+        return blocs.size();
+    }
+
+    public void setBlocCourant(int blocCourant) {
+        this.blocCourant = blocCourant;
+    }
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("TDS{");
-        sb.append("blocs=").append(blocs);
-        sb.append(", blocCourant=").append(blocCourant);
-        sb.append(", nbBlocs=").append(nbBlocs);
-        sb.append('}');
-        return sb.toString();
+        return "TDS{" +
+                "blocs=" + blocs +
+                '}';
     }
 }
