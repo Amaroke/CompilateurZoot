@@ -5,7 +5,7 @@ public class Symbole {
 
     private String type;
     protected int noLigne;
-    private int numBloc;
+    private final int numBloc;
     protected int deplacement;
     private int nbParams;
 
@@ -35,14 +35,16 @@ public class Symbole {
         return noLigne;
     }
 
+    public int getNumBloc() {
+        return numBloc;
+    }
+
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Symbole{");
-        sb.append("deplacement=").append(deplacement);
-        sb.append(", type='").append(type).append(" ");
-        sb.append(", noLigne=").append(noLigne);
-        sb.append(", numBloc=").append(numBloc);
-        sb.append("}");
-        return sb.toString();
+        return "Symbole{" + "deplacement=" + deplacement +
+                ", type='" + type + " " +
+                ", noLigne=" + noLigne +
+                ", numBloc=" + numBloc +
+                "}";
     }
 }

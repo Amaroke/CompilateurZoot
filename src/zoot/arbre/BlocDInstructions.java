@@ -53,7 +53,9 @@ public class BlocDInstructions extends ArbreAbstrait {
             }
             str.append("\tb end\n\n");
             for (Fonction f : ListeFonctions.getInstance().getFonctions()) {
+                TDS.getInstance().setBlocCourant(f.getNumeroBloc());
                 str.append(f.toMIPS());
+                TDS.getInstance().setBlocCourant(0);
             }
             str.append("   #Fin du programme :\n\tend:\n\tli $v0, 10\n\tsyscall");
         } else {

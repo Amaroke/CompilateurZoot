@@ -1,0 +1,237 @@
+#MATHIEU STEINBACH Hugo & MOSELLE Marie-Luc
+
+.data
+
+AffichageVrai: .asciiz "vrai"
+AffichageFaux: .asciiz "faux"
+saut_ligne: .asciiz "\n"
+
+.text
+
+main: 
+   #Initialisation de la base des variables :
+	move $s7, $sp
+	addi $sp, $sp, -44
+
+   #Debut du programme :
+
+   #ecrire 42
+	li $v0, 42
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire faux
+	li $v0, 0
+	move $a0, $v0
+	beq $zero, $a0, Sinon38
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi38
+	Sinon38:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi38:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire vrai
+	li $v0, 1
+	move $a0, $v0
+	beq $zero, $a0, Sinon39
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi39
+	Sinon39:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi39:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #a = 5
+	li $v0, 5
+	sw $v0, 0($s7)
+   #c = a
+	lw $v0, 0($s7)
+
+	sw $v0, -8($s7)
+   #b = vrai
+	li $v0, 1
+	sw $v0, -4($s7)
+   #d = faux
+	li $v0, 0
+	sw $v0, -12($s7)
+   #ecrire a
+	lw $v0, 0($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire b
+	lw $v0, -4($s7)
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon45
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi45
+	Sinon45:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi45:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire c
+	lw $v0, -8($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire d
+	lw $v0, -12($s7)
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon47
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi47
+	Sinon47:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi47:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire fonc1
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Appel de la fonction
+	jal fonc1
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire fonc2
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Appel de la fonction
+	jal fonc2
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire fonc3
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Appel de la fonction
+	jal fonc3
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon50
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi50
+	Sinon50:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi50:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+	b end
+
+	fonc2:
+   #a = 42
+	li $v0, 42
+	sw $v0, -16($s7)
+   #b = a
+	lw $v0, -16($s7)
+
+	sw $v0, -20($s7)
+	lw $v0, -20($s7)
+
+	jr $ra
+
+	fonc1:
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Appel de la fonction
+	jal fonc2
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	jr $ra
+
+	fonc3:
+   #bool = faux
+	li $v0, 0
+	sw $v0, -36($s7)
+   #z = 4
+	li $v0, 4
+	sw $v0, -32($s7)
+	lw $v0, -36($s7)
+
+	jr $ra
+
+   #Fin du programme :
+	end:
+	li $v0, 10
+	syscall

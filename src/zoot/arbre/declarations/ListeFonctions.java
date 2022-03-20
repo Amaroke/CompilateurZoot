@@ -35,7 +35,9 @@ public class ListeFonctions {
 
     public void verifier() {
         for (Fonction f : this.fonctions) {
+            TDS.getInstance().setBlocCourant(f.getNumeroBloc());
             f.verifier();
+            TDS.getInstance().setBlocCourant(0);
         }
     }
 }

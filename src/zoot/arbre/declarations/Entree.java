@@ -21,10 +21,8 @@ public class Entree {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Entree{");
-        sb.append("nom='").append(nom).append('\'');
-        sb.append(", type='").append(type).append('\'');
-        sb.append('}');
-        return sb.toString();
+        return "Entree{" + "nom='" + nom + '\'' +
+                ", type='" + type + '\'' +
+                '}';
     }
 }

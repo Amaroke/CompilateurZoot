@@ -32,18 +32,22 @@ public class TDS {
                 }
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
-        this.blocs.get(blocCourant).put(e, symbole);
-        System.out.println((this));
+        this.blocs.get(symbole.getNumBloc()).put(e, symbole);
     }
 
     public Symbole identifier(Entree e) throws VariableNonDeclaree {
         Symbole symbole = new Symbole("", 0, this.blocCourant);
+        for (Map.Entry<Entree, Symbole> m : this.blocs.get(0).entrySet()) {
+            if (m.getKey().getNom().equals(e.getNom()) && m.getKey().getType().equals(e.getType())) {
+                symbole.setDeplacement(m.getValue().getDeplacement());
+                symbole.setType(m.getValue().getType());
+            }
+        }
         for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
             if (m.getKey().getNom().equals(e.getNom()) && m.getKey().getType().equals(e.getType())) {
                 symbole.setDeplacement(m.getValue().getDeplacement());
                 symbole.setType(m.getValue().getType());
             }
-
         }
         if (!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")) {
             throw new VariableNonDeclaree("Problème dans TDS, un type non reconnu s'y trouve.");
@@ -53,8 +57,8 @@ public class TDS {
 
     public int getTailleZoneVariable() {
         int taille = 0;
-        for (int i = 0; i> this.blocs.size(); ++i) {
-            taille+=this.blocs.get(i).size();
+        for (HashMap<Entree, Symbole> bloc : this.blocs) {
+            taille += bloc.size();
         }
         return taille * (-4);
     }

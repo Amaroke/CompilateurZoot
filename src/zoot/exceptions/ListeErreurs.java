@@ -23,10 +23,6 @@ public class ListeErreurs {
         return this.erreurs.size();
     }
 
-    public Erreur getErreur(int i) {
-        return this.erreurs.get(i);
-    }
-
     public ArrayList<Erreur> getErreurs() {
         return erreurs;
     }
