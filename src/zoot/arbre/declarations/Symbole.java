@@ -7,12 +7,13 @@ public class Symbole {
     protected int noLigne;
     private final int numBloc;
     protected int deplacement;
-    private int nbParams;
+    protected int nbParams;
 
-    public Symbole(String type, int noligne, int numBloc){
+    public Symbole(String type, int noligne, int numBloc) {
         this.type = type;
         this.noLigne = noligne;
-        this. numBloc = numBloc;
+        this.numBloc = numBloc;
+        this.nbParams = TDS.getInstance().getNbParam();
     }
 
     public int getDeplacement() {
@@ -37,6 +38,10 @@ public class Symbole {
 
     public int getNumBloc() {
         return numBloc;
+    }
+
+    public boolean isParam() {
+        return false;
     }
 
     @Override

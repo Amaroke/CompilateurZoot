@@ -2,8 +2,8 @@ package zoot.arbre.expressions;
 
 public abstract class Constante extends Expression {
 
-    protected final String cste ;
-    
+    protected final String cste;
+
     protected Constante(String texte, int n) {
         super(n);
         cste = texte;

@@ -10,14 +10,13 @@ import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
 
 
-public class Retourne extends Instruction{
+public class Retourne extends Instruction {
 
     private final Expression expression;
 
     public Retourne(int n, Expression expression) {
         super(n);
         this.expression = expression;
-
     }
 
     @Override

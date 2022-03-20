@@ -1,6 +1,10 @@
 package zoot.arbre.declarations;
 
 import zoot.arbre.ArbreAbstrait;
+import zoot.arbre.BlocDInstructions;
+import zoot.arbre.instructions.Retourne;
+import zoot.exceptions.Erreur;
+import zoot.exceptions.ListeErreurs;
 
 public class Fonction {
 
@@ -16,12 +20,21 @@ public class Fonction {
         this.numeroBloc = numeroBloc;
     }
 
-    public String toMIPS(){
+    public String toMIPS() {
         return "\t" + idf + ":\n" +
                 arbre.toMIPS() + "\n";
     }
 
-    public void verifier(){
+    public void verifier() {
+        boolean retournePresent = false;
+        for (ArbreAbstrait a : ((BlocDInstructions) arbre).getProgramme()) {
+            if (a instanceof Retourne) {
+                retournePresent = true;
+            }
+        }
+        if (!retournePresent) {
+            ListeErreurs.getInstance().ajouter(new Erreur("Pas de retourne dans la fonction " + idf, noLigne));
+        }
         arbre.verifier();
     }
 

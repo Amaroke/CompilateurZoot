@@ -8,16 +8,16 @@ public class ListeFonctions {
     private int cpt;
     private static final ListeFonctions INSTANCE = new ListeFonctions();
 
-    public ListeFonctions(){
+    public ListeFonctions() {
         this.fonctions = new ArrayList<>();
         this.cpt = 0;
     }
 
-    public static ListeFonctions getInstance(){
+    public static ListeFonctions getInstance() {
         return INSTANCE;
     }
 
-    public void ajouter(Fonction f){
+    public void ajouter(Fonction f) {
         this.fonctions.add(f);
     }
 

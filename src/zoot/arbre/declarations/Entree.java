@@ -10,7 +10,6 @@ public class Entree {
         this.type = type;
     }
 
-
     public String getNom() {
         return nom;
     }

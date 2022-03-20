@@ -34,25 +34,22 @@ public class Zoot {
                     System.err.println("ERREUR SEMANTIQUE : Ligne n°" + e.getLigne() + " : " + e.getMessage());
                 }
             }
-        }
-        catch (FileNotFoundException ex) {
-            System.err.println("Fichier " + nomFichier + " inexistant") ;
-        }
-        catch (AnalyseException ex) {
+        } catch (FileNotFoundException ex) {
+            System.err.println("Fichier " + nomFichier + " inexistant");
+        } catch (AnalyseException ex) {
             System.err.println(ex.getMessage());
-        }
-        catch (Exception ex) {
+        } catch (Exception ex) {
             Logger.getLogger(Zoot.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     public static void main(String[] args) {
         if (args.length != 1) {
-            System.err.println("Nombre incorrect d'arguments") ;
-            System.err.println("\tjava -jar zoot.jar <fichierSource.zoot>") ;
-            System.exit(1) ;
+            System.err.println("Nombre incorrect d'arguments");
+            System.err.println("\tjava -jar zoot.jar <fichierSource.zoot>");
+            System.exit(1);
         }
-        new Zoot(args[0]) ;
+        new Zoot(args[0]);
     }
 
 }

@@ -126,7 +126,7 @@ LPAR    ::=     LPAR:lp PAR:p
 
 PAR     ::=     TYPE:t IDF:i POINTVIRGULE
                 {:
-                TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t, ileft+1, TDS.getInstance().getNbBlocs()-1)); :}
+                TDS.getInstance().ajouter(new Entree(i, "variable"), new SymboleParam(t, ileft+1, TDS.getInstance().getNbBlocs()-1)); :}
                 ;
 
 LVARLOC    ::=  LVARLOC:lv VAR:v
@@ -188,7 +188,7 @@ TYPE    ::=     ENTIER
 FCT     ::=     TYPE:t IDF:i PARAM VARIABLES LVARLOC:lv DEBUT LINST:li FIN
                 {:
                 try {
-                    TDS.getInstance().ajouter(new Entree(i, "fonction"), new Symbole(t, ileft+1,0));
+                    TDS.getInstance().ajouter(new Entree(i, "fonction"), new SymboleFonction(t, ileft+1));
                     } catch (DoubleDeclaration d) {
                         ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
                     }
@@ -199,7 +199,7 @@ FCT     ::=     TYPE:t IDF:i PARAM VARIABLES LVARLOC:lv DEBUT LINST:li FIN
                     TYPE:t IDF:i PARAM DEBUT LINST:li FIN
                     {:
                     try {
-                        TDS.getInstance().ajouter(new Entree(i, "fonction"), new Symbole(t, ileft+1,0));
+                        TDS.getInstance().ajouter(new Entree(i, "fonction"), new SymboleFonction(t, ileft+1));
                         } catch (DoubleDeclaration d) {
                             ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
                         }

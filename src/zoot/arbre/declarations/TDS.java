@@ -27,9 +27,9 @@ public class TDS {
 
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {
         for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
-                if (m.getKey().getNom().equals(e.getNom())) {
-                    throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
-                }
+            if (m.getKey().getNom().equals(e.getNom())) {
+                throw new DoubleDeclaration("Le symbole : \"" + e.getNom() + "\" a été déclaré deux fois.");
+            }
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
         this.blocs.get(symbole.getNumBloc()).put(e, symbole);
@@ -63,16 +63,16 @@ public class TDS {
         return taille * (-4);
     }
 
-    public void entreeBloc(){
+    public void entreeBloc() {
         this.blocs.add(new HashMap<>());
-        this.blocCourant = this.blocs.size()-1;
+        this.blocCourant = this.blocs.size() - 1;
     }
 
-    public void sortieBloc(){
+    public void sortieBloc() {
         this.blocCourant = 0;
     }
 
-    public int getBlocCourant(){
+    public int getBlocCourant() {
         return this.blocCourant;
     }
 
@@ -82,6 +82,16 @@ public class TDS {
 
     public void setBlocCourant(int blocCourant) {
         this.blocCourant = blocCourant;
+    }
+
+    public int getNbParam() {
+        int nb = 0;
+        for (Map.Entry<Entree, Symbole> m : this.blocs.get(blocCourant).entrySet()) {
+            if (m.getValue().isParam()) {
+                nb++;
+            }
+        }
+        return nb;
     }
 
     @Override

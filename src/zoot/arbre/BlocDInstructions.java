@@ -13,25 +13,25 @@ import java.util.ArrayList;
  */
 
 public class BlocDInstructions extends ArbreAbstrait {
-    
+
     protected final ArrayList<ArbreAbstrait> programme;
 
     public BlocDInstructions(int n) {
-        super(n) ;
-        programme = new ArrayList<>() ;
+        super(n);
+        programme = new ArrayList<>();
     }
-    
+
     public void ajouter(ArbreAbstrait a) {
-        programme.add(a) ;
+        programme.add(a);
     }
 
     @Override
     public void verifier() {
-        for(ArbreAbstrait a : programme){
+        for (ArbreAbstrait a : programme) {
             a.verifier();
         }
     }
-    
+
     @Override
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
@@ -64,6 +64,10 @@ public class BlocDInstructions extends ArbreAbstrait {
             }
         }
         return str.toString();
+    }
+
+    public ArrayList<ArbreAbstrait> getProgramme() {
+        return programme;
     }
 
     @Override

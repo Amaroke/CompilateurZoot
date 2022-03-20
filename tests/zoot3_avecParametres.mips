@@ -11,7 +11,7 @@ saut_ligne: .asciiz "\n"
 main: 
    #Initialisation de la base des variables :
 	move $s7, $sp
-	addi $sp, $sp, -44
+	addi $sp, $sp, -52
 
    #Debut du programme :
 
@@ -197,12 +197,12 @@ main:
 	fonc2:
    #a = 42
 	li $v0, 42
-	sw $v0, -16($s7)
+	sw $v0, -24($s7)
    #b = a
-	lw $v0, -16($s7)
+	lw $v0, -24($s7)
 
-	sw $v0, -20($s7)
-	lw $v0, -20($s7)
+	sw $v0, -28($s7)
+	lw $v0, -28($s7)
 
 	jr $ra
 
@@ -223,11 +223,11 @@ main:
 	fonc3:
    #bool = faux
 	li $v0, 0
-	sw $v0, -36($s7)
+	sw $v0, -44($s7)
    #z = 4
 	li $v0, 4
-	sw $v0, -32($s7)
-	lw $v0, -36($s7)
+	sw $v0, -40($s7)
+	lw $v0, -44($s7)
 
 	jr $ra
 
