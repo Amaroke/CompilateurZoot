@@ -49,9 +49,6 @@ public class TDS {
                 symbole.setType(m.getValue().getType());
             }
         }
-        if (!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")) {
-            throw new VariableNonDeclaree("Problème dans TDS, un type non reconnu s'y trouve.");
-        }
         return symbole;
     }
 

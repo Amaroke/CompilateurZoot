@@ -1,6 +1,7 @@
 package zoot.arbre.declarations;
 
 import zoot.arbre.expressions.Expression;
+import zoot.exceptions.DoubleDeclaration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,10 @@ public class ListeFonctions {
     }
 
     public void ajouter(Fonction f) {
+        for (Fonction fct : fonctions) {
+            if (f.getIdf().equals(fct.getIdf()) && f.getNbParam() == fct.getNbParam())
+                throw new DoubleDeclaration("La fonction : \"" + fct.getIdf() + "\" a été déclaré deux fois.");
+        }
         this.fonctions.add(f);
     }
 

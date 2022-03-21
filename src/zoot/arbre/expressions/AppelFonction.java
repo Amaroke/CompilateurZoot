@@ -21,7 +21,7 @@ public class AppelFonction extends Expression {
 
     @Override
     public void verifier() {
-        // TODO Faire les vérifications.
+        //TODO Verifier le type des params ?
         idf.verifier();
     }
 
