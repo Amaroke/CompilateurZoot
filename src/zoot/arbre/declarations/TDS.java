@@ -52,12 +52,13 @@ public class TDS {
         return symbole;
     }
 
-    public Symbole trouverFonction(String idf, int nbParam) {
-        Symbole symbole = new Symbole("", 0, this.blocCourant);
+    public SymboleFonction trouverFonction(String idf, int nbParam) {
+        SymboleFonction symbole = new SymboleFonction(idf, this.blocCourant);
         for (Map.Entry<Entree, Symbole> m : this.blocs.get(0).entrySet()) {
             if (m.getKey().getNom().equals(idf) && (m.getValue().getNbParams() == nbParam)) {
                 symbole.setDeplacement(m.getValue().getDeplacement());
                 symbole.setType(m.getValue().getType());
+                symbole.setNbParams(m.getValue().getNbParams());
             }
         }
         return symbole;
@@ -100,10 +101,15 @@ public class TDS {
         return nb;
     }
 
+    public ArrayList<HashMap<Entree, Symbole>> getBlocs() {
+        return blocs;
+    }
+
     @Override
     public String toString() {
         return "TDS{" +
                 "blocs=" + blocs +
+                ", blocCourant=" + blocCourant +
                 '}';
     }
 }

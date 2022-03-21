@@ -84,5 +84,17 @@ public class Fonction {
         return this.parametres.size();
     }
 
+    public HashMap<Entree, Symbole> getParametres() {
+        return parametres;
+    }
 
+    public String getTypeParam(int i) {
+        for (Map.Entry<Entree, Symbole> m : this.parametres.entrySet()) {
+            if (i == 0) {
+                return m.getValue().getType();
+            }
+            i--;
+        }
+        return null;
+    }
 }

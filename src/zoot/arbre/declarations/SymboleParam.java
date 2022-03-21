@@ -10,4 +10,13 @@ public class SymboleParam extends Symbole {
     public boolean isParam() {
         return true;
     }
+
+    @Override
+    public String toString() {
+        return "SymboleParam{" +
+                "noLigne=" + noLigne +
+                ", deplacement=" + deplacement +
+                ", nbParams=" + nbParams +
+                '}';
+    }
 }

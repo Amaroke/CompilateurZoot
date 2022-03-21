@@ -23,6 +23,10 @@ public class Symbole {
         this.deplacement = deplacement;
     }
 
+    public void setNbParams(int nbParams) {
+        this.nbParams = nbParams;
+    }
+
     public String getType() {
         return type;
     }
@@ -49,10 +53,12 @@ public class Symbole {
 
     @Override
     public String toString() {
-        return "Symbole{" + "deplacement=" + deplacement +
-                ", type='" + type + " " +
+        return "Symbole{" +
+                "type='" + type + '\'' +
                 ", noLigne=" + noLigne +
                 ", numBloc=" + numBloc +
-                "}";
+                ", deplacement=" + deplacement +
+                ", nbParams=" + nbParams +
+                '}';
     }
 }

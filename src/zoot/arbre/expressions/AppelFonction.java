@@ -1,7 +1,11 @@
 package zoot.arbre.expressions;
 
+import zoot.arbre.declarations.Fonction;
 import zoot.arbre.declarations.ListeFonctions;
+import zoot.arbre.declarations.SymboleFonction;
 import zoot.arbre.declarations.TDS;
+import zoot.exceptions.Erreur;
+import zoot.exceptions.ListeErreurs;
 
 import java.util.ArrayList;
 
@@ -21,7 +25,27 @@ public class AppelFonction extends Expression {
 
     @Override
     public void verifier() {
-        //TODO Verifier le type des params ?
+        for (Fonction f : ListeFonctions.getInstance().getFonctions()) {
+            SymboleFonction s = TDS.getInstance().trouverFonction(f.getIdf(), f.getNbParam());
+            if (s.getNbParams() == this.nbParam) {
+                for (int i = 0; i < f.getNbParam(); i++) {
+                    if (!this.parametresEffectifs.get(i).getType().equals(f.getTypeParam(i))) {
+                        ListeErreurs.getInstance().ajouter(new Erreur("Mauvais type de paramètre fourni à " + idf.getNom(), noLigne));
+                    }
+                }
+            }
+        }
+        if (this.nbParam != 0) {
+            boolean bonNombreParam = false;
+            for (Fonction f : ListeFonctions.getInstance().getFonctions()) {
+                if (f.getNbParam() == this.nbParam && f.getIdf().equals(this.idf.getNom())) {
+                    bonNombreParam = true;
+                }
+            }
+            if (!bonNombreParam) {
+                ListeErreurs.getInstance().ajouter(new Erreur("Mauvais nombre de paramètres donné à " + idf.getNom(), noLigne));
+            }
+        }
         idf.verifier();
     }
 

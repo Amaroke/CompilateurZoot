@@ -8,8 +8,6 @@ import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
 
-import java.util.Objects;
-
 
 public class Retourne extends Instruction {
 
@@ -37,8 +35,11 @@ public class Retourne extends Instruction {
                     }
                 }
             }
-            String type = TDS.getInstance().trouverFonction(Objects.requireNonNull(fonctionMere).getIdf(), fonctionMere.getNbParam()).getType();
-            if (!type.equals(expression.getType())) {
+            String type = null;
+            if (fonctionMere != null) {
+                type = TDS.getInstance().trouverFonction((fonctionMere).getIdf(), fonctionMere.getNbParam()).getType();
+            }
+            if (type != null && !type.equals(expression.getType())) {
                 ListeErreurs.getInstance().ajouter(new Erreur("Le type de l'instruction retourné ne correspond pas au type de retour de la fonction correspondante.", noLigne));
             }
         } catch (VariableNonDeclaree e) {

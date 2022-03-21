@@ -5,6 +5,7 @@ import zoot.exceptions.DoubleDeclaration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 public class ListeFonctions {
 
@@ -26,10 +27,16 @@ public class ListeFonctions {
     }
 
     public void ajouter(Fonction f) {
+        for (Map.Entry<Entree, Symbole> m : TDS.getInstance().getBlocs().get(0).entrySet()) {
+            if (m.getKey().getNom().equals(f.getIdf()) && !m.getKey().getType().equals("fonction")) {
+                throw new DoubleDeclaration("La fonction : \"" + f.getIdf() + "\" porte le même nom qu'une variable.");
+            }
+        }
         for (Fonction fct : fonctions) {
             if (f.getIdf().equals(fct.getIdf()) && f.getNbParam() == fct.getNbParam())
                 throw new DoubleDeclaration("La fonction : \"" + fct.getIdf() + "\" a été déclaré deux fois.");
         }
+
         this.fonctions.add(f);
     }
 

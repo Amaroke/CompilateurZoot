@@ -1,254 +1,198 @@
 @startuml
-skinparam class {
-BackgroundColor AliceBlue
-ArrowColor DarkTurquoise
-BorderColor Turquoise
+abstract class zoot.exceptions.AnalyseException {
+}
+class zoot.arbre.instructions.Affectation {
+# Expression exp
+# Idf idf
++ void verifier()
++ String toMIPS()
+}
+class zoot.arbre.declarations.Fonction {
+- ArbreAbstrait arbre
+- int noLigne
+- String idf
+- int numeroBloc
+- HashMap<Entree,Symbole> parametres
+- String etiquette
++ String toMIPS()
++ void verifier()
++ void recupererParametres()
++ int getNoLigne()
++ void setEtiquette()
++ String getIdf()
++ int getNumeroBloc()
++ int getNbParam()
++ HashMap<Entree,Symbole> getParametres()
++ String getTypeParam(int)
+}
+class zoot.exceptions.DoubleDeclaration {
+}
+abstract class zoot.arbre.instructions.Instruction {
++ {abstract}void verifier()
+}
+class zoot.exceptions.Erreur {
+- String message
+- int ligne
++ String getMessage()
++ int getLigne()
+}
+class zoot.exceptions.VariableNonDeclaree {
+}
+class zoot.exceptions.AnalyseSemantiqueException {
+}
+class zoot.arbre.BlocDInstructions {
+# ArrayList<ArbreAbstrait> programme
++ void ajouter(ArbreAbstrait)
++ void verifier()
++ String toMIPS()
++ ArrayList<ArbreAbstrait> getProgramme()
++ String toString()
+}
+class zoot.exceptions.AnalyseLexicaleException {
+}
+class zoot.arbre.expressions.ConstanteBooleenne {
++ String toMIPS()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
+}
+abstract class zoot.arbre.expressions.Expression {
++ {abstract}boolean isIdf()
++ {abstract}boolean isBool()
++ {abstract}boolean isFonction()
++ {abstract}String getType()
++ {abstract}String getNom()
+}
+class zoot.arbre.declarations.ListeFonctions {
+- ArrayList<Fonction> fonctions
+- ArrayList<Expression> parametresEffectifs
+- HashMap<Entree,Symbole> parametres
+- int cpt
+- {static} ListeFonctions INSTANCE
++ {static} ListeFonctions getInstance()
++ void ajouter(Fonction)
++ ArrayList<Fonction> getFonctions()
++ int getCpt()
++ void setCpt(int)
++ ArrayList<Expression> getParametresEffectifs()
++ void viderParametresEffectifs()
++ void ajouterParametreEffectif(Expression)
++ void viderParametres()
++ void ajouterParametre(Entree,Symbole)
++ HashMap<Entree,Symbole> getParametres()
++ void verifier()
+}
+class zoot.arbre.instructions.Ecrire {
+# Expression exp
++ void verifier()
++ String toMIPS()
+}
+class zoot.arbre.declarations.SymboleFonction {
+}
+class zoot.arbre.declarations.Symbole {
+- String type
+# int noLigne
+- int numBloc
+# int deplacement
+# int nbParams
++ int getDeplacement()
++ void setDeplacement(int)
++ void setNbParams(int)
++ String getType()
++ void setType(String)
++ int getNoLigne()
++ int getNumBloc()
++ boolean isParam()
++ int getNbParams()
++ String toString()
+}
+abstract class zoot.arbre.expressions.Constante {
+# String cste
++ void verifier()
++ String toString()
++ boolean isIdf()
++ String getNom()
+}
+class zoot.arbre.expressions.ConstanteEntiere {
++ String toMIPS()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
+}
+class zoot.arbre.declarations.TDS {
+- {static} TDS INSTANCE
+- ArrayList<HashMap<Entree,Symbole>> blocs
+- int blocCourant
++ {static} TDS getInstance()
++ void ajouter(Entree,Symbole)
++ Symbole identifier(Entree)
++ SymboleFonction trouverFonction(String,int)
++ int getTailleZoneVariable()
++ void entreeBloc()
++ void sortieBloc()
++ int getBlocCourant()
++ void setBlocCourant(int)
++ int getNbParam()
++ ArrayList<HashMap<Entree,Symbole>> getBlocs()
++ String toString()
+}
+class zoot.exceptions.AnalyseSyntaxiqueException {
+}
+abstract class zoot.arbre.ArbreAbstrait {
+# int noLigne
++ int getNoLigne()
++ {abstract}void verifier()
++ {abstract}String toMIPS()
+}
+class zoot.Zoot {
++ {static} void main(String[])
+}
+class zoot.arbre.expressions.Idf {
+- Entree entree
+- Symbole symbole
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ int getDeplacement()
++ String getNom()
+}
+class zoot.exceptions.ListeErreurs {
+- {static} ListeErreurs INSTANCE
+- ArrayList<Erreur> erreurs
++ {static} ListeErreurs getInstance()
++ void ajouter(Erreur)
++ int getNbErreurs()
++ ArrayList<Erreur> getErreurs()
+}
+class zoot.arbre.declarations.Entree {
+- String nom
+- String type
++ String getNom()
++ String getType()
++ String toString()
 }
 
-skinparam stereotypeCBackgroundColor DarkTurquoise
-skinparam stereotypeIBackgroundColor Magenta
-skinparam stereotypeABackgroundColor Yellow
 
-hide stereotype
-hide empty member
-
-package "arbre"{
-    package "exceptions"{
-        abstract class AnalyseException{
-            AnalyseException(String m)
-        }
-
-        AnalyseException -up-|> RuntimeException
-
-        class AnalyseLexicaleException{
-            AnalyseLexicalException(int ligne, int colonne, String m)
-        }
-        AnalyseLexicaleException -up-|> AnalyseException
-
-        class AnalyseSyntaxiqueException{
-            AnalyseSyntaxiqueException(String m)
-        }
-        AnalyseSyntaxiqueException -up-|> AnalyseException
-
-        class AnalyseSemantiqueException{
-            AnalyseSemantiqueException(String m)
-        }
-        AnalyseSemantiqueException -up-|> AnalyseException
-
-        class AnalyseLexicaleSemantiqueException{
-            AnalyseLexicaleSemantiqueException(String m)
-        }
-        AnalyseLexicaleSemantiqueException -up-|> AnalyseException
-
-        class VariableNonDeclaree{
-            VariableNonDeclaree(String m)
-        }
-        VariableNonDeclaree -up-|> AnalyseSemantiqueException
-
-        class DoubleDeclaration{
-            DoubleDeclaration(String m)
-        }
-        DoubleDeclaration -up-|> AnalyseSemantiqueException
-
-        class Erreur{
-            final String message
-            final int ligne
-            String getMessage()
-            int getLigne()
-        }
-
-        class ListeErreurs{
-            static final ListeErreurs INSTANCE
-            ListeErreurs()
-            static ListeErreurs getInstance()
-            void ajouter(Erreur e)
-            int getNbErreurs()
-            Erreur getErreur(int i)
-            ArrayList<Erreur> getErreurs()
-        }
-    }
-    ListeErreurs --"*"Erreur
-
-
-    package "instructions"{
-        abstract class ArbreAbstrait {
-           int noLigne
-           ArbreAbstrait(int n)
-           int getNoLigne()
-           abstract void verifier()
-           abstract String toMIPS()
-        }
-
-        class BlocDInstructions {
-           BlocDInstructions(int n)
-           void ajouter(ArbreAbstrait a)
-           void verifier()
-           String toMIPS()
-           String toString()
-        }
-
-        BlocDInstructions -up-|> ArbreAbstrait
-        BlocDInstructions -up- "*" ArbreAbstrait
-
-        abstract class Instruction {
-            Instruction(int n)
-        }
-
-        Instruction -up-|> ArbreAbstrait
-
-        class Ecrire {
-           Ecrire(int n)
-           void verifier()
-           String toMIPS()
-        }
-
-        Ecrire  -up-|> Instruction
-
-        class Affectation {
-           Affectation(Idf idf, Expression e, int n)
-           void verifier()
-           String toMIPS()
-        }
-
-        class Retourne{
-        	final Expression expression
-
-        	}
-				Retourne --up-|> Expression
-        Affectation  -up-|> Instruction
-
-    }
-
-
-    package "expressions"{
-        abstract class Expression {
-           Expression(int n)
-           abstract boolean isIdf()
-           abstract boolean isBool()
-           abstract boolean isFonction()
-           abstract String getType()
-           abstract String getNom()
-        }
-
-        Expression  -up-|> ArbreAbstrait
-        Ecrire - "1" Expression
-
-        abstract class Constante {
-           String cste
-           protected Constante(String texte, int n)
-           void verfier()
-           String toString()
-           boolean isIdf
-           String getNom()
-        }
-
-        Constante  -up-|> Expression
-
-
-        class ConstanteEntiere {
-           ConstanteEntiere(String texte, int n)
-           String toMIPS()
-           boolean isBool()
-           boolean isFonction()
-           String getType()
-
-        }
-
-        class Idf {
-                   String nom
-                   Symbole symbole
-                   Idf(String texte, int n)
-                   void verifier()
-                   String toMIPS()
-                   boolean isIdf()
-                   boolean isBool()
-                   String getType()
-                   String getNom()
-
-                }
-
-        ConstanteEntiere  -up-|> Constante
-
-        class ConstanteBooleenne {
-           ConstanteBooleenne(String texte, int n)
-           String toMIPS()
-           boolean isBool()
-           boolean isFonction()
-           String getType()
-        }
-
-        class AppelFonction{
-        	final Idf idf
-        	AppelFonction(Idf idf, int n)
-        	void verifier()
-        	String toMIPS()
-        	boolean isIdf()
-        	boolean isBool()
-        	boolean isFonction()
-        	String getType()
-        	String getNom()
-        }
-
-        ConstanteBooleenne  -up-|> Constante
-        Affectation - "1" Expression
-        Affectation - "1" Idf
-        AppelFonction --up-|> Expression
-
-    }
-    package "declarations"{
-        class Symbole {
-            int deplacement
-            String type
-            Symbole(int deplacement, String type)
-            Symbole(String type)
-            Symbole(String type, int noLigne)
-            int getDeplacement
-            void setDeplacement(int deplacement)
-            String getType()
-            void setType(String type)
-
-        }
-
-        class TDS{
-            static final TDS INSTANCE
-            final HashMap<String, Symbole> variables
-            static TDS getInstance()
-            void ajouter(String idf, Symbole symbole) throws DoubleDeclaration
-            Symbole identifier(String nom) throws VariableNonDeclaree
-            int getTailleZoneVariable()
-
-        }
-
-        class Entree{
-        	final String nom
-        	Entree(String nom)
-        	String getNom()
-        }
-
-        class Fonction{
-    			final int noLigne;
-    			final String idf;
-    			Fonction(ArbreAbstrait arbre, int noLigne, String idf)
-    			String toMIPS()
-    			void verifier()
-    			int getNoLigne()
-        }
-
-        class ListeFonctions{
-        	int cpt
-        	static final ListeFonctions INSTANCE
-        	ListeFonctions()
-        	ListeFonctions getInstance()
-        	ajouter(Fonction f)
-        	ArrayList<Fonction> getFonctions()
-        	int getCpt()
-        	void setCpt(int cpt)
-        }
-
-
-        Fonction --"1" ArbreAbstrait
-        Fonction --up-|> Expression
-        ListeFonctions --"*" Fonction
-}
-}
+zoot.exceptions.RuntimeException <|-- zoot.exceptions.AnalyseException
+zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Affectation
+zoot.exceptions.AnalyseSemantiqueException <|-- zoot.exceptions.DoubleDeclaration
+zoot.arbre.ArbreAbstrait <|-- zoot.arbre.instructions.Instruction
+zoot.exceptions.AnalyseSemantiqueException <|-- zoot.exceptions.VariableNonDeclaree
+zoot.exceptions.AnalyseException <|-- zoot.exceptions.AnalyseSemantiqueException
+zoot.arbre.ArbreAbstrait <|-- zoot.arbre.BlocDInstructions
+zoot.exceptions.AnalyseException <|-- zoot.exceptions.AnalyseLexicaleException
+zoot.arbre.expressions.Constante <|-- zoot.arbre.expressions.ConstanteBooleenne
+zoot.arbre.ArbreAbstrait <|-- zoot.arbre.expressions.Expression
+zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Retourne
+zoot.arbre.declarations.Symbole <|-- zoot.arbre.declarations.SymboleParam
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.AppelFonction
+zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Ecrire
+zoot.arbre.declarations.Symbole <|-- zoot.arbre.declarations.SymboleFonction
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.Constante
+zoot.arbre.expressions.Constante <|-- zoot.arbre.expressions.ConstanteEntiere
+zoot.exceptions.AnalyseException <|-- zoot.exceptions.AnalyseSyntaxiqueException
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.Idf
 @enduml

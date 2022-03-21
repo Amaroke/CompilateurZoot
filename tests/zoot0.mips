@@ -2,8 +2,6 @@
 
 .data
 
-vrai: .word 1
-faux: .word 0
 AffichageVrai: .asciiz "vrai"
 AffichageFaux: .asciiz "faux"
 saut_ligne: .asciiz "\n"

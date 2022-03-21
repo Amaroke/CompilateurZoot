@@ -132,8 +132,10 @@ main:
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc1
+	jal fonc10
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -151,8 +153,10 @@ main:
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc2
+	jal fonc20
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -170,8 +174,10 @@ main:
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc3
+	jal fonc30
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -194,17 +200,19 @@ main:
 
 	b end
 
-	fonc2:
+	fonc20:
 	li $v0, 42
 	jr $ra
 
-	fonc1:
+	fonc10:
 	   #Sauvegarde des registres
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc2
+	jal fonc20
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -212,7 +220,7 @@ main:
 
 	jr $ra
 
-	fonc3:
+	fonc30:
 	li $v0, 0
 	jr $ra
 
