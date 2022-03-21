@@ -40,11 +40,12 @@ public class ListeFonctions {
         this.cpt = cpt;
     }
 
-    public Expression recupererParametreEffectif() {
-        System.out.println(parametresEffectifs);
-        Expression res = parametresEffectifs.get(0);
-        parametresEffectifs.remove(0);
-        return res;
+    public ArrayList<Expression> getParametresEffectifs() {
+        return parametresEffectifs;
+    }
+
+    public void viderParametresEffectifs() {
+        this.parametresEffectifs.clear();
     }
 
     public void ajouterParametreEffectif(Expression param) {

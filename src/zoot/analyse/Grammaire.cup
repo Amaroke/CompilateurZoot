@@ -216,6 +216,7 @@ FCT     ::=     TYPE:t IDF:i PARAM VARIABLES LVARLOC:lv DEBUT LINST:li FIN
                     }
                     Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
                     fonction.recupererParametres();
+                    fonction.setEtiquette();
                 ListeFonctions.getInstance().ajouter(fonction);
                 TDS.getInstance().sortieBloc(); :}
                 |
@@ -229,7 +230,9 @@ FCT     ::=     TYPE:t IDF:i PARAM VARIABLES LVARLOC:lv DEBUT LINST:li FIN
                         }
                    Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
                                         fonction.recupererParametres();
+                                        fonction.setEtiquette();
                                     ListeFonctions.getInstance().ajouter(fonction);
+                                    TDS.getInstance().sortieBloc();
                     :}
 
                 ;

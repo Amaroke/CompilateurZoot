@@ -16,6 +16,7 @@ public class Fonction {
     private final String idf;
     private final int numeroBloc;
     private HashMap<Entree, Symbole> parametres;
+    private String etiquette;
 
     public Fonction(ArbreAbstrait arbre, int noLigne, String idf, int numeroBloc) {
         this.arbre = arbre;
@@ -27,12 +28,18 @@ public class Fonction {
 
     public String toMIPS() {
         StringBuilder str = new StringBuilder();
-        str.append("\t").append(idf).append(":\n");
-        if (parametres.size() != 0) {
-            for (Map.Entry<Entree, Symbole> m : this.parametres.entrySet()) {
-                str.append("\t").append(ListeFonctions.getInstance().recupererParametreEffectif().toMIPS()).append("\n");
-                str.append("\tsw $v0, ").append(m.getValue().getDeplacement()).append("($s7)\n");
+        int plusPetit = 0;
+        for (Map.Entry<Entree, Symbole> m : this.parametres.entrySet()) {
+            if (m.getValue().getDeplacement() < plusPetit) {
+                plusPetit = m.getValue().getDeplacement();
             }
+        }
+        str.append("\t").append(etiquette).append(":\n");
+        for (Map.Entry<Entree, Symbole> m : this.parametres.entrySet()) {
+            str.append("\tlw $v0, 4($sp)\n");
+            str.append("\taddi $sp,$sp, 4\n");
+            str.append("\tsw $v0, ").append(plusPetit).append("($s7)\n");
+            plusPetit += 4;
         }
         str.append(arbre.toMIPS()).append("\n");
         return str.toString();
@@ -61,6 +68,10 @@ public class Fonction {
         return noLigne;
     }
 
+    public void setEtiquette() {
+        this.etiquette = this.idf + this.parametres.size();
+    }
+
     public String getIdf() {
         return idf;
     }
@@ -68,4 +79,10 @@ public class Fonction {
     public int getNumeroBloc() {
         return numeroBloc;
     }
+
+    public int getNbParam() {
+        return this.parametres.size();
+    }
+
+
 }

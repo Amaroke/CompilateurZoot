@@ -1,6 +1,5 @@
 package zoot.arbre.instructions;
 
-import zoot.arbre.declarations.Entree;
 import zoot.arbre.declarations.Fonction;
 import zoot.arbre.declarations.ListeFonctions;
 import zoot.arbre.declarations.TDS;
@@ -8,6 +7,8 @@ import zoot.arbre.expressions.Expression;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
+
+import java.util.Objects;
 
 
 public class Retourne extends Instruction {
@@ -27,16 +28,17 @@ public class Retourne extends Instruction {
         }
         try {
             int tmp = 0;
-            String fonctionMere = "";
+            Fonction fonctionMere = null;
             for (Fonction f : ListeFonctions.getInstance().getFonctions()) {
                 if (f.getNoLigne() < this.noLigne) {
-                    if (f.getNoLigne() >= tmp) {
+                    if (f.getNoLigne() > tmp) {
                         tmp = f.getNoLigne();
-                        fonctionMere = f.getIdf();
+                        fonctionMere = f;
                     }
                 }
             }
-            if (!TDS.getInstance().identifier(new Entree(fonctionMere, "fonction")).getType().equals(expression.getType())) {
+            String type = TDS.getInstance().trouverFonction(Objects.requireNonNull(fonctionMere).getIdf(), fonctionMere.getNbParam()).getType();
+            if (!type.equals(expression.getType())) {
                 ListeErreurs.getInstance().ajouter(new Erreur("Le type de l'instruction retourné ne correspond pas au type de retour de la fonction correspondante.", noLigne));
             }
         } catch (VariableNonDeclaree e) {

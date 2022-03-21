@@ -32,6 +32,7 @@ public class TDS {
         }
         symbole.setDeplacement(this.getTailleZoneVariable());
         this.blocs.get(symbole.getNumBloc()).put(e, symbole);
+
     }
 
     public Symbole identifier(Entree e) throws VariableNonDeclaree {
@@ -50,6 +51,17 @@ public class TDS {
         }
         if (!symbole.getType().equals("entier") && !symbole.getType().equals("booleen")) {
             throw new VariableNonDeclaree("Problème dans TDS, un type non reconnu s'y trouve.");
+        }
+        return symbole;
+    }
+
+    public Symbole trouverFonction(String idf, int nbParam) {
+        Symbole symbole = new Symbole("", 0, this.blocCourant);
+        for (Map.Entry<Entree, Symbole> m : this.blocs.get(0).entrySet()) {
+            if (m.getKey().getNom().equals(idf) && (m.getValue().getNbParams() == nbParam)) {
+                symbole.setDeplacement(m.getValue().getDeplacement());
+                symbole.setType(m.getValue().getType());
+            }
         }
         return symbole;
     }

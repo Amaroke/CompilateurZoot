@@ -43,6 +43,10 @@ public class Symbole {
         return false;
     }
 
+    public int getNbParams() {
+        return nbParams;
+    }
+
     @Override
     public String toString() {
         return "Symbole{" + "deplacement=" + deplacement +
