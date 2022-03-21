@@ -73,6 +73,9 @@ start with PROG ;
 PROG    ::=     VARIABLES LDCL:lv FONCTION LFCT:lf DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
         |
+                FONCTION LFCT:lf DEBUT  LINST:li  FIN
+                {: RESULT = li; :}
+        |
                 VARIABLES LDCL:lv DEBUT  LINST:li  FIN
                 {: RESULT = li; :}
         |
@@ -119,26 +122,31 @@ LPAR    ::=     LPAR:lp PAR:p
                 {:
                 BlocDInstructions b = new BlocDInstructions(pleft + 1) ;
                 b.ajouter(p) ;
-                RESULT = b ; :}
+                RESULT = b ;
+                :}
                 ;
 
 PAR_EFF   ::=   PAR_EFF:le VIRGULE EXP:e
                 {:
                 ((BlocDInstructions)le).ajouter(e) ;
-                ListeFonctions.getInstance().ajouterParametre(e);
+                ListeFonctions.getInstance().ajouterParametreEffectif(e);
                 RESULT = le ; :}
         |
                 EXP:e
                 {: BlocDInstructions b = new BlocDInstructions(eleft + 1) ;
                    b.ajouter(e) ;
-                   ListeFonctions.getInstance().ajouterParametre(e);
+                   ListeFonctions.getInstance().ajouterParametreEffectif(e);
                    RESULT = b ; :}
                 ;
 
 PAR     ::=     TYPE:t IDF:i POINTVIRGULE
                 {:
                 TDS.getInstance().entreeBloc();
-                TDS.getInstance().ajouter(new Entree(i, "variable"), new SymboleParam(t, ileft+1, TDS.getInstance().getBlocCourant())); :}
+                Entree e = new Entree(i, "variable");
+                Symbole s = new SymboleParam(t, ileft+1, TDS.getInstance().getBlocCourant());
+                TDS.getInstance().ajouter(e,s);
+                ListeFonctions.getInstance().ajouterParametre(e,s);
+                 :}
                 ;
 
 LVARLOC    ::=  LVARLOC:lv VAR:v
@@ -206,7 +214,9 @@ FCT     ::=     TYPE:t IDF:i PARAM VARIABLES LVARLOC:lv DEBUT LINST:li FIN
                     } catch (DoubleDeclaration d) {
                         ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
                     }
-                ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant()));
+                    Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
+                    fonction.recupererParametres();
+                ListeFonctions.getInstance().ajouter(fonction);
                 TDS.getInstance().sortieBloc(); :}
                 |
 
@@ -217,8 +227,9 @@ FCT     ::=     TYPE:t IDF:i PARAM VARIABLES LVARLOC:lv DEBUT LINST:li FIN
                         } catch (DoubleDeclaration d) {
                             ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
                         }
-                    ListeFonctions.getInstance().ajouter(new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant()));
-                    TDS.getInstance().sortieBloc();
+                   Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
+                                        fonction.recupererParametres();
+                                    ListeFonctions.getInstance().ajouter(fonction);
                     :}
 
                 ;

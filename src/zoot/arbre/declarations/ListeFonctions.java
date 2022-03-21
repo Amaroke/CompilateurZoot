@@ -8,13 +8,15 @@ import java.util.HashMap;
 public class ListeFonctions {
 
     private final ArrayList<Fonction> fonctions;
-    private final ArrayList<Expression> parametres;
+    private final ArrayList<Expression> parametresEffectifs;
+    private final HashMap<Entree, Symbole> parametres;
     private int cpt;
     private static final ListeFonctions INSTANCE = new ListeFonctions();
 
     public ListeFonctions() {
         this.fonctions = new ArrayList<>();
-        this.parametres = new ArrayList<>();
+        this.parametresEffectifs = new ArrayList<>();
+        this.parametres = new HashMap<>();
         this.cpt = 0;
     }
 
@@ -38,8 +40,27 @@ public class ListeFonctions {
         this.cpt = cpt;
     }
 
-    public void ajouterParametre(Expression param) {
-        this.parametres.add(param);
+    public Expression recupererParametreEffectif() {
+        System.out.println(parametresEffectifs);
+        Expression res = parametresEffectifs.get(0);
+        parametresEffectifs.remove(0);
+        return res;
+    }
+
+    public void ajouterParametreEffectif(Expression param) {
+        this.parametresEffectifs.add(param);
+    }
+
+    public void viderParametres() {
+        this.parametres.clear();
+    }
+
+    public void ajouterParametre(Entree e, Symbole s) {
+        parametres.put(e, s);
+    }
+
+    public HashMap<Entree, Symbole> getParametres() {
+        return parametres;
     }
 
     public void verifier() {

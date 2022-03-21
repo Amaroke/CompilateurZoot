@@ -11,129 +11,17 @@ saut_ligne: .asciiz "\n"
 main: 
    #Initialisation de la base des variables :
 	move $s7, $sp
-	addi $sp, $sp, -56
+	addi $sp, $sp, -28
 
    #Debut du programme :
 
-   #ecrire 42
-	li $v0, 42
-	move $a0, $v0
-	li $v0, 1
-	syscall
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire faux
-	li $v0, 0
-	move $a0, $v0
-	beq $zero, $a0, Sinon44
-	la $a0, AffichageVrai
-	li $v0, 4
-	syscall
-	b FinSi44
-	Sinon44:
-	la $a0, AffichageFaux
-	li $v0, 4
-	syscall
-	FinSi44:
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire vrai
-	li $v0, 1
-	move $a0, $v0
-	beq $zero, $a0, Sinon45
-	la $a0, AffichageVrai
-	li $v0, 4
-	syscall
-	b FinSi45
-	Sinon45:
-	la $a0, AffichageFaux
-	li $v0, 4
-	syscall
-	FinSi45:
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #a = 5
-	li $v0, 5
-	sw $v0, 0($s7)
-   #c = a
-	lw $v0, 0($s7)
-
-	sw $v0, -8($s7)
-   #b = vrai
-	li $v0, 1
-	sw $v0, -4($s7)
-   #d = faux
-	li $v0, 0
-	sw $v0, -12($s7)
-   #ecrire a
-	lw $v0, 0($s7)
-
-	move $a0, $v0
-	li $v0, 1
-	syscall
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire b
-	lw $v0, -4($s7)
-
-	move $a0, $v0
-	beq $zero, $a0, Sinon51
-	la $a0, AffichageVrai
-	li $v0, 4
-	syscall
-	b FinSi51
-	Sinon51:
-	la $a0, AffichageFaux
-	li $v0, 4
-	syscall
-	FinSi51:
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire c
-	lw $v0, -8($s7)
-
-	move $a0, $v0
-	li $v0, 1
-	syscall
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire d
-	lw $v0, -12($s7)
-
-	move $a0, $v0
-	beq $zero, $a0, Sinon53
-	la $a0, AffichageVrai
-	li $v0, 4
-	syscall
-	b FinSi53
-	Sinon53:
-	la $a0, AffichageFaux
-	li $v0, 4
-	syscall
-	FinSi53:
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire fonc1
+   #ecrire fonc5
 	   #Sauvegarde des registres
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
    #Appel de la fonction
-	jal fonc1
+	jal fonc5
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -142,52 +30,6 @@ main:
 	move $a0, $v0
 	li $v0, 1
 	syscall
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire fonc2
-	   #Sauvegarde des registres
-	sw $ra,0($sp)
-	sw $s1,-4($sp)
-	addi $sp,$sp,-8
-   #Appel de la fonction
-	jal fonc2
-   #Restauration des registres
-	lw $s1,4($sp)
-	lw $ra,8($sp)
-	addi $sp,$sp,8
-
-	move $a0, $v0
-	li $v0, 1
-	syscall
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire fonc3
-	   #Sauvegarde des registres
-	sw $ra,0($sp)
-	sw $s1,-4($sp)
-	addi $sp,$sp,-8
-   #Appel de la fonction
-	jal fonc3
-   #Restauration des registres
-	lw $s1,4($sp)
-	lw $ra,8($sp)
-	addi $sp,$sp,8
-
-	move $a0, $v0
-	beq $zero, $a0, Sinon56
-	la $a0, AffichageVrai
-	li $v0, 4
-	syscall
-	b FinSi56
-	Sinon56:
-	la $a0, AffichageFaux
-	li $v0, 4
-	syscall
-	FinSi56:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -211,48 +53,17 @@ main:
 	li $v0, 4
 	syscall
 
-	b end
-
-	fonc2:
-   #a = 42
-	li $v0, 42
-	sw $v0, -16($s7)
-   #b = a
-	lw $v0, -16($s7)
-
-	sw $v0, -20($s7)
-	lw $v0, -20($s7)
-
-	jr $ra
-
-	fonc1:
+   #ecrire fonc5
 	   #Sauvegarde des registres
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
    #Appel de la fonction
-	jal fonc2
+	jal fonc5
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
 	addi $sp,$sp,8
-
-	jr $ra
-
-	fonc3:
-   #bool = faux
-	li $v0, 0
-	sw $v0, -36($s7)
-   #z = 4
-	li $v0, 4
-	sw $v0, -32($s7)
-	lw $v0, -36($s7)
-
-	jr $ra
-
-	fonc4:
-   #ecrire x
-	lw $v0, -44($s7)
 
 	move $a0, $v0
 	li $v0, 1
@@ -261,8 +72,74 @@ main:
 	li $v0, 4
 	syscall
 
-	lw $v0, -44($s7)
+	b end
 
+	fonc4:
+	li $v0, 1
+	sw $v0, -4($s7)
+	li $v0, 2
+	sw $v0, 0($s7)
+   #ecrire x
+	lw $v0, 0($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire y
+	lw $v0, -4($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+	li $v0, 0
+	jr $ra
+
+	fonc5:
+	li $v0, 3
+	sw $v0, -16($s7)
+	li $v0, 4
+	sw $v0, -12($s7)
+	li $v0, 5
+	sw $v0, -20($s7)
+   #ecrire a
+	lw $v0, -12($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire b
+	lw $v0, -16($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire c
+	lw $v0, -20($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+	li $v0, 0
 	jr $ra
 
    #Fin du programme :

@@ -12,7 +12,6 @@ public class TDS {
 
     private static final TDS INSTANCE = new TDS();
     private final ArrayList<HashMap<Entree, Symbole>> blocs;
-
     private int blocCourant;
 
     private TDS() {
@@ -64,7 +63,7 @@ public class TDS {
     }
 
     public void entreeBloc() {
-        if(blocCourant == 0) {
+        if (blocCourant == 0) {
             this.blocs.add(new HashMap<>());
         }
         this.blocCourant = this.blocs.size() - 1;
