@@ -27,23 +27,6 @@ main:
    #ecrire faux
 	li $v0, 0
 	move $a0, $v0
-	beq $zero, $a0, Sinon37
-	la $a0, AffichageVrai
-	li $v0, 4
-	syscall
-	b FinSi37
-	Sinon37:
-	la $a0, AffichageFaux
-	li $v0, 4
-	syscall
-	FinSi37:
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire vrai
-	li $v0, 1
-	move $a0, $v0
 	beq $zero, $a0, Sinon38
 	la $a0, AffichageVrai
 	li $v0, 4
@@ -54,6 +37,23 @@ main:
 	li $v0, 4
 	syscall
 	FinSi38:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire vrai
+	li $v0, 1
+	move $a0, $v0
+	beq $zero, $a0, Sinon39
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi39
+	Sinon39:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi39:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -85,16 +85,16 @@ main:
 	lw $v0, -4($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon44
+	beq $zero, $a0, Sinon45
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi44
-	Sinon44:
+	b FinSi45
+	Sinon45:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi44:
+	FinSi45:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -113,16 +113,16 @@ main:
 	lw $v0, -12($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon46
+	beq $zero, $a0, Sinon47
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi46
-	Sinon46:
+	b FinSi47
+	Sinon47:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi46:
+	FinSi47:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -178,16 +178,16 @@ main:
 	addi $sp,$sp,8
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon49
+	beq $zero, $a0, Sinon50
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi49
-	Sinon49:
+	b FinSi50
+	Sinon50:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi49:
+	FinSi50:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -227,6 +227,9 @@ main:
    #z = 4
 	li $v0, 4
 	sw $v0, -32($s7)
+	lw $v0, -36($s7)
+
+	jr $ra
 
    #Fin du programme :
 	end:

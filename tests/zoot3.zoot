@@ -7,7 +7,7 @@ booleen d;
 
 fonctions
 
-entier fonc2()
+entier fonc2(entier x; entier y; booleen c;)
 variables
 entier a;
 entier b;
@@ -17,9 +17,12 @@ debut
     retourne b;
 fin
 
-entier fonc1()
+entier fonc1(entier z; booleen c;)
 debut
-    retourne fonc2();
+    ecrire c;
+    ecrire z;
+    ecrire fonc2();
+    retourne fonc2(1,5,vrai);
 fin
 
 booleen fonc3()
@@ -32,14 +35,14 @@ debut
     retourne bool;
 fin
 
-entier fonc4(entier x; entier y;)
+booleen fonc2()
 debut
-ecrire x;
-retourne x;
+    ecrire vrai;
+    retourne vrai;
 fin
 
 debut
-    // Doit donner : 42 faux vrai 5 vrai 5 faux 42 42 faux
+    // Doit donner : 42 faux vrai 5 vrai 5 faux faux 42 vrai vrai 42 42 faux vrai
     ecrire 42;
     ecrire faux;
     ecrire vrai;
@@ -51,8 +54,8 @@ debut
     ecrire b;
     ecrire c;
     ecrire d;
-    ecrire fonc1();
-    ecrire fonc2();
+    ecrire fonc1(42, faux);
+    ecrire fonc2(1,5,vrai);
     ecrire fonc3();
-    ecrire fonc4(4444, fonc3());
+    ecrire fonc2();
 fin

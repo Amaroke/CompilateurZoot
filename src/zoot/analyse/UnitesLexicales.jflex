@@ -60,6 +60,8 @@ commentaire = [/]{2}.*{finDeLigne}
 
 ";"                    { return symbol(CodesLexicaux.POINTVIRGULE); }
 
+","                    { return symbol(CodesLexicaux.VIRGULE); }
+
 "("                    { return symbol(CodesLexicaux.PAR_OUVRANTE); }
 
 ")"                    { return symbol(CodesLexicaux.PAR_FERMANTE); }

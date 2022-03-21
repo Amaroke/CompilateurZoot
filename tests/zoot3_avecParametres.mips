@@ -11,7 +11,7 @@ saut_ligne: .asciiz "\n"
 main: 
    #Initialisation de la base des variables :
 	move $s7, $sp
-	addi $sp, $sp, -52
+	addi $sp, $sp, -56
 
    #Debut du programme :
 
@@ -27,16 +27,16 @@ main:
    #ecrire faux
 	li $v0, 0
 	move $a0, $v0
-	beq $zero, $a0, Sinon38
+	beq $zero, $a0, Sinon44
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi38
-	Sinon38:
+	b FinSi44
+	Sinon44:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi38:
+	FinSi44:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -44,16 +44,16 @@ main:
    #ecrire vrai
 	li $v0, 1
 	move $a0, $v0
-	beq $zero, $a0, Sinon39
+	beq $zero, $a0, Sinon45
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi39
-	Sinon39:
+	b FinSi45
+	Sinon45:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi39:
+	FinSi45:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -85,16 +85,16 @@ main:
 	lw $v0, -4($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon45
+	beq $zero, $a0, Sinon51
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi45
-	Sinon45:
+	b FinSi51
+	Sinon51:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi45:
+	FinSi51:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -113,16 +113,16 @@ main:
 	lw $v0, -12($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon47
+	beq $zero, $a0, Sinon53
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi47
-	Sinon47:
+	b FinSi53
+	Sinon53:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi47:
+	FinSi53:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -178,16 +178,35 @@ main:
 	addi $sp,$sp,8
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon50
+	beq $zero, $a0, Sinon56
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi50
-	Sinon50:
+	b FinSi56
+	Sinon56:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi50:
+	FinSi56:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire fonc4
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Appel de la fonction
+	jal fonc4
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -197,12 +216,12 @@ main:
 	fonc2:
    #a = 42
 	li $v0, 42
-	sw $v0, -24($s7)
+	sw $v0, -16($s7)
    #b = a
-	lw $v0, -24($s7)
+	lw $v0, -16($s7)
 
-	sw $v0, -28($s7)
-	lw $v0, -28($s7)
+	sw $v0, -20($s7)
+	lw $v0, -20($s7)
 
 	jr $ra
 
@@ -223,10 +242,25 @@ main:
 	fonc3:
    #bool = faux
 	li $v0, 0
-	sw $v0, -44($s7)
+	sw $v0, -36($s7)
    #z = 4
 	li $v0, 4
-	sw $v0, -40($s7)
+	sw $v0, -32($s7)
+	lw $v0, -36($s7)
+
+	jr $ra
+
+	fonc4:
+   #ecrire x
+	lw $v0, -44($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
 	lw $v0, -44($s7)
 
 	jr $ra

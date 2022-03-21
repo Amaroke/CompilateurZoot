@@ -64,7 +64,9 @@ public class TDS {
     }
 
     public void entreeBloc() {
-        this.blocs.add(new HashMap<>());
+        if(blocCourant == 0) {
+            this.blocs.add(new HashMap<>());
+        }
         this.blocCourant = this.blocs.size() - 1;
     }
 
@@ -74,10 +76,6 @@ public class TDS {
 
     public int getBlocCourant() {
         return this.blocCourant;
-    }
-
-    public int getNbBlocs() {
-        return blocs.size();
     }
 
     public void setBlocCourant(int blocCourant) {

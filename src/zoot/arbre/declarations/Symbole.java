@@ -13,7 +13,6 @@ public class Symbole {
         this.type = type;
         this.noLigne = noligne;
         this.numBloc = numBloc;
-        this.nbParams = TDS.getInstance().getNbParam();
     }
 
     public int getDeplacement() {

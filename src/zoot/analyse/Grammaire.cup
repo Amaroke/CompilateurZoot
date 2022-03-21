@@ -56,12 +56,12 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE;
+terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE;
 terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, LPAR, PAR, PARAM, LFCT, FCT, VAR, LVARLOC;
+non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, LPAR, PAR_EFF, PAR, PARAM, LFCT, FCT, VAR, LVARLOC;
 non terminal Instruction INST ;
 non terminal Expression EXP ;
 non terminal String TYPE;
@@ -110,8 +110,6 @@ LINST   ::=     LINST:li  INST:i
                    RESULT = b ; :}
                    ;
 
-
-
 LPAR    ::=     LPAR:lp PAR:p
                 {:
                 ((BlocDInstructions)lp).ajouter(p) ;
@@ -124,9 +122,23 @@ LPAR    ::=     LPAR:lp PAR:p
                 RESULT = b ; :}
                 ;
 
+PAR_EFF   ::=   PAR_EFF:le VIRGULE EXP:e
+                {:
+                ((BlocDInstructions)le).ajouter(e) ;
+                ListeFonctions.getInstance().ajouterParametre(e);
+                RESULT = le ; :}
+        |
+                EXP:e
+                {: BlocDInstructions b = new BlocDInstructions(eleft + 1) ;
+                   b.ajouter(e) ;
+                   ListeFonctions.getInstance().ajouterParametre(e);
+                   RESULT = b ; :}
+                ;
+
 PAR     ::=     TYPE:t IDF:i POINTVIRGULE
                 {:
-                TDS.getInstance().ajouter(new Entree(i, "variable"), new SymboleParam(t, ileft+1, TDS.getInstance().getNbBlocs()-1)); :}
+                TDS.getInstance().entreeBloc();
+                TDS.getInstance().ajouter(new Entree(i, "variable"), new SymboleParam(t, ileft+1, TDS.getInstance().getBlocCourant())); :}
                 ;
 
 LVARLOC    ::=  LVARLOC:lv VAR:v
@@ -151,7 +163,6 @@ PARAM   ::=   PAR_OUVRANTE PAR_FERMANTE
         |
               PAR_OUVRANTE LPAR PAR_FERMANTE
               {:
-              TDS.getInstance().entreeBloc();
               :}
               ;
 
@@ -174,8 +185,11 @@ EXP    ::=     CSTENTIERE:c
                IDF:i
                {: RESULT = new Idf(new Entree(i, "variable"), ileft + 1) ; :}
         |
-               IDF:i PARAM
-               {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
+                 IDF:i PAR_OUVRANTE PAR_EFF PAR_FERMANTE
+                 {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
+        |
+                 IDF:i PAR_OUVRANTE PAR_FERMANTE
+                 {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
                 ;
 
 TYPE    ::=     ENTIER
