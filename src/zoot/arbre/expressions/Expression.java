@@ -17,4 +17,9 @@ public abstract class Expression extends ArbreAbstrait {
     public abstract String getType();
 
     public abstract String getNom();
+
+    public abstract int nombreDErchov();
+
+    public abstract String toMIPS();
+
 }

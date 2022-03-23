@@ -91,4 +91,9 @@ public class AppelFonction extends Expression {
     public String getNom() {
         return this.idf.getNom();
     }
+
+    @Override
+    public int nombreDErchov() {
+        return 0;
+    }
 }

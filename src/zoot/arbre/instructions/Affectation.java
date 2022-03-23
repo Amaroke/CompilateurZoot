@@ -6,6 +6,9 @@ import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Affectation extends Instruction {
 
     protected final Expression exp;

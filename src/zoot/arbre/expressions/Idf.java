@@ -7,6 +7,8 @@ import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
 
+import java.util.ArrayList;
+
 public class Idf extends Expression {
 
     private final Entree entree;
@@ -69,6 +71,11 @@ public class Idf extends Expression {
     @Override
     public String getNom() {
         return this.entree.getNom();
+    }
+
+    @Override
+    public int nombreDErchov() {
+        return 1;
     }
 
 }

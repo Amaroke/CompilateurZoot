@@ -3,6 +3,8 @@ package zoot.analyse ;
 import java.util.*;
 import zoot.arbre.* ;
 import zoot.arbre.expressions.* ;
+import zoot.arbre.expressions.unaire.* ;
+import zoot.arbre.expressions.binaire.* ;
 import zoot.arbre.instructions.* ;
 import zoot.arbre.declarations.* ;
 import zoot.exceptions.*;

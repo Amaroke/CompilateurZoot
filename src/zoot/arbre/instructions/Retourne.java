@@ -8,6 +8,9 @@ import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 public class Retourne extends Instruction {
 
@@ -49,6 +52,7 @@ public class Retourne extends Instruction {
 
     @Override
     public String toMIPS() {
+        ArrayList<String> registres = new ArrayList<>(Arrays.asList("$v0", "$t0", "$t1", "$t2"));
         return "\t" + expression.toMIPS() + "\n" +
                 "\tjr $ra\n";
     }

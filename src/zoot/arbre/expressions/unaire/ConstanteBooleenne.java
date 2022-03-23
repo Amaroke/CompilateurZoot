@@ -1,4 +1,8 @@
-package zoot.arbre.expressions;
+package zoot.arbre.expressions.unaire;
+
+import zoot.arbre.expressions.Constante;
+
+import java.util.ArrayList;
 
 public class ConstanteBooleenne extends Constante {
 
@@ -24,6 +28,11 @@ public class ConstanteBooleenne extends Constante {
     @Override
     public String getType() {
         return "booleen";
+    }
+
+    @Override
+    public int nombreDErchov() {
+        return 1;
     }
 
 }

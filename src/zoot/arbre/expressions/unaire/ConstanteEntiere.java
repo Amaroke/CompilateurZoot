@@ -1,4 +1,8 @@
-package zoot.arbre.expressions;
+package zoot.arbre.expressions.unaire;
+
+import zoot.arbre.expressions.Constante;
+
+import java.util.ArrayList;
 
 public class ConstanteEntiere extends Constante {
 
@@ -24,5 +28,10 @@ public class ConstanteEntiere extends Constante {
     @Override
     public String getType() {
         return "entier";
+    }
+
+    @Override
+    public int nombreDErchov() {
+        return 1;
     }
 }
