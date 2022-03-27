@@ -1,0 +1,50 @@
+variables
+
+entier a;
+booleen b;
+entier c;
+
+fonctions
+
+entier fonc1(entier n;)
+    variables
+    debut
+    repeter n = n + 2 jusqua 10 < n finrepeter
+    retourne n;
+    fin
+
+debut
+    a = 0;
+    b = faux;
+    c = 0;
+    // Boucle for écrit successivement 1 2 3 4 5
+    repeter c = c + 1 ecrire c jusqua c == 5
+    finrepeter
+
+    // La fonction devrait donner 12
+    ecrire fonc1(a);
+
+    // Représentation d'une boucle while simple
+    repeter
+        a = a + (-1)
+        si a < 10 alors
+            b = vrai;
+        finsi
+    jusqua b == vrai
+    finrepeter
+
+    a = 0;
+    b = faux
+
+    // a devrait être égal à 4 et b à vrai
+    repeter
+         a = a + 1
+         si a < 5 et 1 < a alors
+            b = vrai;
+         finsi
+    jusqua a == 4 et b != faux
+    finrepeter
+    ecrire a;
+    ecrire b;
+
+fin

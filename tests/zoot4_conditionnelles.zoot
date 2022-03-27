@@ -1,0 +1,55 @@
+variables
+
+entier a;
+booleen b;
+entier c;
+booleen d;
+
+
+debut
+
+    a = 1;
+    b = faux;
+    c = 6;
+    d = faux;
+
+    // Test inégalité + sinon doit mettre b à vrai et d à faux
+    si a < c alors
+        b = vrai;
+    sinon
+        d = vrai;
+    finsi
+
+    // 1 6 vrai faux
+    ecrire a;
+    ecrire c;
+    ecrire b;
+    ecrire d;
+
+    // Test du OU et de l'égalité doit écrire 42
+    si b == vrai ou d == vrai alors
+        ecrire 42;
+    finsi
+
+    // Test de la multiplication a à 6
+    a = a * 6;
+    // Test de l'égalité entre 2 entiers d à vrai
+    si a == c alors
+        d = vrai;
+    finsi
+
+    // Test du ET doit écrire 24
+    si b == vrai et d == vrai alors
+        ecrire 24;
+    sinon
+        ecrire 55;
+    finsi
+
+    // Test de la différence et du sinon
+    si b != d alors
+        ecrire 32;
+    sinon
+        ecrire 57;
+    finsi
+
+fin
