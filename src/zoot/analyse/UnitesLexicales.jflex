@@ -66,6 +66,20 @@ commentaire = [/]{2}.*{finDeLigne}
 
 ")"                    { return symbol(CodesLexicaux.PAR_FERMANTE); }
 
+"+"                    { return symbol(CodesLexicaux.ADDITION); }
+
+"*"                    { return symbol(CodesLexicaux.MULTIPLICATION); }
+
+"<"                    { return symbol(CodesLexicaux.INFERIEUR); }
+
+"=="                   { return symbol(CodesLexicaux.EGALITE); }
+
+"!="                   { return symbol(CodesLexicaux.DIFFERENT); }
+
+"et"                   { return symbol(CodesLexicaux.INTERSECTION); }
+
+"ou"                   { return symbol(CodesLexicaux.UNION); }
+
 "retourne"             { return symbol(CodesLexicaux.RETOURNE); }
 
 {csteE}      	       { return symbol(CodesLexicaux.CSTENTIERE, yytext()); }

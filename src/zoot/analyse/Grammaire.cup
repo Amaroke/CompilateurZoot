@@ -58,12 +58,12 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE;
-terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN;
+terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE, ADDITION, MULTIPLICATION, INFERIEUR, EGALITE, DIFFERENT, INTERSECTION, UNION;
+terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN ;
 
 /* Non terminals used in the grammar section.  */
 
-non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, LPAR, PAR_EFF, PAR, PARAM, LFCT, FCT, VAR, LVARLOC;
+non terminal ArbreAbstrait PROG, LINST, LDCL, DCL, LPAR, PAR_EFF, PAR, PARAM, LFCT, FCT, VAR, LVARLOC, OPER, CONDITION;
 non terminal Instruction INST ;
 non terminal Expression EXP ;
 non terminal String TYPE;
@@ -210,6 +210,27 @@ EXP    ::=     CSTENTIERE:c
         |
                  IDF:i PAR_OUVRANTE PAR_FERMANTE
                  {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
+        |
+                IDF:i1 ADDITION:a IDF:i2
+                {: RESULT = new Addition(i1, i2, aleft + 1); :}
+        |
+                IDF:i1 MULTIPLICATION:m IDF:i2
+                {: RESULT = new Multiplication(i1, i2, mleft + 1); :}
+        |
+                IDF:i1 INFERIEUR:i IDF:i2
+                {: RESULT = new Inferieur(i1, i2, ileft + 1); :}
+        |
+                IDF:i1 EGALITE:e IDF:i2
+                {: RESULT = new Egalite(i1, i2, eleft + 1); :}
+        |
+                IDF:i1 DIFFERENT:d IDF:i2
+                {: RESULT = new Different(i1, i2, dleft + 1); :}
+        |
+                IDF:i1 INTERSECTION:i IDF:i2
+                {: RESULT = new Intersection(i1, i2, ileft + 1); :}
+        |
+                IDF:i1 UNION:u IDF:i2
+                {: RESULT = new Union(i1, i2, uleft + 1); :}
                 ;
 
 TYPE    ::=     ENTIER
@@ -286,3 +307,39 @@ DCL     ::=    TYPE:t IDF:i POINTVIRGULE
                       ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
                       }:}
                ;
+
+
+OPER    ::=    ADDITION:a
+               {: RESULT = "+"; :}
+
+               |
+
+               MULTIPLICATION:m
+               {: RESULT = "*"; :}
+
+               |
+
+               INFERIEUR:i
+               {: RESULT = "<"; :}
+
+               |
+
+               EGALITE:e
+               {: RESULT = "==";:}
+
+               |
+
+               DIFFERENT:d
+               {: RESULT = "!="; :}
+
+               |
+
+               INTERSECTION:i
+               {: RESULT = "et"; :}
+
+               |
+
+               UNION:u
+               {: RESULT = "ou";:}
+               ;
+
