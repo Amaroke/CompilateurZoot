@@ -4,9 +4,6 @@ import zoot.analyse.AnalyseurLexical;
 import zoot.analyse.AnalyseurSyntaxique;
 import zoot.arbre.ArbreAbstrait;
 import zoot.arbre.declarations.ListeFonctions;
-import zoot.arbre.expressions.binaire.Addition;
-import zoot.arbre.expressions.unaire.ConstanteBooleenne;
-import zoot.arbre.expressions.unaire.ConstanteEntiere;
 import zoot.exceptions.AnalyseException;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
@@ -47,12 +44,6 @@ public class Zoot {
     }
 
     public static void main(String[] args) {
-        System.out.println(new Addition(new ConstanteEntiere("0",0), new Addition(new ConstanteEntiere("0", 0), new ConstanteEntiere("0", 0), 0), 0).nombreDErchov());
-        System.out.println(new ConstanteEntiere("0", 0).nombreDErchov());
-        System.out.println(new ConstanteBooleenne("0", 0).nombreDErchov());
-
-
-
         if (args.length != 1) {
             System.err.println("Nombre incorrect d'arguments");
             System.err.println("\tjava -jar zoot.jar <fichierSource.zoot>");

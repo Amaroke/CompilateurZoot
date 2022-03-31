@@ -11,9 +11,76 @@ saut_ligne: .asciiz "\n"
 main: 
    #Initialisation de la base des variables :
 	move $s7, $sp
-	addi $sp, $sp, -32
+	addi $sp, $sp, -36
 
    #Debut du programme :
+
+   #ecrire 1 + 2
+	li $v0, 1
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 2
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire 5
+	li $v0, 5
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire 1 + 658
+	li $v0, 1
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 658
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #a = 4
+	li $v0, 4
+	sw $v0, 0($s7)
+   #ecrire a + 4
+	lw $v0, 0($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
 
    #ecrire fonc5
 	   #Sauvegarde des registres
@@ -109,16 +176,16 @@ main:
 	addi $sp,$sp,8
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon28
+	beq $zero, $a0, Sinon37
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi28
-	Sinon28:
+	b FinSi37
+	Sinon37:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi28:
+	FinSi37:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -128,12 +195,12 @@ main:
 	fonc42:
 	lw $v0, 4($sp)
 	addi $sp,$sp, 4
-	sw $v0, -4($s7)
+	sw $v0, -8($s7)
 	lw $v0, 4($sp)
 	addi $sp,$sp, 4
-	sw $v0, 0($s7)
+	sw $v0, -4($s7)
    #ecrire x
-	lw $v0, 0($s7)
+	lw $v0, -4($s7)
 
 	move $a0, $v0
 	li $v0, 1
@@ -143,7 +210,7 @@ main:
 	syscall
 
    #ecrire y
-	lw $v0, -4($s7)
+	lw $v0, -8($s7)
 
 	move $a0, $v0
 	li $v0, 1
@@ -162,24 +229,14 @@ main:
 	fonc53:
 	lw $v0, 4($sp)
 	addi $sp,$sp, 4
+	sw $v0, -28($s7)
+	lw $v0, 4($sp)
+	addi $sp,$sp, 4
 	sw $v0, -24($s7)
 	lw $v0, 4($sp)
 	addi $sp,$sp, 4
 	sw $v0, -20($s7)
-	lw $v0, 4($sp)
-	addi $sp,$sp, 4
-	sw $v0, -16($s7)
    #ecrire a
-	lw $v0, -16($s7)
-
-	move $a0, $v0
-	li $v0, 1
-	syscall
-	la $a0, saut_ligne
-	li $v0, 4
-	syscall
-
-   #ecrire b
 	lw $v0, -20($s7)
 
 	move $a0, $v0
@@ -189,8 +246,18 @@ main:
 	li $v0, 4
 	syscall
 
-   #ecrire c
+   #ecrire b
 	lw $v0, -24($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire c
+	lw $v0, -28($s7)
 
 	move $a0, $v0
 	li $v0, 1

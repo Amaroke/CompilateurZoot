@@ -14,7 +14,6 @@ public class Union extends Binaire{
 
     @Override
     public String toMIPS() {
-        ArrayList<String> registres = new ArrayList<>(Arrays.asList("$v0", "$t0", "$t1", "$t2"));
-        return this.toMIPS(registres);
+        return "";
     }
 }

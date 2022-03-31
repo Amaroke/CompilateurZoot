@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public abstract class Binaire extends Expression {
 
-    private Expression expressionGauche;
-    private Expression expressionDroite;
+    protected Expression expressionGauche;
+    protected Expression expressionDroite;
 
     public Binaire(Expression gauche, Expression droite, int n) {
         super(n);
@@ -24,10 +24,6 @@ public abstract class Binaire extends Expression {
     @Override
     public String toMIPS() {
         return null;
-    }
-
-    public String toMIPS(ArrayList<String> registres) {
-        return "";
     }
 
     @Override
@@ -52,7 +48,7 @@ public abstract class Binaire extends Expression {
 
     @Override
     public String getNom() {
-        return null;
+        return "";
     }
 
     @Override

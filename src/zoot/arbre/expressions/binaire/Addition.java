@@ -2,9 +2,6 @@ package zoot.arbre.expressions.binaire;
 
 import zoot.arbre.expressions.Expression;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 
 public class Addition extends Binaire {
 
@@ -13,8 +10,22 @@ public class Addition extends Binaire {
     }
 
     @Override
-    public String toMIPS() {
-        ArrayList<String> registres = new ArrayList<>(Arrays.asList("$v0", "$t0", "$t1", "$t2"));
-        return this.toMIPS(registres);
+    public String getNom() {
+        return this.expressionGauche.getNom()+" + "+expressionDroite.getNom();
     }
+
+    @Override
+    public String toMIPS() {
+
+        return expressionGauche.toMIPS() + "\n" +
+                "   #Empiler $v0\n" +
+                "\tsw $v0,($sp)\n" +
+                "\tadd $sp,$sp,-4\n" +
+                expressionDroite.toMIPS() + "\n" +
+                "   #Dépiler $v0\n" +
+                "\tadd $sp,$sp,4\n" +
+                "\tlw $t8,($sp)\n" +
+                "\tadd $v0, $t8, $v0\n";
+    }
+
 }
