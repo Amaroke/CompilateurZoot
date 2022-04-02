@@ -23,19 +23,19 @@ public class Conditionnelle extends Instruction{
     public String toMIPS() {
         int etiquette = TDS.getInstance().getEtiquetteCourante();
         StringBuilder str = new StringBuilder();
-        str.append(expressionConditionelle.toMIPS()).append("\n");
+        str.append("   #Condition\n").append(this.expressionConditionelle.toMIPS()).append("\n");
         str.append("\tli $t8, 1\n");
         str.append("\tbeq $v0,$t8,si").append(etiquette).append("\n");
-        if(instructionSi != null){
-            str.append(instructionSi.toMIPS()).append("\n");
-        }
-        str.append("\tj go").append(etiquette).append("\n");
-        str.append("si").append(etiquette).append(":\n");
         if(instructionAlors != null){
             str.append(instructionAlors.toMIPS()).append("\n");
         }
         str.append("\tj go").append(etiquette).append("\n");
-        str.append("go").append(etiquette).append(":\n");
+        str.append("\tsi").append(etiquette).append(":\n");
+        if(instructionSi != null){
+            str.append(instructionSi.toMIPS()).append("\n");
+        }
+        str.append("\tj go").append(etiquette).append("\n");
+        str.append("\tgo").append(etiquette).append(":\n");
         return str.toString();
     }
 
@@ -50,7 +50,7 @@ public class Conditionnelle extends Instruction{
                 instructionAlors.verifier();
             }
         }else{
-            ListeErreurs.getInstance().ajouter(new Erreur("La condtion doit être booléenne", noLigne));
+            ListeErreurs.getInstance().ajouter(new Erreur("La condition doit être booléenne", noLigne));
         }
     }
 }

@@ -27,16 +27,16 @@ main:
    #ecrire faux
 	li $v0, 0
 	move $a0, $v0
-	beq $zero, $a0, Sinon28
+	beq $zero, $a0, Sinon1
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi28
-	Sinon28:
+	b FinSi1
+	Sinon1:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi28:
+	FinSi1:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -44,16 +44,16 @@ main:
    #ecrire vrai
 	li $v0, 1
 	move $a0, $v0
-	beq $zero, $a0, Sinon29
+	beq $zero, $a0, Sinon2
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi29
-	Sinon29:
+	b FinSi2
+	Sinon2:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi29:
+	FinSi2:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -85,16 +85,16 @@ main:
 	lw $v0, -4($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon35
+	beq $zero, $a0, Sinon4
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi35
-	Sinon35:
+	b FinSi4
+	Sinon4:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi35:
+	FinSi4:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -113,16 +113,16 @@ main:
 	lw $v0, -12($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon37
+	beq $zero, $a0, Sinon6
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi37
-	Sinon37:
+	b FinSi6
+	Sinon6:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi37:
+	FinSi6:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -184,16 +184,16 @@ main:
 	addi $sp,$sp,8
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon40
+	beq $zero, $a0, Sinon9
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi40
-	Sinon40:
+	b FinSi9
+	Sinon9:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi40:
+	FinSi9:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall

@@ -15,11 +15,10 @@ public class Oppose extends Expression {
 
     @Override
     public void verifier() {
-        System.out.println(this.expression.isBool());
-        if (!this.expression.isBool()) {
+        if(!expression.isBool()){
             expression.verifier();
-        } else {
-            ListeErreurs.getInstance().ajouter(new Erreur("Impossible de traiter l'opérateur \"-\" devant un booléen", noLigne));
+        }else{
+            ListeErreurs.getInstance().ajouter(new Erreur("Impossible de faire l'opposé d'autre chose qu'un entie'", noLigne));
         }
     }
 
@@ -45,7 +44,7 @@ public class Oppose extends Expression {
 
     @Override
     public String getNom() {
-        return "-" + expression;
+        return "-" + expression.getNom();
     }
 
     @Override
@@ -55,7 +54,8 @@ public class Oppose extends Expression {
 
     @Override
     public String toMIPS() {
-        return expression.toMIPS() + "\n" +
+
+        return this.expression.toMIPS() + "\n" +
                 "   #Empiler $v0\n" +
                 "\tsw $v0,($sp)\n" +
                 "\tadd $sp,$sp,-4\n" +

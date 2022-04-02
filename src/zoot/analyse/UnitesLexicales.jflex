@@ -66,6 +66,12 @@ commentaire = [/]{2}.*{finDeLigne}
 
 "finsi"                { return symbol(CodesLexicaux.FINSI); }
 
+"repeter"              { return symbol(CodesLexicaux.REPETER); }
+
+"jusqua"              { return symbol(CodesLexicaux.JUSQUA); }
+
+"finrepeter"           { return symbol(CodesLexicaux.FINREPETER); }
+
 "="                    { return symbol(CodesLexicaux.EGAL); }
 
 ";"                    { return symbol(CodesLexicaux.POINTVIRGULE); }

@@ -58,7 +58,7 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE, ADDITION, MULTIPLICATION, INFERIEUR, EGALITE, DIFFERENT, INTERSECTION, UNION, NEGATION, NEGATIF, SI, ALORS, SINON, FINSI;
+terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE, ADDITION, MULTIPLICATION, INFERIEUR, EGALITE, DIFFERENT, INTERSECTION, UNION, NEGATION, NEGATIF, SI, ALORS, SINON, FINSI, REPETER, JUSQUA, FINREPETER;
 terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN;
 
 /* Non terminals used in the grammar section.  */
@@ -75,6 +75,8 @@ precedence left EGALITE;
 precedence left INFERIEUR;
 precedence left ADDITION;
 precedence left MULTIPLICATION;
+precedence left NEGATION;
+precedence left PAR_OUVRANTE, PAR_FERMANTE;
 
 /* ----------------------------Grammar Section-------------------- */
 
@@ -200,13 +202,16 @@ INST    ::=     ECRIRE EXP:e POINTVIRGULE
                 {: RESULT = new Conditionnelle(e,eleft+1,la,lb); :}
        |
                 SI EXP:e ALORS LINST:l FINSI
-                {: RESULT = new Conditionnelle(e,eleft+1,null,l); :}
+                {: RESULT = new Conditionnelle(e,eleft+1,l,null); :}
        |
                 SI EXP:e ALORS SINON LINST:l FINSI
-                {: RESULT = new Conditionnelle(e,eleft+1,l,null); :}
+                {: RESULT = new Conditionnelle(e,eleft+1,null,l); :}
        |
                 SI EXP:e ALORS FINSI
                 {: RESULT = new Conditionnelle(e,eleft+1,null,null); :}
+       |
+                REPETER LINST:li JUSQUA EXP:e FINREPETER
+                {: RESULT = new Iterative(li,e,eleft + 1) ; :}
                 ;
 
 EXP    ::=     CSTENTIERE:c
@@ -231,7 +236,7 @@ EXP    ::=     CSTENTIERE:c
               {: RESULT = new Oppose(e,eleft + 1) ; :}
         |
               NEGATION EXP:e
-              {: RESULT = new ConstanteBooleenne(e.equals("vrai") ? "faux" : "vrai",eleft + 1) ; :}
+              {: RESULT = new Negation(e, eleft+1) ; :}
         |
               EXP:g ADDITION EXP:d
               {: RESULT = new Addition(g, d, gleft+1); :}

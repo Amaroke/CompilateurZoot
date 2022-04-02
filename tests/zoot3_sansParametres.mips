@@ -27,16 +27,16 @@ main:
    #ecrire faux
 	li $v0, 0
 	move $a0, $v0
-	beq $zero, $a0, Sinon38
+	beq $zero, $a0, Sinon1
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi38
-	Sinon38:
+	b FinSi1
+	Sinon1:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi38:
+	FinSi1:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -44,16 +44,16 @@ main:
    #ecrire vrai
 	li $v0, 1
 	move $a0, $v0
-	beq $zero, $a0, Sinon39
+	beq $zero, $a0, Sinon2
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi39
-	Sinon39:
+	b FinSi2
+	Sinon2:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi39:
+	FinSi2:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -85,16 +85,16 @@ main:
 	lw $v0, -4($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon45
+	beq $zero, $a0, Sinon4
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi45
-	Sinon45:
+	b FinSi4
+	Sinon4:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi45:
+	FinSi4:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -113,16 +113,16 @@ main:
 	lw $v0, -12($s7)
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon47
+	beq $zero, $a0, Sinon6
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi47
-	Sinon47:
+	b FinSi6
+	Sinon6:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi47:
+	FinSi6:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
@@ -132,8 +132,10 @@ main:
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc1
+	jal fonc10
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -151,8 +153,10 @@ main:
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc2
+	jal fonc20
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -170,31 +174,33 @@ main:
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc3
+	jal fonc30
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
 	addi $sp,$sp,8
 
 	move $a0, $v0
-	beq $zero, $a0, Sinon50
+	beq $zero, $a0, Sinon9
 	la $a0, AffichageVrai
 	li $v0, 4
 	syscall
-	b FinSi50
-	Sinon50:
+	b FinSi9
+	Sinon9:
 	la $a0, AffichageFaux
 	li $v0, 4
 	syscall
-	FinSi50:
+	FinSi9:
 	la $a0, saut_ligne
 	li $v0, 4
 	syscall
 
 	b end
 
-	fonc2:
+	fonc20:
    #a = 42
 	li $v0, 42
 	sw $v0, -16($s7)
@@ -206,13 +212,15 @@ main:
 
 	jr $ra
 
-	fonc1:
+	fonc10:
 	   #Sauvegarde des registres
 	sw $ra,0($sp)
 	sw $s1,-4($sp)
 	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
    #Appel de la fonction
-	jal fonc2
+	jal fonc20
    #Restauration des registres
 	lw $s1,4($sp)
 	lw $ra,8($sp)
@@ -220,7 +228,7 @@ main:
 
 	jr $ra
 
-	fonc3:
+	fonc30:
    #bool = faux
 	li $v0, 0
 	sw $v0, -36($s7)

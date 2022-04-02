@@ -1,8 +1,0 @@
-
-variables
-booleen a;
-
-debut
-    ecrire 16*2;
-    ecrire 16*5*8;
-fin

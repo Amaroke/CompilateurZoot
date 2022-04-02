@@ -31,7 +31,7 @@ public class Idf extends Expression {
     public String toMIPS() {
         String str = "";
         try {
-            str = ("lw $v0, " + this.getDeplacement() + ("($s7)\n"));
+            str = ("\tlw $v0, " + this.getDeplacement() + ("($s7)\n"));
         } catch (VariableNonDeclaree m) {
             ListeErreurs.getInstance().ajouter(new Erreur(m.getMessage(), this.noLigne));
         }

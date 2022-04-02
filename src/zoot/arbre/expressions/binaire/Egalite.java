@@ -35,10 +35,10 @@ public class Egalite extends Binaire{
                 "\tbeq $v0,$t8,si" + etiquette + "\n" +
                 "\tli $v0, 0\n" +
                 "\tj go" + etiquette + "\n" +
-                "si" + etiquette + ":\n" +
+                "\tsi" + etiquette + ":\n" +
                 "\tli $v0, 1\n" +
                 "\tj go" + etiquette + "\n" +
-                "go" + etiquette + ":\n";
+                "\tgo" + etiquette + ":\n";
     }
 
     @Override
