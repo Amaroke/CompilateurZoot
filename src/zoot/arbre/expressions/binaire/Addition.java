@@ -13,17 +13,17 @@ public class Addition extends Binaire {
 
     @Override
     public void verifier() {
-        if(!this.expressionDroite.isBool() && !this.expressionGauche.isBool()) {
+        if (!this.expressionDroite.isBool() && !this.expressionGauche.isBool()) {
             this.expressionDroite.verifier();
             this.expressionGauche.verifier();
-        }else{
+        } else {
             ListeErreurs.getInstance().ajouter(new Erreur("Impossible de faire une addition avec des booléens", noLigne));
         }
     }
 
     @Override
     public String getNom() {
-        return this.expressionGauche.getNom()+" + "+expressionDroite.getNom();
+        return this.expressionGauche.getNom() + " + " + expressionDroite.getNom();
     }
 
     @Override

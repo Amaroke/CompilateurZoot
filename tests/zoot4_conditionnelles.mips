@@ -1,0 +1,372 @@
+#MATHIEU STEINBACH Hugo & MOSELLE Marie-Luc
+
+.data
+
+AffichageVrai: .asciiz "vrai"
+AffichageFaux: .asciiz "faux"
+saut_ligne: .asciiz "\n"
+
+.text
+
+main: 
+   #Initialisation de la base des variables :
+	move $s7, $sp
+	addi $sp, $sp, -16
+
+   #Debut du programme :
+
+   #a = 1
+		li $v0, 1
+	sw $v0, 0($s7)
+   #b = faux
+	li $v0, 0
+	sw $v0, -4($s7)
+   #c = 6
+		li $v0, 6
+	sw $v0, -8($s7)
+   #d = faux
+	li $v0, 0
+	sw $v0, -12($s7)
+   #Condition
+	lw $v0, 0($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -8($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si1
+	li $v0, 1
+	j go1
+	si1:
+	li $v0, 0
+	j go1
+	go1:
+
+	li $t8, 1
+	beq $v0,$t8,si0
+   #d = vrai
+	li $v0, 1
+	sw $v0, -12($s7)
+
+	j go0
+	si0:
+   #b = vrai
+	li $v0, 1
+	sw $v0, -4($s7)
+
+	j go0
+	go0:
+   #ecrire a
+		lw $v0, 0($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire c
+		lw $v0, -8($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire b
+		lw $v0, -4($s7)
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon4
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi4
+	Sinon4:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi4:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire d
+		lw $v0, -12($s7)
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon5
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi5
+	Sinon5:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi5:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #Condition
+	lw $v0, -12($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 1
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si8
+	li $v0, 0
+	j go8
+	si8:
+	li $v0, 1
+	j go8
+	go8:
+
+	li $t8, 1
+	beq $v0, $t8, si7a
+	j sinon7a
+	si7a:
+	li $v0, 1
+	j go7a
+	sinon7a:
+	lw $v0, -4($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 1
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si9
+	li $v0, 0
+	j go9
+	si9:
+	li $v0, 1
+	j go9
+	go9:
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	li $v0, 1
+	beq $t8, $v0, si7b
+	j sinon7b
+	si7b:
+	li $v0, 1
+	j go7a
+	sinon7b:
+	li $v0, 0
+	j go7a
+	go7a:
+
+	li $t8, 1
+	beq $v0,$t8,si6
+	j go6
+	si6:
+   #ecrire 42
+		li $v0, 42
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+
+	j go6
+	go6:
+   #a = a * 6
+		lw $v0, 0($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 6
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+	sw $v0, 0($s7)
+   #Condition
+	lw $v0, 0($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -8($s7)
+
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si12
+	li $v0, 0
+	j go12
+	si12:
+	li $v0, 1
+	j go12
+	go12:
+
+	li $t8, 1
+	beq $v0,$t8,si11
+	j go11
+	si11:
+   #d = vrai
+	li $v0, 1
+	sw $v0, -12($s7)
+
+	j go11
+	go11:
+   #Condition
+	lw $v0, -12($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 1
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si15
+	li $v0, 0
+	j go15
+	si15:
+	li $v0, 1
+	j go15
+	go15:
+
+	li $t8, 0
+	beq $v0, $t8, si14a
+	j sinon14a
+	si14a:
+	li $v0, 0
+	j go14a
+	sinon14a:
+	lw $v0, -4($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 1
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si16
+	li $v0, 0
+	j go16
+	si16:
+	li $v0, 1
+	j go16
+	go16:
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	li $v0, 0
+	beq $t8, $v0, si14b
+	j sinon14b
+	si14b:
+	li $v0, 0
+	j go14a
+	sinon14b:
+	li $v0, 1
+	j go14a
+	go14a:
+
+	li $t8, 1
+	beq $v0,$t8,si13
+   #ecrire 55
+		li $v0, 55
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+
+	j go13
+	si13:
+   #ecrire 24
+		li $v0, 24
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+
+	j go13
+	go13:
+   #Condition
+	lw $v0, -4($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -12($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	bne $v0,$t8,si20
+	li $v0, 0
+	j go20
+si20:
+	li $v0, 1
+	j go20
+go20:
+
+	li $t8, 1
+	beq $v0,$t8,si19
+   #ecrire 57
+		li $v0, 57
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+
+	j go19
+	si19:
+   #ecrire 32
+		li $v0, 32
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+
+	j go19
+	go19:
+	b end
+
+   #Fin du programme :
+	end:
+	li $v0, 10
+	syscall

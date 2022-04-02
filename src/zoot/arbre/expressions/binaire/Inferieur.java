@@ -5,7 +5,7 @@ import zoot.arbre.expressions.Expression;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 
-public class Inferieur extends Binaire{
+public class Inferieur extends Binaire {
 
     public Inferieur(Expression gauche, Expression droite, int n) {
         super(gauche, droite, n);
@@ -13,10 +13,10 @@ public class Inferieur extends Binaire{
 
     @Override
     public void verifier() {
-        if(!this.expressionDroite.isBool() && !this.expressionGauche.isBool()) {
+        if (!this.expressionDroite.isBool() && !this.expressionGauche.isBool()) {
             this.expressionDroite.verifier();
             this.expressionGauche.verifier();
-        }else{
+        } else {
             ListeErreurs.getInstance().ajouter(new Erreur("Impossible de faire un inférieur entre autre chose que deux entiers", noLigne));
         }
     }
@@ -64,6 +64,6 @@ public class Inferieur extends Binaire{
 
     @Override
     public String getNom() {
-        return this.expressionGauche.getNom()+" < "+this.expressionDroite.getNom();
+        return this.expressionGauche.getNom() + " < " + this.expressionDroite.getNom();
     }
 }

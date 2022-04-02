@@ -1,0 +1,764 @@
+#MATHIEU STEINBACH Hugo & MOSELLE Marie-Luc
+
+.data
+
+AffichageVrai: .asciiz "vrai"
+AffichageFaux: .asciiz "faux"
+saut_ligne: .asciiz "\n"
+
+.text
+
+main: 
+   #Initialisation de la base des variables :
+	move $s7, $sp
+	addi $sp, $sp, -60
+
+   #Debut du programme :
+
+   #initV = faux
+	li $v0, 0
+	sw $v0, 0($s7)
+   #Condition
+	lw $v0, 0($s7)
+
+	li $t8, 1
+	beq $v0,$t8,si1
+	li $v0, 1
+	j go1
+	si1:
+	li $v0, 0
+	j go1
+	go1:
+
+	li $t8, 1
+	beq $v0,$t8,si0
+	j go0
+	si0:
+   #ecrire init
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Empilage des paramètres
+	addi $sp, $sp, 0
+   #Appel de la fonction
+	jal init0
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon2
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi2
+	Sinon2:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi2:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+
+	j go0
+	go0:
+	until3:
+   #ecrire manger
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Empilage des paramètres
+		li $v0, 10
+	sw $v0, -8($sp)
+		li $v0, 10
+	sw $v0, -4($sp)
+		li $v0, 10
+	sw $v0, 0($sp)
+	addi $sp, $sp, -12
+   #Appel de la fonction
+	jal manger3
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon4
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi4
+	Sinon4:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi4:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire poulet
+		lw $v0, -12($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire boeuf
+		lw $v0, -8($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire poissons
+		lw $v0, -4($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire joursSansManger
+		lw $v0, -20($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire score
+		lw $v0, -32($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #Condition
+	lw $v0, -20($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -24($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si12
+	li $v0, 1
+	j go12
+	si12:
+	li $v0, 0
+	j go12
+	go12:
+
+	li $t8, 1
+	beq $v0,$t8,si11
+	li $v0, 1
+	j go11
+	si11:
+	li $v0, 0
+	j go11
+	go11:
+
+	li $t8, 1
+	beq $v0,$t8,si10
+	j go10
+	si10:
+   #estMort = vrai
+	li $v0, 1
+	sw $v0, -28($s7)
+
+	j go10
+	go10:
+
+	lw $v0, -28($s7)
+
+	beqz $v0, until3
+   #ecrire score
+		lw $v0, -32($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+	b end
+
+	init0:
+   #initV = vrai
+	li $v0, 1
+	sw $v0, 0($s7)
+   #poissons = 20
+		li $v0, 20
+	sw $v0, -4($s7)
+   #boeuf = 20
+		li $v0, 20
+	sw $v0, -8($s7)
+   #poulet = 20
+		li $v0, 20
+	sw $v0, -12($s7)
+   #joursSansManger = 0
+		li $v0, 0
+	sw $v0, -20($s7)
+   #maxJoursSansManger = 5
+		li $v0, 5
+	sw $v0, -24($s7)
+   #score = 0
+		li $v0, 0
+	sw $v0, -32($s7)
+   #estMort = faux
+	li $v0, 0
+	sw $v0, -28($s7)
+		lw $v0, 0($s7)
+
+	jr $ra
+
+	manger3:
+	lw $v0, 4($sp)
+	addi $sp,$sp, 4
+	sw $v0, -48($s7)
+	lw $v0, 4($sp)
+	addi $sp,$sp, 4
+	sw $v0, -44($s7)
+	lw $v0, 4($sp)
+	addi $sp,$sp, 4
+	sw $v0, -40($s7)
+   #Condition
+	lw $v0, -4($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -40($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si15
+	li $v0, 1
+	j go15
+	si15:
+	li $v0, 0
+	j go15
+	go15:
+
+	li $t8, 1
+	beq $v0,$t8,si14
+   #poissons = poissons + -poissonMange
+		lw $v0, -4($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -40($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, -1
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -4($s7)
+
+	j go14
+	si14:
+   #poissonMange = poissons
+		lw $v0, -4($s7)
+
+	sw $v0, -40($s7)
+   #poissons = 0
+		li $v0, 0
+	sw $v0, -4($s7)
+
+	j go14
+	go14:
+   #score = score + 2 * poissonMange
+		lw $v0, -32($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 2
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -40($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -32($s7)
+   #Condition
+	lw $v0, -8($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -44($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si17
+	li $v0, 1
+	j go17
+	si17:
+	li $v0, 0
+	j go17
+	go17:
+
+	li $t8, 1
+	beq $v0,$t8,si16
+   #boeuf = boeuf + -boeufMange
+		lw $v0, -8($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -44($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, -1
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -8($s7)
+
+	j go16
+	si16:
+   #boeufMange = boeuf
+		lw $v0, -8($s7)
+
+	sw $v0, -44($s7)
+   #boeuf = 0
+		li $v0, 0
+	sw $v0, -8($s7)
+
+	j go16
+	go16:
+   #score = score + 4 * boeufMange
+		lw $v0, -32($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 4
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -44($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -32($s7)
+   #Condition
+	lw $v0, -12($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -48($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si19
+	li $v0, 1
+	j go19
+	si19:
+	li $v0, 0
+	j go19
+	go19:
+
+	li $t8, 1
+	beq $v0,$t8,si18
+   #poulet = poulet + -pouletMange
+		lw $v0, -12($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -48($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, -1
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -12($s7)
+
+	j go18
+	si18:
+   #pouletMange = poulet
+		lw $v0, -12($s7)
+
+	sw $v0, -48($s7)
+   #poulet = 0
+		li $v0, 0
+	sw $v0, -12($s7)
+
+	j go18
+	go18:
+   #score = 3 * pouletMange + score
+		li $v0, 3
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -48($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -32($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -32($s7)
+   #score = 2 * score + -score + 2 * score + 2 * score + -4 * score
+		li $v0, 2
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -32($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -32($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 2
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -32($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 2
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -32($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 4
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -32($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, $v0
+	mflo $v0
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, -1
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, -1
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -32($s7)
+   #Condition
+	lw $v0, -48($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 2
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si23
+	li $v0, 1
+	j go23
+	si23:
+	li $v0, 0
+	j go23
+	go23:
+
+	li $t8, 1
+	beq $v0,$t8,si22
+	li $v0, 1
+	j go22
+	si22:
+	li $v0, 0
+	j go22
+	go22:
+
+	li $t8, 0
+	beq $v0, $t8, si21a
+	j sinon21a
+	si21a:
+	li $v0, 0
+	j go21a
+	sinon21a:
+	lw $v0, -44($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 1
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si26
+	li $v0, 1
+	j go26
+	si26:
+	li $v0, 0
+	j go26
+	go26:
+
+	li $t8, 1
+	beq $v0,$t8,si25
+	li $v0, 1
+	j go25
+	si25:
+	li $v0, 0
+	j go25
+	go25:
+
+	li $t8, 0
+	beq $v0, $t8, si24a
+	j sinon24a
+	si24a:
+	li $v0, 0
+	j go24a
+	sinon24a:
+	lw $v0, -40($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 5
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si28
+	li $v0, 1
+	j go28
+	si28:
+	li $v0, 0
+	j go28
+	go28:
+
+	li $t8, 1
+	beq $v0,$t8,si27
+	li $v0, 1
+	j go27
+	si27:
+	li $v0, 0
+	j go27
+	go27:
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	li $v0, 0
+	beq $t8, $v0, si24b
+	j sinon24b
+	si24b:
+	li $v0, 0
+	j go24a
+	sinon24b:
+	li $v0, 1
+	j go24a
+	go24a:
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	li $v0, 0
+	beq $t8, $v0, si21b
+	j sinon21b
+	si21b:
+	li $v0, 0
+	j go21a
+	sinon21b:
+	li $v0, 1
+	j go21a
+	go21a:
+
+	li $t8, 1
+	beq $v0,$t8,si20
+   #aMange = faux
+	li $v0, 0
+	sw $v0, -16($s7)
+   #joursSansManger = joursSansManger + 1
+		lw $v0, -20($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 1
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -20($s7)
+
+	j go20
+	si20:
+   #aMange = vrai
+	li $v0, 1
+	sw $v0, -16($s7)
+   #joursSansManger = 0
+		li $v0, 0
+	sw $v0, -20($s7)
+
+	j go20
+	go20:
+		lw $v0, -16($s7)
+
+	jr $ra
+
+	digerer0:
+   #aMange = faux
+	li $v0, 0
+	sw $v0, -16($s7)
+	li $v0, 1
+	jr $ra
+
+   #Fin du programme :
+	end:
+	li $v0, 10
+	syscall

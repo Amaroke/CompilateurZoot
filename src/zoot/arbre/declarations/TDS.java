@@ -28,7 +28,7 @@ public class TDS {
 
     public int getEtiquetteCourante() {
         this.etiquetteCourante++;
-        return this.etiquetteCourante-1;
+        return this.etiquetteCourante - 1;
     }
 
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {

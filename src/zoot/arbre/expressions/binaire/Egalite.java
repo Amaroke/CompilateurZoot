@@ -5,7 +5,7 @@ import zoot.arbre.expressions.Expression;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 
-public class Egalite extends Binaire{
+public class Egalite extends Binaire {
 
     public Egalite(Expression gauche, Expression droite, int n) {
         super(gauche, droite, n);

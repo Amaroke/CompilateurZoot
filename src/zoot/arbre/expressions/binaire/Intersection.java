@@ -5,7 +5,7 @@ import zoot.arbre.expressions.Expression;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 
-public class Intersection extends Binaire{
+public class Intersection extends Binaire {
 
     public Intersection(Expression gauche, Expression droite, int n) {
         super(gauche, droite, n);
@@ -13,10 +13,10 @@ public class Intersection extends Binaire{
 
     @Override
     public void verifier() {
-        if(this.expressionDroite.isBool() &&  this.expressionGauche.isBool()) {
+        if (this.expressionDroite.isBool() && this.expressionGauche.isBool()) {
             this.expressionDroite.verifier();
             this.expressionGauche.verifier();
-        }else{
+        } else {
             ListeErreurs.getInstance().ajouter(new Erreur("Impossible de faire une intersection entre autre chose que deux booléens", noLigne));
         }
     }

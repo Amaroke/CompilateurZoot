@@ -6,7 +6,7 @@ import zoot.arbre.expressions.Expression;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 
-public class Conditionnelle extends Instruction{
+public class Conditionnelle extends Instruction {
 
     private final Expression expressionConditionelle;
     private final ArbreAbstrait instructionSi;
@@ -26,12 +26,12 @@ public class Conditionnelle extends Instruction{
         str.append("   #Condition\n").append(this.expressionConditionelle.toMIPS()).append("\n");
         str.append("\tli $t8, 1\n");
         str.append("\tbeq $v0,$t8,si").append(etiquette).append("\n");
-        if(instructionAlors != null){
+        if (instructionAlors != null) {
             str.append(instructionAlors.toMIPS()).append("\n");
         }
         str.append("\tj go").append(etiquette).append("\n");
         str.append("\tsi").append(etiquette).append(":\n");
-        if(instructionSi != null){
+        if (instructionSi != null) {
             str.append(instructionSi.toMIPS()).append("\n");
         }
         str.append("\tj go").append(etiquette).append("\n");
@@ -41,15 +41,15 @@ public class Conditionnelle extends Instruction{
 
     @Override
     public void verifier() {
-        if(expressionConditionelle.isBool()) {
+        if (expressionConditionelle.isBool()) {
             expressionConditionelle.verifier();
-            if(instructionSi != null){
+            if (instructionSi != null) {
                 instructionSi.verifier();
             }
-            if(instructionAlors != null){
+            if (instructionAlors != null) {
                 instructionAlors.verifier();
             }
-        }else{
+        } else {
             ListeErreurs.getInstance().ajouter(new Erreur("La condition doit être booléenne", noLigne));
         }
     }

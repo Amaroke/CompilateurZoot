@@ -22,8 +22,36 @@ class zoot.arbre.declarations.Fonction {
 + String getIdf()
 + int getNumeroBloc()
 + int getNbParam()
-+ HashMap<Entree,Symbole> getParametres()
 + String getTypeParam(int)
+}
+class zoot.arbre.expressions.binaire.Multiplication {
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
+}
+class zoot.arbre.expressions.unaire.Oppose {
+- Expression expression
++ void verifier()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
++ int nombreDErchov()
++ String toMIPS()
+}
+class zoot.arbre.expressions.binaire.Egalite {
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
 }
 class zoot.exceptions.DoubleDeclaration {
 }
@@ -40,6 +68,17 @@ class zoot.exceptions.VariableNonDeclaree {
 }
 class zoot.exceptions.AnalyseSemantiqueException {
 }
+class zoot.arbre.expressions.unaire.ExpressionPrioritaire {
+- Expression expression
++ void verifier()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
++ int nombreDErchov()
++ String toMIPS()
+}
 class zoot.arbre.BlocDInstructions {
 # ArrayList<ArbreAbstrait> programme
 + void ajouter(ArbreAbstrait)
@@ -50,18 +89,200 @@ class zoot.arbre.BlocDInstructions {
 }
 class zoot.exceptions.AnalyseLexicaleException {
 }
-class zoot.arbre.expressions.ConstanteBooleenne {
-+ String toMIPS()
-+ boolean isBool()
-+ boolean isFonction()
-+ String getType()
-}
 abstract class zoot.arbre.expressions.Expression {
 + {abstract}boolean isIdf()
 + {abstract}boolean isBool()
 + {abstract}boolean isFonction()
 + {abstract}String getType()
 + {abstract}String getNom()
++ {abstract}int nombreDErchov()
++ {abstract}String toMIPS()
+}
+class zoot.analyse.CodesLexicaux {
++ {static} int EGALITE
++ {static} int RETOURNE
++ {static} int IDF
++ {static} int CSTBOOLEENNE
++ {static} int JUSQUA
++ {static} int EGAL
++ {static} int CSTENTIERE
++ {static} int INFERIEUR
++ {static} int ECRIRE
++ {static} int FONCTION
++ {static} int ALORS
++ {static} int DIFFERENT
++ {static} int VIRGULE
++ {static} int REPETER
++ {static} int PAR_FERMANTE
++ {static} int POINTVIRGULE
++ {static} int SINON
++ {static} int VARIABLES
++ {static} int FINREPETER
++ {static} int NEGATIF
++ {static} int ENTIER
++ {static} int EOF
++ {static} int MULTIPLICATION
++ {static} int UNION
++ {static} int SI
++ {static} int error
++ {static} int NEGATION
++ {static} int INTERSECTION
++ {static} int BOOLEEN
++ {static} int DEBUT
++ {static} int FINSI
++ {static} int ADDITION
++ {static} int FIN
++ {static} int PAR_OUVRANTE
+}
+class zoot.arbre.expressions.binaire.Inferieur {
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
+}
+class zoot.arbre.instructions.Retourne {
+- Expression expression
++ void verifier()
++ String toMIPS()
+}
+class zoot.arbre.expressions.unaire.ConstanteBooleenne {
++ String toMIPS()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ int nombreDErchov()
+}
+class zoot.analyse.AnalyseurLexical {
++ {static} int YYEOF
+- {static} int ZZ_BUFFERSIZE
++ {static} int YYINITIAL
+- {static} int[] ZZ_LEXSTATE
+- {static} String ZZ_CMAP_PACKED
+- {static} char[] ZZ_CMAP
+- {static} int[] ZZ_ACTION
+- {static} String ZZ_ACTION_PACKED_0
+- {static} int[] ZZ_ROWMAP
+- {static} String ZZ_ROWMAP_PACKED_0
+- {static} int[] ZZ_TRANS
+- {static} String ZZ_TRANS_PACKED_0
+- {static} int ZZ_UNKNOWN_ERROR
+- {static} int ZZ_NO_MATCH
+- {static} int ZZ_PUSHBACK_2BIG
+- {static} String[] ZZ_ERROR_MSG
+- {static} int[] ZZ_ATTRIBUTE
+- {static} String ZZ_ATTRIBUTE_PACKED_0
+- java.io.Reader zzReader
+- int zzState
+- int zzLexicalState
+- char[] zzBuffer
+- int zzMarkedPos
+- int zzCurrentPos
+- int zzStartRead
+- int zzEndRead
+- int yyline
+- int yychar
+- int yycolumn
+- boolean zzAtBOL
+- boolean zzAtEOF
+- boolean zzEOFDone
+- int zzFinalHighSurrogate
+- StringBuilder chaine
+- {static} int[] zzUnpackAction()
+- {static} int zzUnpackAction(String,int,int[])
+- {static} int[] zzUnpackRowMap()
+- {static} int zzUnpackRowMap(String,int,int[])
+- {static} int[] zzUnpackTrans()
+- {static} int zzUnpackTrans(String,int,int[])
+- {static} int[] zzUnpackAttribute()
+- {static} int zzUnpackAttribute(String,int,int[])
+- Symbol symbol(int)
+- Symbol symbol(int,Object)
+- {static} char[] zzUnpackCMap(String)
+- boolean zzRefill()
++ void yyclose()
++ void yyreset(java.io.Reader)
++ int yystate()
++ void yybegin(int)
++ String yytext()
++ char yycharat(int)
++ int yylength()
+- void zzScanError(int)
++ void yypushback(int)
+- void zzDoEOF()
++ Symbol next_token()
+}
+class zoot.arbre.declarations.SymboleParam {
++ boolean isParam()
++ String toString()
+}
+abstract class zoot.arbre.expressions.unaire.Constante {
+# String cste
++ void verifier()
++ String toString()
++ boolean isIdf()
++ String getNom()
+}
+class zoot.arbre.expressions.AppelFonction {
+- Idf idf
+- ArrayList<Expression> parametresEffectifs
+- int nbParam
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
++ int nombreDErchov()
+}
+class zoot.arbre.expressions.binaire.Addition {
++ void verifier()
++ String getNom()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
+}
+class zoot.arbre.expressions.binaire.Intersection {
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
+}
+class zoot.analyse.AnalyseurSyntaxique {
+# {static} short[][] _production_table
+# {static} short[][] _action_table
+# {static} short[][] _reduce_table
+# CUP$AnalyseurSyntaxique$actions action_obj
++ short[][] production_table()
++ short[][] action_table()
++ short[][] reduce_table()
+# void init_actions()
++ java_cup.runtime.Symbol do_action(int,java_cup.runtime.lr_parser,java.util.Stack,int)
++ int start_state()
++ int start_production()
++ int EOF_sym()
++ int error_sym()
++ void report_error(String,Object)
++ void report_fatal_error(String,Object)
+}
+class zoot.analyse.CUP$AnalyseurSyntaxique$actions {
+- AnalyseurSyntaxique parser
++ java_cup.runtime.Symbol CUP$AnalyseurSyntaxique$do_action(int,java_cup.runtime.lr_parser,java.util.Stack,int)
+}
+class zoot.arbre.instructions.Conditionnelle {
+- Expression expressionConditionelle
+- ArbreAbstrait instructionSi
+- ArbreAbstrait instructionAlors
++ String toMIPS()
++ void verifier()
 }
 class zoot.arbre.declarations.ListeFonctions {
 - ArrayList<Fonction> fonctions
@@ -81,6 +302,17 @@ class zoot.arbre.declarations.ListeFonctions {
 + void ajouterParametre(Entree,Symbole)
 + HashMap<Entree,Symbole> getParametres()
 + void verifier()
+}
+class zoot.arbre.expressions.unaire.Negation {
+~ Expression expression
++ void verifier()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
++ int nombreDErchov()
++ String toMIPS()
 }
 class zoot.arbre.instructions.Ecrire {
 # Expression exp
@@ -106,24 +338,35 @@ class zoot.arbre.declarations.Symbole {
 + int getNbParams()
 + String toString()
 }
-abstract class zoot.arbre.expressions.Constante {
-# String cste
-+ void verifier()
-+ String toString()
-+ boolean isIdf()
-+ String getNom()
-}
-class zoot.arbre.expressions.ConstanteEntiere {
+class zoot.arbre.expressions.unaire.ConstanteEntiere {
 + String toMIPS()
 + boolean isBool()
 + boolean isFonction()
 + String getType()
++ int nombreDErchov()
+}
+class zoot.arbre.instructions.Iterative {
+~ Expression expressionConditionnelle
+~ ArbreAbstrait instructions
++ String toMIPS()
++ void verifier()
+}
+class zoot.arbre.expressions.binaire.Union {
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
 }
 class zoot.arbre.declarations.TDS {
 - {static} TDS INSTANCE
 - ArrayList<HashMap<Entree,Symbole>> blocs
 - int blocCourant
+- int etiquetteCourante
 + {static} TDS getInstance()
++ int getEtiquetteCourante()
 + void ajouter(Entree,Symbole)
 + Symbole identifier(Entree)
 + SymboleFonction trouverFonction(String,int)
@@ -135,6 +378,18 @@ class zoot.arbre.declarations.TDS {
 + int getNbParam()
 + ArrayList<HashMap<Entree,Symbole>> getBlocs()
 + String toString()
+}
+abstract class zoot.arbre.expressions.binaire.Binaire {
+# Expression expressionGauche
+# Expression expressionDroite
++ {abstract}void verifier()
++ {abstract}String toMIPS()
++ {abstract}boolean isIdf()
++ {abstract}boolean isBool()
++ {abstract}boolean isFonction()
++ {abstract}String getType()
++ {abstract}String getNom()
++ int nombreDErchov()
 }
 class zoot.exceptions.AnalyseSyntaxiqueException {
 }
@@ -158,6 +413,7 @@ class zoot.arbre.expressions.Idf {
 + String getType()
 + int getDeplacement()
 + String getNom()
++ int nombreDErchov()
 }
 class zoot.exceptions.ListeErreurs {
 - {static} ListeErreurs INSTANCE
@@ -166,6 +422,15 @@ class zoot.exceptions.ListeErreurs {
 + void ajouter(Erreur)
 + int getNbErreurs()
 + ArrayList<Erreur> getErreurs()
+}
+class zoot.arbre.expressions.binaire.Different {
++ void verifier()
++ String toMIPS()
++ boolean isIdf()
++ boolean isBool()
++ boolean isFonction()
++ String getType()
++ String getNom()
 }
 class zoot.arbre.declarations.Entree {
 - String nom
@@ -178,21 +443,36 @@ class zoot.arbre.declarations.Entree {
 
 zoot.exceptions.RuntimeException <|-- zoot.exceptions.AnalyseException
 zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Affectation
+zoot.arbre.expressions.binaire.Binaire <|-- zoot.arbre.expressions.binaire.Multiplication
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.unaire.Oppose
+zoot.arbre.expressions.binaire.Binaire <|-- zoot.arbre.expressions.binaire.Egalite
 zoot.exceptions.AnalyseSemantiqueException <|-- zoot.exceptions.DoubleDeclaration
 zoot.arbre.ArbreAbstrait <|-- zoot.arbre.instructions.Instruction
 zoot.exceptions.AnalyseSemantiqueException <|-- zoot.exceptions.VariableNonDeclaree
 zoot.exceptions.AnalyseException <|-- zoot.exceptions.AnalyseSemantiqueException
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.unaire.ExpressionPrioritaire
 zoot.arbre.ArbreAbstrait <|-- zoot.arbre.BlocDInstructions
 zoot.exceptions.AnalyseException <|-- zoot.exceptions.AnalyseLexicaleException
-zoot.arbre.expressions.Constante <|-- zoot.arbre.expressions.ConstanteBooleenne
 zoot.arbre.ArbreAbstrait <|-- zoot.arbre.expressions.Expression
+zoot.arbre.expressions.binaire.Binaire <|-- zoot.arbre.expressions.binaire.Inferieur
 zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Retourne
+zoot.arbre.expressions.unaire.Constante <|-- zoot.arbre.expressions.unaire.ConstanteBooleenne
+zoot.analyse.Scanner <|.. zoot.analyse.AnalyseurLexical
 zoot.arbre.declarations.Symbole <|-- zoot.arbre.declarations.SymboleParam
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.unaire.Constante
 zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.AppelFonction
+zoot.arbre.expressions.binaire.Binaire <|-- zoot.arbre.expressions.binaire.Addition
+zoot.arbre.expressions.binaire.Binaire <|-- zoot.arbre.expressions.binaire.Intersection
+zoot.analyse.lr_parser <|-- zoot.analyse.AnalyseurSyntaxique
+zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Conditionnelle
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.unaire.Negation
 zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Ecrire
 zoot.arbre.declarations.Symbole <|-- zoot.arbre.declarations.SymboleFonction
-zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.Constante
-zoot.arbre.expressions.Constante <|-- zoot.arbre.expressions.ConstanteEntiere
+zoot.arbre.expressions.unaire.Constante <|-- zoot.arbre.expressions.unaire.ConstanteEntiere
+zoot.arbre.instructions.Instruction <|-- zoot.arbre.instructions.Iterative
+zoot.arbre.expressions.binaire.Binaire <|-- zoot.arbre.expressions.binaire.Union
+zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.binaire.Binaire
 zoot.exceptions.AnalyseException <|-- zoot.exceptions.AnalyseSyntaxiqueException
 zoot.arbre.expressions.Expression <|-- zoot.arbre.expressions.Idf
+zoot.arbre.expressions.binaire.Binaire <|-- zoot.arbre.expressions.binaire.Different
 @enduml

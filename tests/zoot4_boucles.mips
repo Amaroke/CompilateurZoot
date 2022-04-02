@@ -1,0 +1,387 @@
+#MATHIEU STEINBACH Hugo & MOSELLE Marie-Luc
+
+.data
+
+AffichageVrai: .asciiz "vrai"
+AffichageFaux: .asciiz "faux"
+saut_ligne: .asciiz "\n"
+
+.text
+
+main: 
+   #Initialisation de la base des variables :
+	move $s7, $sp
+	addi $sp, $sp, -20
+
+   #Debut du programme :
+
+   #a = 0
+		li $v0, 0
+	sw $v0, 0($s7)
+   #b = faux
+	li $v0, 0
+	sw $v0, -4($s7)
+   #c = 0
+		li $v0, 0
+	sw $v0, -8($s7)
+	until0:
+   #c = c + 1
+		lw $v0, -8($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 1
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -8($s7)
+   #ecrire c
+		lw $v0, -8($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+
+	lw $v0, -8($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 5
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si2
+	li $v0, 0
+	j go2
+	si2:
+	li $v0, 1
+	j go2
+	go2:
+
+	beqz $v0, until0
+   #ecrire fonc1
+	   #Sauvegarde des registres
+	sw $ra,0($sp)
+	sw $s1,-4($sp)
+	addi $sp,$sp,-8
+   #Empilage des paramètres
+		lw $v0, 0($s7)
+
+	sw $v0, 0($sp)
+	addi $sp, $sp, -4
+   #Appel de la fonction
+	jal fonc11
+   #Restauration des registres
+	lw $s1,4($sp)
+	lw $ra,8($sp)
+	addi $sp,$sp,8
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+	until4:
+   #a = a + (zoot.arbre.expressions.unaire.Oppose@26f0a63f)
+		lw $v0, 0($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 1
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	mul $v0, $t8, -1
+	mflo $v0
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, 0($s7)
+   #Condition
+	lw $v0, 0($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 10
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si6
+	li $v0, 1
+	j go6
+	si6:
+	li $v0, 0
+	j go6
+	go6:
+
+	li $t8, 1
+	beq $v0,$t8,si5
+	j go5
+	si5:
+   #b = vrai
+	li $v0, 1
+	sw $v0, -4($s7)
+
+	j go5
+	go5:
+
+	lw $v0, -4($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 1
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si7
+	li $v0, 0
+	j go7
+	si7:
+	li $v0, 1
+	j go7
+	go7:
+
+	beqz $v0, until4
+   #a = 0
+		li $v0, 0
+	sw $v0, 0($s7)
+   #b = faux
+	li $v0, 0
+	sw $v0, -4($s7)
+	until8:
+   #a = a + 1
+		lw $v0, 0($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 1
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, 0($s7)
+   #Condition
+	li $v0, 1
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, 0($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si11
+	li $v0, 1
+	j go11
+	si11:
+	li $v0, 0
+	j go11
+	go11:
+
+	li $t8, 0
+	beq $v0, $t8, si10a
+	j sinon10a
+	si10a:
+	li $v0, 0
+	j go10a
+	sinon10a:
+	lw $v0, 0($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 5
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si12
+	li $v0, 1
+	j go12
+	si12:
+	li $v0, 0
+	j go12
+	go12:
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	li $v0, 0
+	beq $t8, $v0, si10b
+	j sinon10b
+	si10b:
+	li $v0, 0
+	j go10a
+	sinon10b:
+	li $v0, 1
+	j go10a
+	go10a:
+
+	li $t8, 1
+	beq $v0,$t8,si9
+	j go9
+	si9:
+   #b = vrai
+	li $v0, 1
+	sw $v0, -4($s7)
+
+	j go9
+	go9:
+
+	lw $v0, -4($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+li $v0, 0
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	bne $v0,$t8,si14
+	li $v0, 0
+	j go14
+si14:
+	li $v0, 1
+	j go14
+go14:
+
+	li $t8, 0
+	beq $v0, $t8, si13a
+	j sinon13a
+	si13a:
+	li $v0, 0
+	j go13a
+	sinon13a:
+	lw $v0, 0($s7)
+
+	   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 4
+	   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	beq $v0,$t8,si15
+	li $v0, 0
+	j go15
+	si15:
+	li $v0, 1
+	j go15
+	go15:
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	li $v0, 0
+	beq $t8, $v0, si13b
+	j sinon13b
+	si13b:
+	li $v0, 0
+	j go13a
+	sinon13b:
+	li $v0, 1
+	j go13a
+	go13a:
+
+	beqz $v0, until8
+   #ecrire a
+		lw $v0, 0($s7)
+
+	move $a0, $v0
+	li $v0, 1
+	syscall
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+   #ecrire b
+		lw $v0, -4($s7)
+
+	move $a0, $v0
+	beq $zero, $a0, Sinon17
+	la $a0, AffichageVrai
+	li $v0, 4
+	syscall
+	b FinSi17
+	Sinon17:
+	la $a0, AffichageFaux
+	li $v0, 4
+	syscall
+	FinSi17:
+	la $a0, saut_ligne
+	li $v0, 4
+	syscall
+
+	b end
+
+	fonc11:
+	lw $v0, 4($sp)
+	addi $sp,$sp, 4
+	sw $v0, -12($s7)
+	until18:
+   #n = n + 2
+		lw $v0, -12($s7)
+
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	li $v0, 2
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	add $v0, $t8, $v0
+
+	sw $v0, -12($s7)
+
+	li $v0, 10
+   #Empiler $v0
+	sw $v0,($sp)
+	add $sp,$sp,-4
+	lw $v0, -12($s7)
+
+   #Dépiler $v0
+	add $sp,$sp,4
+	lw $t8,($sp)
+	ble $v0,$t8,si19
+	li $v0, 1
+	j go19
+	si19:
+	li $v0, 0
+	j go19
+	go19:
+
+	beqz $v0, until18
+		lw $v0, -12($s7)
+
+	jr $ra
+
+   #Fin du programme :
+	end:
+	li $v0, 10
+	syscall
