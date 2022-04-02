@@ -1,5 +1,6 @@
 package zoot.arbre.expressions.binaire;
 
+import zoot.arbre.declarations.TDS;
 import zoot.arbre.expressions.Expression;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
@@ -23,7 +24,7 @@ public class Inferieur extends Binaire{
 
     @Override
     public String toMIPS() {
-
+        int etiquette = TDS.getInstance().getEtiquetteCourante();
         return this.expressionGauche.toMIPS() + "\n" +
                 "   #Empiler $v0\n" +
                 "\tsw $v0,($sp)\n" +
@@ -32,13 +33,13 @@ public class Inferieur extends Binaire{
                 "   #Dépiler $v0\n" +
                 "\tadd $sp,$sp,4\n" +
                 "\tlw $t8,($sp)\n" +
-                "\tble $v0,$t8,si" + noLigne + "\n" +
+                "\tble $v0,$t8,si" + etiquette + "\n" +
                 "\tli $v0, 1\n" +
-                "\tj go" + noLigne + "\n" +
-                "si" + noLigne + ":\n" +
+                "\tj go" + etiquette + "\n" +
+                "si" + etiquette + ":\n" +
                 "\tli $v0, 0\n" +
-                "\tj go" + noLigne + "\n" +
-                "go" + noLigne + ":\n";
+                "\tj go" + etiquette + "\n" +
+                "go" + etiquette + ":\n";
     }
 
     @Override

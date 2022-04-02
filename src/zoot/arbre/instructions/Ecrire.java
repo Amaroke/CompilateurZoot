@@ -1,5 +1,6 @@
 package zoot.arbre.instructions;
 
+import zoot.arbre.declarations.TDS;
 import zoot.arbre.expressions.Expression;
 
 public class Ecrire extends Instruction {
@@ -18,21 +19,22 @@ public class Ecrire extends Instruction {
 
     @Override
     public String toMIPS() {
+        int etiquette = TDS.getInstance().getEtiquetteCourante();
         StringBuilder str = new StringBuilder();
         str.append("   #ecrire ").append(exp.getNom()).append("\n");
         str.append("\t").append(exp.toMIPS()).append("\n");
         str.append("\tmove $a0, $v0\n");
         if (exp.isBool()) {
-            str.append("\tbeq $zero, $a0, Sinon").append(exp.getNoLigne()).append("\n");
+            str.append("\tbeq $zero, $a0, Sinon").append(etiquette).append("\n");
             str.append("\tla $a0, AffichageVrai\n");
             str.append("\tli $v0, 4\n");
             str.append("\tsyscall\n");
-            str.append("\tb FinSi").append(exp.getNoLigne()).append("\n");
-            str.append("\tSinon").append(exp.getNoLigne()).append(":").append("\n");
+            str.append("\tb FinSi").append(etiquette).append("\n");
+            str.append("\tSinon").append(etiquette).append(":").append("\n");
             str.append("\tla $a0, AffichageFaux\n");
             str.append("\tli $v0, 4\n");
             str.append("\tsyscall\n");
-            str.append("\tFinSi").append(exp.getNoLigne()).append(":").append("\n");
+            str.append("\tFinSi").append(etiquette).append(":").append("\n");
         } else {
             str.append("\tli $v0, 1\n\tsyscall\n");
         }

@@ -1,5 +1,6 @@
 package zoot.arbre.expressions.binaire;
 
+import zoot.arbre.declarations.TDS;
 import zoot.arbre.expressions.Expression;
 import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
@@ -23,14 +24,15 @@ public class Intersection extends Binaire{
 
     @Override
     public String toMIPS() {
+        int etiquette = TDS.getInstance().getEtiquetteCourante();
         return this.expressionDroite.toMIPS() + "\n" +
                 "\tli $t8, 0\n" +
-                "\tbeq $v0, $t8, si" + noLigne + "a" + "\n" +
-                "\tj sinon" + noLigne + "a" + "\n" +
-                "\tsi" + noLigne + "a" + ":\n" +
+                "\tbeq $v0, $t8, si" + etiquette + "a" + "\n" +
+                "\tj sinon" + etiquette + "a" + "\n" +
+                "\tsi" + etiquette + "a" + ":\n" +
                 "\tli $v0, 0\n" +
-                "\tj go" + noLigne + "a" + "\n" +
-                "\tsinon" + noLigne + "a" + ":\n" +
+                "\tj go" + etiquette + "a" + "\n" +
+                "\tsinon" + etiquette + "a" + ":\n" +
                 this.expressionGauche.toMIPS() + "\n" +
                 "   #Empiler $v0\n" +
                 "\tsw $v0,($sp)\n" +
@@ -39,15 +41,15 @@ public class Intersection extends Binaire{
                 "\tadd $sp,$sp,4\n" +
                 "\tlw $t8,($sp)\n" +
                 "\tli $v0, 0\n" +
-                "\tbeq $t8, $v0, si" + noLigne + "b" + "\n" +
-                "\tj sinon" + noLigne + "b" + "\n" +
-                "\tsi" + noLigne + "b" + ":\n" +
+                "\tbeq $t8, $v0, si" + etiquette + "b" + "\n" +
+                "\tj sinon" + etiquette + "b" + "\n" +
+                "\tsi" + etiquette + "b" + ":\n" +
                 "\tli $v0, 0\n" +
-                "\tj go" + noLigne + "a" + "\n" +
-                "\tsinon" + noLigne + "b" + ":\n" +
+                "\tj go" + etiquette + "a" + "\n" +
+                "\tsinon" + etiquette + "b" + ":\n" +
                 "\tli $v0, 1\n" +
-                "\tj go" + noLigne + "a" + "\n" +
-                "\tgo" + noLigne + "a" + ":\n";
+                "\tj go" + etiquette + "a" + "\n" +
+                "\tgo" + etiquette + "a" + ":\n";
     }
 
     @Override

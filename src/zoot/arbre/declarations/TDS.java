@@ -13,8 +13,10 @@ public class TDS {
     private static final TDS INSTANCE = new TDS();
     private final ArrayList<HashMap<Entree, Symbole>> blocs;
     private int blocCourant;
+    private int etiquetteCourante;
 
     private TDS() {
+        this.etiquetteCourante = 0;
         this.blocCourant = 0;
         this.blocs = new ArrayList<>();
         this.blocs.add(new HashMap<>());
@@ -22,6 +24,11 @@ public class TDS {
 
     public static TDS getInstance() {
         return INSTANCE;
+    }
+
+    public int getEtiquetteCourante() {
+        this.etiquetteCourante++;
+        return this.etiquetteCourante-1;
     }
 
     public void ajouter(Entree e, Symbole symbole) throws DoubleDeclaration {

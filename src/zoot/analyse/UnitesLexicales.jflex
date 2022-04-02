@@ -58,6 +58,14 @@ commentaire = [/]{2}.*{finDeLigne}
 
 "non"                  { return symbol(CodesLexicaux.NEGATION); }
 
+"si"                   { return symbol(CodesLexicaux.SI); }
+
+"alors"                { return symbol(CodesLexicaux.ALORS); }
+
+"sinon"                { return symbol(CodesLexicaux.SINON); }
+
+"finsi"                { return symbol(CodesLexicaux.FINSI); }
+
 "="                    { return symbol(CodesLexicaux.EGAL); }
 
 ";"                    { return symbol(CodesLexicaux.POINTVIRGULE); }

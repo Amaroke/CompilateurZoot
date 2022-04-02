@@ -23,7 +23,6 @@ public class Multiplication extends Binaire{
 
     @Override
     public String toMIPS() {
-
         return this.expressionGauche.toMIPS() + "\n" +
                 "   #Empiler $v0\n" +
                 "\tsw $v0,($sp)\n" +

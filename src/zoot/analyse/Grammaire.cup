@@ -58,7 +58,7 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE, ADDITION, MULTIPLICATION, INFERIEUR, EGALITE, DIFFERENT, INTERSECTION, UNION, NEGATION, NEGATIF;
+terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE, ADDITION, MULTIPLICATION, INFERIEUR, EGALITE, DIFFERENT, INTERSECTION, UNION, NEGATION, NEGATIF, SI, ALORS, SINON, FINSI;
 terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN;
 
 /* Non terminals used in the grammar section.  */
@@ -195,6 +195,18 @@ INST    ::=     ECRIRE EXP:e POINTVIRGULE
         |
                 RETOURNE EXP:e POINTVIRGULE
                 {: RESULT = new Retourne(eleft+1, e); :}
+       |
+                SI EXP:e ALORS LINST:la SINON LINST:lb FINSI
+                {: RESULT = new Conditionnelle(e,eleft+1,la,lb); :}
+       |
+                SI EXP:e ALORS LINST:l FINSI
+                {: RESULT = new Conditionnelle(e,eleft+1,null,l); :}
+       |
+                SI EXP:e ALORS SINON LINST:l FINSI
+                {: RESULT = new Conditionnelle(e,eleft+1,l,null); :}
+       |
+                SI EXP:e ALORS FINSI
+                {: RESULT = new Conditionnelle(e,eleft+1,null,null); :}
                 ;
 
 EXP    ::=     CSTENTIERE:c
