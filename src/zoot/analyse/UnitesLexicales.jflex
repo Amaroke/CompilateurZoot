@@ -56,6 +56,8 @@ commentaire = [/]{2}.*{finDeLigne}
 
 "booleen"              { return symbol(CodesLexicaux.BOOLEEN); }
 
+"non"                  { return symbol(CodesLexicaux.NEGATION); }
+
 "="                    { return symbol(CodesLexicaux.EGAL); }
 
 ";"                    { return symbol(CodesLexicaux.POINTVIRGULE); }
@@ -67,6 +69,8 @@ commentaire = [/]{2}.*{finDeLigne}
 ")"                    { return symbol(CodesLexicaux.PAR_FERMANTE); }
 
 "+"                    { return symbol(CodesLexicaux.ADDITION); }
+
+"-"                    { return symbol(CodesLexicaux.NEGATIF); }
 
 "*"                    { return symbol(CodesLexicaux.MULTIPLICATION); }
 

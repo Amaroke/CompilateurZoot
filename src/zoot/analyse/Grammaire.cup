@@ -58,7 +58,7 @@ parser code {:
 
 /* Terminals (tokens returned by the scanner).  */
 
-terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE, ADDITION, MULTIPLICATION, INFERIEUR, EGALITE, DIFFERENT, INTERSECTION, UNION;
+terminal Symbol    DEBUT, FIN, VARIABLES, FONCTION, POINTVIRGULE, VIRGULE, ECRIRE, EGAL, PAR_OUVRANTE, PAR_FERMANTE, RETOURNE, ADDITION, MULTIPLICATION, INFERIEUR, EGALITE, DIFFERENT, INTERSECTION, UNION, NEGATION, NEGATIF;
 terminal String    IDF, CSTENTIERE, CSTBOOLEENNE, ENTIER, BOOLEEN;
 
 /* Non terminals used in the grammar section.  */
@@ -121,7 +121,7 @@ LINST   ::=     LINST:li  INST:i
                 {: BlocDInstructions b = new BlocDInstructions(ileft + 1) ;
                    b.ajouter(i) ;
                    RESULT = b ; :}
-                   ;
+                ;
 
 LPAR    ::=     LPAR:lp PAR:p
                 {:
@@ -150,18 +150,16 @@ PAR_EFF   ::=   PAR_EFF:le VIRGULE EXP:e
                 ;
 
 PAR     ::=     TYPE:t IDF:i POINTVIRGULE
-                {:
-                TDS.getInstance().entreeBloc();
+                {: TDS.getInstance().entreeBloc();
                 Entree e = new Entree(i, "variable");
                 Symbole s = new SymboleParam(t, ileft+1, TDS.getInstance().getBlocCourant());
 
-                 try {
-                TDS.getInstance().ajouter(e,s);
+                try {
+                    TDS.getInstance().ajouter(e,s);
                 } catch (DoubleDeclaration d) {
                     ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
                 }
-                ListeFonctions.getInstance().ajouterParametre(e,s);
-                 :}
+                ListeFonctions.getInstance().ajouterParametre(e,s); :}
                 ;
 
 LVARLOC    ::=  LVARLOC:lv VAR:v
@@ -175,23 +173,18 @@ LVARLOC    ::=  LVARLOC:lv VAR:v
                 ;
 
 VAR     ::=     TYPE:t IDF:i POINTVIRGULE
-                {:
-                try {
-                TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t, ileft+1,TDS.getInstance().getBlocCourant()));
+                {: try {
+                    TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t, ileft+1,TDS.getInstance().getBlocCourant()));
                 } catch (DoubleDeclaration d) {
                     ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                }
-                :}
+                } :}
                 ;
 
 PARAM   ::=   PAR_OUVRANTE PAR_FERMANTE
-              {:
-              TDS.getInstance().entreeBloc();
-               :}
+              {: TDS.getInstance().entreeBloc(); :}
         |
               PAR_OUVRANTE LPAR PAR_FERMANTE
-              {:
-              :}
+              {: :}
               ;
 
 INST    ::=     ECRIRE EXP:e POINTVIRGULE
@@ -213,34 +206,42 @@ EXP    ::=     CSTENTIERE:c
                IDF:i
                {: RESULT = new Idf(new Entree(i, "variable"), ileft + 1) ; :}
         |
-                 IDF:i PAR_OUVRANTE PAR_EFF PAR_FERMANTE
-                 {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
+               IDF:i PAR_OUVRANTE PAR_EFF PAR_FERMANTE
+               {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
         |
-                 IDF:i PAR_OUVRANTE PAR_FERMANTE
-                 {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
+               IDF:i PAR_OUVRANTE PAR_FERMANTE
+               {: RESULT = new AppelFonction(new Idf(new Entree(i, "fonction"), ileft + 1 ),ileft+1) ; :}
         |
-                EXP:g ADDITION EXP:d
-                {: RESULT = new Addition(g, d, gleft+1); :}
+              PAR_OUVRANTE EXP:e PAR_FERMANTE
+              {: RESULT = new ExpressionPrioritaire(e,eleft + 1) ; :}
         |
-                EXP:g MULTIPLICATION EXP:d
-                {: RESULT = new Multiplication(g, d, gleft+1); :}
+              NEGATIF EXP:e
+              {: RESULT = new Oppose(e,eleft + 1) ; :}
         |
-                EXP:g INFERIEUR EXP:d
-                {: RESULT = new Inferieur(g, d, gleft+1); :}
+              NEGATION EXP:e
+              {: RESULT = new ConstanteBooleenne(e.equals("vrai") ? "faux" : "vrai",eleft + 1) ; :}
         |
-                EXP:g EGALITE EXP:d
-                {: RESULT = new Egalite(g, d, gleft+1); :}
+              EXP:g ADDITION EXP:d
+              {: RESULT = new Addition(g, d, gleft+1); :}
         |
-                EXP:g DIFFERENT EXP:d
-                {: RESULT = new Different(g, d, gleft+1); :}
+              EXP:g MULTIPLICATION EXP:d
+              {: RESULT = new Multiplication(g, d, gleft+1); :}
         |
-                EXP:g INTERSECTION EXP:d
-                {: RESULT = new Intersection(g, d, gleft+1); :}
+              EXP:g INFERIEUR EXP:d
+              {: RESULT = new Inferieur(g, d, gleft+1); :}
         |
-                EXP:g UNION EXP:d
-                {: RESULT = new Union(g, d, gleft+1); :}
-                ;
-
+              EXP:g EGALITE EXP:d
+              {: RESULT = new Egalite(g, d, gleft+1); :}
+        |
+              EXP:g DIFFERENT EXP:d
+              {: RESULT = new Different(g, d, gleft+1); :}
+        |
+              EXP:g INTERSECTION EXP:d
+              {: RESULT = new Intersection(g, d, gleft+1); :}
+        |
+              EXP:g UNION EXP:d
+              {: RESULT = new Union(g, d, gleft+1); :}
+              ;
 
 TYPE    ::=     ENTIER
                 {: RESULT = "entier"; :}
@@ -250,69 +251,59 @@ TYPE    ::=     ENTIER
                 ;
 
 FCT     ::=     TYPE:t IDF:i PARAM VARIABLES LVARLOC:lv DEBUT LINST:li FIN
-                {:
-                try {
+                {: try {
                     TDS.getInstance().ajouter(new Entree(i, "fonction"), new SymboleFonction(t, ileft+1));
-                    } catch (DoubleDeclaration d) {
-                        ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                    }
-                    Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
+                } catch (DoubleDeclaration d) {
+                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                }
+                Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
+                fonction.recupererParametres();
+                fonction.setEtiquette();
+                try {
+                    ListeFonctions.getInstance().ajouter(fonction);
+                } catch (DoubleDeclaration d) {
+                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                }
+                TDS.getInstance().sortieBloc(); :}
+       |
+                TYPE:t IDF:i PARAM VARIABLES DEBUT LINST:li FIN
+                {: try {
+                    TDS.getInstance().ajouter(new Entree(i, "fonction"), new SymboleFonction(t, ileft+1));
+                } catch (DoubleDeclaration d) {
+                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                }
+                Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
                     fonction.recupererParametres();
                     fonction.setEtiquette();
-                      try {
-                                        ListeFonctions.getInstance().ajouter(fonction);
-                                        } catch (DoubleDeclaration d) {
-                                            ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                                        }
-
+                try {
+                    ListeFonctions.getInstance().ajouter(fonction);
+                } catch (DoubleDeclaration d) {
+                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                }
                 TDS.getInstance().sortieBloc(); :}
-                |
-
-                    TYPE:t IDF:i PARAM VARIABLES DEBUT LINST:li FIN
-                    {:
-                    try {
-                        TDS.getInstance().ajouter(new Entree(i, "fonction"), new SymboleFonction(t, ileft+1));
-                        } catch (DoubleDeclaration d) {
-                            ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                        }
-                   Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
-                                        fonction.recupererParametres();
-                                        fonction.setEtiquette();
-                                     try {
-                                      ListeFonctions.getInstance().ajouter(fonction);
-                                      } catch (DoubleDeclaration d) {
-                                          ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                                      }
-                                    TDS.getInstance().sortieBloc();
-                    :}
-                    |
-
-                    TYPE:t IDF:i PARAM  DEBUT LINST:li FIN
-                    {:
-                    try {
-                        TDS.getInstance().ajouter(new Entree(i, "fonction"), new SymboleFonction(t, ileft+1));
-                        } catch (DoubleDeclaration d) {
-                            ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                        }
-                   Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
-                                        fonction.recupererParametres();
-                                        fonction.setEtiquette();
-                                           try {
-                                                                                ListeFonctions.getInstance().ajouter(fonction);
-                                                                                } catch (DoubleDeclaration d) {
-                                                                                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                                                                                }
-
-                                    TDS.getInstance().sortieBloc();
-                    :}
+       |
+                TYPE:t IDF:i PARAM  DEBUT LINST:li FIN
+                {: try {
+                    TDS.getInstance().ajouter(new Entree(i, "fonction"), new SymboleFonction(t, ileft+1));
+                } catch (DoubleDeclaration d) {
+                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                }
+                Fonction fonction = new Fonction(li, ileft+1, i, TDS.getInstance().getBlocCourant());
+                fonction.recupererParametres();
+                fonction.setEtiquette();
+                try {
+                    ListeFonctions.getInstance().ajouter(fonction);
+                } catch (DoubleDeclaration d) {
+                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+                }
+                TDS.getInstance().sortieBloc(); :}
                 ;
 
 
 DCL     ::=    TYPE:t IDF:i POINTVIRGULE
-               {:
-                 try {
-                      TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t, ileft+1, TDS.getInstance().getBlocCourant())) ;
-                      } catch (DoubleDeclaration d) {
-                      ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
-                      }:}
+               {: try {
+                    TDS.getInstance().ajouter(new Entree(i, "variable"), new Symbole(t, ileft+1, TDS.getInstance().getBlocCourant())) ;
+               } catch (DoubleDeclaration d) {
+                    ListeErreurs.getInstance().ajouter(new Erreur(d.getMessage(),ileft+1));
+               } :}
                ;

@@ -35,7 +35,7 @@ public class Fonction {
             }
         }
         str.append("\t").append(etiquette).append(":\n");
-        for (Map.Entry<Entree, Symbole> m : this.parametres.entrySet()) {
+        for (Map.Entry<Entree, Symbole> ignored : this.parametres.entrySet()) {
             str.append("\tlw $v0, 4($sp)\n");
             str.append("\taddi $sp,$sp, 4\n");
             str.append("\tsw $v0, ").append(plusPetit).append("($s7)\n");
@@ -82,10 +82,6 @@ public class Fonction {
 
     public int getNbParam() {
         return this.parametres.size();
-    }
-
-    public HashMap<Entree, Symbole> getParametres() {
-        return parametres;
     }
 
     public String getTypeParam(int i) {

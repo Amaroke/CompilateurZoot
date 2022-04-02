@@ -2,9 +2,6 @@ package zoot.arbre.instructions;
 
 import zoot.arbre.expressions.Expression;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-
 public class Ecrire extends Instruction {
 
     protected final Expression exp;
@@ -21,7 +18,6 @@ public class Ecrire extends Instruction {
 
     @Override
     public String toMIPS() {
-        ArrayList<String> registres = new ArrayList<>(Arrays.asList("$v0", "$t0", "$t1", "$t2"));
         StringBuilder str = new StringBuilder();
         str.append("   #ecrire ").append(exp.getNom()).append("\n");
         str.append("\t").append(exp.toMIPS()).append("\n");

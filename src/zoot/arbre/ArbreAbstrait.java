@@ -1,7 +1,5 @@
 package zoot.arbre;
 
-import java.util.ArrayList;
-
 public abstract class ArbreAbstrait {
 
     protected int noLigne;

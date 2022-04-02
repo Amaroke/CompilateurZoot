@@ -7,8 +7,6 @@ import zoot.exceptions.Erreur;
 import zoot.exceptions.ListeErreurs;
 import zoot.exceptions.VariableNonDeclaree;
 
-import java.util.ArrayList;
-
 public class Idf extends Expression {
 
     private final Entree entree;
@@ -47,11 +45,8 @@ public class Idf extends Expression {
 
     @Override
     public boolean isBool() {
-        try {
-            return (symbole.getType().equals("booleen"));
-        } catch (NullPointerException n) {
-            return false;
-        }
+        Symbole symbole = TDS.getInstance().identifier(this.entree);
+        return (symbole.getType().equals("booleen"));
     }
 
     @Override

@@ -6,12 +6,6 @@ import zoot.arbre.declarations.TDS;
 
 import java.util.ArrayList;
 
-/**
- * 21 novembre 2018
- *
- * @author brigitte wrobel-dautcourt
- */
-
 public class BlocDInstructions extends ArbreAbstrait {
 
     protected final ArrayList<ArbreAbstrait> programme;

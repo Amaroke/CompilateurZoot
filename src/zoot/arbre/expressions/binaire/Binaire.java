@@ -1,9 +1,6 @@
 package zoot.arbre.expressions.binaire;
 
 import zoot.arbre.expressions.Expression;
-import zoot.arbre.expressions.unaire.ConstanteEntiere;
-
-import java.util.ArrayList;
 
 public abstract class Binaire extends Expression {
 
@@ -17,39 +14,25 @@ public abstract class Binaire extends Expression {
     }
 
     @Override
-    public void verifier() {
-
-    }
+    public abstract void verifier();
 
     @Override
-    public String toMIPS() {
-        return null;
-    }
+    public abstract String toMIPS();
 
     @Override
-    public boolean isIdf() {
-        return false;
-    }
+    public abstract boolean isIdf();
 
     @Override
-    public boolean isBool() {
-        return false;
-    }
+    public abstract boolean isBool();
 
     @Override
-    public boolean isFonction() {
-        return false;
-    }
+    public abstract boolean isFonction();
 
     @Override
-    public String getType() {
-        return null;
-    }
+    public abstract String getType();
 
     @Override
-    public String getNom() {
-        return "";
-    }
+    public abstract String getNom();
 
     @Override
     public int nombreDErchov() {

@@ -1,4 +1,6 @@
-package zoot.arbre.expressions;
+package zoot.arbre.expressions.unaire;
+
+import zoot.arbre.expressions.Expression;
 
 public abstract class Constante extends Expression {
 

@@ -1,9 +1,5 @@
 package zoot.arbre.expressions.unaire;
 
-import zoot.arbre.expressions.Constante;
-
-import java.util.ArrayList;
-
 public class ConstanteBooleenne extends Constante {
 
     public ConstanteBooleenne(String texte, int n) {
